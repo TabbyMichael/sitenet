@@ -1,0 +1,28 @@
+/*
+Theme Name: SITE Child Theme
+Theme URI: https://sitenet.org
+Description: Child theme for SITE Enterprise Promotion Kenya
+Author: SITE Development Team
+Author URI: https://sitenet.org
+Template: the-landscaper
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: site-child
+*/
+
+/* SITE-specific customizations */
+/* Homepage customizations */
+.hero-section {
+    /* Hero section styles will be added in Day 3 */
+}
+
+/* Program cards */
+.program-card {
+    /* Program card styles will be added in Day 4 */
+}
+
+/* Media gallery */
+.media-gallery {
+    /* Gallery styles will be added in Day 5 */
+}
