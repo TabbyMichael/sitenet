@@ -1,0 +1,130 @@
+# WordPress Core
+wp-config.php
+wp-content/advanced-cache.php
+wp-content/backup-db/
+wp-content/backups/
+wp-content/cache/
+wp-content/updraft/
+wp-content/w3tc-config/
+
+# Database
+*.sql
+*.sqlite
+*.db
+
+# Environment-specific files
+.env
+.env.local
+.env.production
+
+# Sensitive files
+*.key
+*.pem
+*.crt
+htaccess
+web.config
+
+# WordPress uploads (large media files)
+wp-content/uploads/
+wp-content/blogs/
+wp-content/upgrade/
+
+# Plugins (exclude third-party plugins from version control)
+wp-content/plugins/all-in-one-seo-pack/
+wp-content/plugins/akismet/
+wp-content/plugins/antispam-bee/
+wp-content/plugins/black-studio-tinymce-widget/
+wp-content/plugins/breadcrumb-navxt/
+wp-content/plugins/contact-form-7/
+wp-content/plugins/copy-delete-posts/
+wp-content/plugins/duplicate-page/
+wp-content/plugins/easy-fancybox/
+wp-content/plugins/elementor/
+wp-content/plugins/essential-grid/
+wp-content/plugins/google-analytics-for-wordpress/
+wp-content/plugins/hello.php
+wp-content/plugins/image-optimization/
+wp-content/plugins/jetpack/
+wp-content/plugins/one-click-demo-import/
+wp-content/plugins/portfolio-post-type/
+wp-content/plugins/revslider/
+wp-content/plugins/simple-page-sidebars/
+wp-content/plugins/siteorigin-panels/
+wp-content/plugins/the-landscaper-toolkit/
+wp-content/plugins/twentytwenty/
+wp-content/plugins/updraftplus/
+wp-content/plugins/woocommerce/
+wp-content/plugins/wpforms-lite/
+wp-content/plugins/wp-optimize/
+
+# Exclude parent theme
+wp-content/themes/the-landscaper/
+
+# Keep custom development files
+!wp-content/themes/site-child/
+!wp-content/mu-plugins/
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Log Files
+*.log
+error_log
+debug.log
+wp-content/debug.log
+wp-content/error_log
+
+# Backup and temp files
+*.bak
+*.backup
+*.tmp
+*.temp
+*~
+*.orig
+
+# Node modules (if using build tools)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build artifacts
+dist/
+build/
+*.min.js
+*.min.css
+
+# Documentation files (keep these)
+!README.md
+!Docs/
+!.gitignore
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files
+*.backup
+*.bak
