@@ -1,0 +1,466 @@
+/* ==========================================================================
+   SITE Hero Carousel — image-first editorial slider
+   Vanilla CSS. No framework dependency (site runs Bootstrap 3.4.1).
+   ========================================================================== */
+
+.screen-reader-text {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	width: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
+	word-wrap: normal !important;
+}
+
+/* --------------------------------------------------------------------------
+   Shell / frame
+   -------------------------------------------------------------------------- */
+
+.site-hero-carousel {
+	position: relative;
+	margin: 0 auto 64px;
+	padding: 0;
+	max-width: none;
+	width: 100%;
+}
+
+.site-carousel-frame {
+	position: relative;
+	top: 0;
+	overflow: hidden;
+	border-radius: 0;
+	background: #e8ece9;
+	box-shadow: none;
+	/* Fallback before JS measures the header (prevents CLS). */
+	height: clamp(680px, 100vh, 760px);
+	/* Full-screen height: carousel.js measures the header and sets
+	   --site-hero-offset so the hero fills the remaining viewport exactly. */
+	height: calc(100vh - var(--site-hero-offset, 0px));
+	min-height: 480px;
+}
+
+/* Very subtle darkening at the bottom edge only, for control legibility.
+   The photograph itself is never covered by a heavy overlay. */
+.site-carousel-frame::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 130px;
+	background: linear-gradient(to top, rgba(3, 24, 12, 0.42), rgba(3, 24, 12, 0));
+	pointer-events: none;
+	z-index: 2;
+}
+
+.site-carousel-track {
+	display: flex;
+	height: 100%;
+	transition: transform 0.65s cubic-bezier(0.33, 0, 0.2, 1);
+	touch-action: pan-y;
+	will-change: transform;
+}
+
+.site-carousel-slide {
+	position: relative;
+	flex: 0 0 100%;
+	min-width: 100%;
+	height: 100%;
+	visibility: visible;
+	transition: visibility 0s;
+}
+
+/* Hidden slides leave the tab order once the transition has finished. */
+.site-carousel-slide[aria-hidden="true"] {
+	visibility: hidden;
+	transition: visibility 0s 0.65s;
+	pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Image (the dominant element)
+   -------------------------------------------------------------------------- */
+
+.site-carousel-media {
+	position: absolute;
+	inset: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.site-carousel-image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	transform: scale(1.045);
+	transition: transform 1.6s cubic-bezier(0.2, 0.6, 0.25, 1);
+	user-select: none;
+	-webkit-user-drag: none;
+}
+
+.site-carousel-slide.is-active .site-carousel-image {
+	transform: scale(1);
+}
+
+
+/* --------------------------------------------------------------------------
+   Text panel — a floating card so the photo stays clearly dominant
+   -------------------------------------------------------------------------- */
+
+.site-carousel-panel {
+	position: absolute;
+	right: clamp(20px, 3.4vw, 56px);
+	bottom: clamp(20px, 3.4vw, 56px);
+	z-index: 3;
+	max-width: 460px;
+	background: rgba(255, 255, 255, 0.96);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	border-radius: 12px;
+	padding: 26px 30px 28px;
+	box-shadow: 0 22px 50px -22px rgba(1, 30, 14, 0.45);
+}
+
+.site-carousel-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 10px;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: #01622c;
+}
+
+.site-carousel-eyebrow::before {
+	content: "";
+	width: 22px;
+	height: 3px;
+	border-radius: 2px;
+	background: #f9c802;
+}
+
+.site-carousel-title {
+	margin: 0 0 10px;
+	font-size: clamp(22px, 2.3vw, 30px);
+	font-weight: 800;
+	line-height: 1.22;
+	color: #0b1f14;
+	letter-spacing: -0.01em;
+}
+
+.site-carousel-description {
+	margin: 0 0 18px;
+	font-size: 15px;
+	line-height: 1.6;
+	color: #3d4a43;
+}
+
+.site-carousel-actions {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	flex-wrap: wrap;
+}
+
+.site-carousel-cta {
+	display: inline-block;
+	background: #01622c;
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: 700;
+	text-decoration: none;
+	padding: 12px 24px;
+	border-radius: 8px;
+	box-shadow: 0 10px 22px -10px rgba(1, 98, 44, 0.65);
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.site-carousel-cta:hover,
+.site-carousel-cta:focus-visible {
+	background: #014720;
+	color: #ffffff;
+	text-decoration: none;
+	transform: translateY(-1px);
+}
+
+.site-carousel-cta-secondary {
+	display: inline-block;
+	color: #0b1f14;
+	font-size: 14px;
+	font-weight: 700;
+	text-decoration: none;
+	padding: 12px 0;
+	transition: color 0.2s ease;
+}
+
+.site-carousel-cta-secondary:hover,
+.site-carousel-cta-secondary:focus-visible {
+	color: #01622c;
+	text-decoration: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   Controls: arrows, counter, pause
+   -------------------------------------------------------------------------- */
+
+.site-carousel-arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 4;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.92);
+	color: #0b1f14;
+	cursor: pointer;
+	box-shadow: 0 12px 28px -12px rgba(1, 30, 14, 0.55);
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.site-carousel-arrow:hover {
+	background: #ffffff;
+	transform: translateY(-50%) scale(1.06);
+}
+
+.site-carousel-arrow:focus-visible {
+	outline: 3px solid #f9c802;
+	outline-offset: 2px;
+}
+
+.site-carousel-arrow--prev { left: clamp(12px, 1.8vw, 32px); }
+.site-carousel-arrow--next { right: clamp(12px, 1.8vw, 32px); }
+
+.site-carousel-footer {
+	position: absolute;
+	left: clamp(16px, 2.4vw, 40px);
+	bottom: clamp(16px, 2.4vw, 32px);
+	z-index: 4;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.site-carousel-counter {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 6px;
+	margin: 0;
+	padding: 8px 14px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.92);
+	color: #0b1f14;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1;
+	font-variant-numeric: tabular-nums;
+}
+
+.site-carousel-counter-current {
+	font-weight: 800;
+	color: #01622c;
+}
+
+.site-carousel-counter-sep {
+	opacity: 0.45;
+}
+
+.site-carousel-toggle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.92);
+	color: #0b1f14;
+	cursor: pointer;
+	box-shadow: 0 10px 24px -12px rgba(1, 30, 14, 0.55);
+	transition: background-color 0.2s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Tablet (768–991px): image on top, text panel flows below it
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 991px) {
+	.site-hero-carousel {
+		padding: 0;
+		margin-bottom: 48px;
+	}
+
+	.site-carousel-frame {
+		height: auto;
+		border-radius: 0;
+	}
+
+	.site-carousel-media {
+		position: relative;
+		inset: auto;
+		aspect-ratio: 16 / 10; /* Reserves layout space — no CLS. */
+	}
+
+	.site-carousel-panel {
+		position: static;
+		max-width: none;
+		background: #ffffff;
+		border-radius: 0;
+		padding: 22px 22px 6px;
+		box-shadow: none;
+	}
+
+	.site-carousel-footer {
+		position: static;
+		justify-content: space-between;
+		padding: 10px 22px 18px;
+		background: #ffffff;
+	}
+
+	.site-carousel-frame::after {
+		display: none;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Mobile (<768px): image stays dominant, compact text below, touch-friendly
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+	.site-hero-carousel {
+		padding: 0;
+		margin-bottom: 36px;
+	}
+
+	.site-carousel-frame {
+		border-radius: 0;
+	}
+
+	.site-carousel-media {
+		aspect-ratio: 4 / 5; /* ~420–520px tall at 360–430px wide. */
+	}
+
+	.site-carousel-panel {
+		padding: 18px 18px 4px;
+	}
+
+	.site-carousel-title {
+		font-size: clamp(20px, 5.6vw, 24px);
+	}
+
+	.site-carousel-description {
+		font-size: 14px;
+		margin-bottom: 14px;
+	}
+
+	.site-carousel-cta {
+		width: 100%;
+		text-align: center;
+		padding: 13px 24px;
+	}
+
+	.site-carousel-actions {
+		gap: 8px;
+	}
+
+	.site-carousel-cta-secondary {
+		padding: 10px 0;
+	}
+
+	.site-carousel-footer {
+		padding: 6px 18px 16px;
+		gap: 10px;
+	}
+
+	.site-carousel-arrow {
+		width: 44px;
+		height: 44px;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Small phones (<=380px)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 380px) {
+	.site-carousel-media {
+		aspect-ratio: 3 / 4;
+	}
+
+	.site-carousel-panel {
+		padding: 16px 15px 2px;
+	}
+}
+
+
+
+.site-carousel-toggle:hover { background: #ffffff; }
+.site-carousel-toggle:focus-visible { outline: 3px solid #f9c802; outline-offset: 2px; }
+
+.site-carousel-toggle-icon-play { display: none; }
+.site-carousel-toggle[aria-pressed="true"] .site-carousel-toggle-icon-pause { display: none; }
+.site-carousel-toggle[aria-pressed="true"] .site-carousel-toggle-icon-play { display: block; }
+
+/* Gentle text entrance on the active slide only. */
+.site-carousel-slide.is-active .site-carousel-panel > * {
+	animation: siteFadeUp 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+.site-carousel-slide.is-active .site-carousel-panel > :nth-child(2) { animation-delay: 0.07s; }
+.site-carousel-slide.is-active .site-carousel-panel > :nth-child(3) { animation-delay: 0.14s; }
+.site-carousel-slide.is-active .site-carousel-panel > :nth-child(4) { animation-delay: 0.21s; }
+
+@keyframes siteFadeUp {
+	from {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+	.site-carousel-track {
+		transition: none;
+	}
+
+	.site-carousel-image {
+		transform: none;
+		transition: none;
+	}
+
+	.site-carousel-slide.is-active .site-carousel-panel > * {
+		animation: none !important;
+	}
+
+	.site-carousel-arrow,
+	.site-carousel-cta,
+	.site-carousel-toggle {
+		transition: none;
+	}
+
+	/* Keep hidden slides hidden instantly (no transition delay). */
+	.site-carousel-slide[aria-hidden="true"] {
+		transition: none;
+	}
+}
+

@@ -1,131 +1,191 @@
 <?php
 /**
- * SITE Custom Post Types
- * Must-use plugin for reliability - always active
+ * Plugin Name: SITE Custom Post Types
+ * Description: Registers core CPTs (Projects, Stories, Resources, Partners) for SITE Enterprise Promotion Kenya.
+ * Version: 1.0.0
+ * Author: SITE Development Team
  */
 
-// Register Projects Post Type
-function site_register_projects() {
-    $labels = array(
-        'name' => 'Projects',
-        'singular_name' => 'Project',
-        'add_new' => 'Add New',
-        'add_new_item' => 'Add New Project',
-        'edit_item' => 'Edit Project',
-        'new_item' => 'New Project',
-        'view_item' => 'View Project',
-        'search_items' => 'Search Projects',
-        'not_found' => 'No projects found',
-        'not_found_in_trash' => 'No projects found in Trash',
-    );
-
-    $args = array(
-        'labels' => $labels,
-        'public' => true,
-        'has_archive' => true,
-        'menu_icon' => 'dashicons-portfolio',
-        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions' ),
-        'rewrite' => array( 'slug' => 'projects' ),
-        'show_in_rest' => true,
-    );
-
-    register_post_type( 'site_project', $args );
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
-add_action( 'init', 'site_register_projects' );
 
-// Register Stories Post Type
-function site_register_stories() {
-    $labels = array(
-        'name' => 'Stories',
-        'singular_name' => 'Story',
-        'add_new' => 'Add New',
-        'add_new_item' => 'Add New Story',
-        'edit_item' => 'Edit Story',
-        'new_item' => 'New Story',
-        'view_item' => 'View Story',
-        'search_items' => 'Search Stories',
-        'not_found' => 'No stories found',
-        'not_found_in_trash' => 'No stories found in Trash',
-    );
+/**
+ * Register Projects Custom Post Type.
+ */
+function site_register_projects_cpt() {
+	$labels = array(
+		'name'               => _x( 'Projects', 'post type general name', 'site-child' ),
+		'singular_name'      => _x( 'Project', 'post type singular name', 'site-child' ),
+		'menu_name'          => _x( 'Projects', 'admin menu', 'site-child' ),
+		'name_admin_bar'     => _x( 'Project', 'add new on admin bar', 'site-child' ),
+		'add_new'            => _x( 'Add New', 'project', 'site-child' ),
+		'add_new_item'       => __( 'Add New Project', 'site-child' ),
+		'new_item'           => __( 'New Project', 'site-child' ),
+		'edit_item'          => __( 'Edit Project', 'site-child' ),
+		'view_item'          => __( 'View Project', 'site-child' ),
+		'all_items'          => __( 'All Projects', 'site-child' ),
+		'search_items'       => __( 'Search Projects', 'site-child' ),
+		'parent_item_colon'  => __( 'Parent Projects:', 'site-child' ),
+		'not_found'          => __( 'No projects found.', 'site-child' ),
+		'not_found_in_trash' => __( 'No projects found in Trash.', 'site-child' ),
+	);
 
-    $args = array(
-        'labels' => $labels,
-        'public' => true,
-        'has_archive' => true,
-        'menu_icon' => 'dashicons-book',
-        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions' ),
-        'rewrite' => array( 'slug' => 'stories' ),
-        'show_in_rest' => true,
-    );
+	$args = array(
+		'labels'             => $labels,
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'query_var'          => true,
+		'rewrite'            => array(
+			'slug'       => 'projects',
+			'with_front' => false,
+		),
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => 20,
+		'menu_icon'          => 'dashicons-portfolio',
+		'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions' ),
+		'show_in_rest'       => true,
+	);
 
-    register_post_type( 'site_story', $args );
+	register_post_type( 'site_project', $args );
 }
-add_action( 'init', 'site_register_stories' );
+add_action( 'init', 'site_register_projects_cpt' );
 
-// Register Resources Post Type
-function site_register_resources() {
-    $labels = array(
-        'name' => 'Resources',
-        'singular_name' => 'Resource',
-        'add_new' => 'Add New',
-        'add_new_item' => 'Add New Resource',
-        'edit_item' => 'Edit Resource',
-        'new_item' => 'New Resource',
-        'view_item' => 'View Resource',
-        'search_items' => 'Search Resources',
-        'not_found' => 'No resources found',
-        'not_found_in_trash' => 'No resources found in Trash',
-    );
+/**
+ * Register Stories Custom Post Type.
+ */
+function site_register_stories_cpt() {
+	$labels = array(
+		'name'               => _x( 'Stories', 'post type general name', 'site-child' ),
+		'singular_name'      => _x( 'Story', 'post type singular name', 'site-child' ),
+		'menu_name'          => _x( 'Stories', 'admin menu', 'site-child' ),
+		'name_admin_bar'     => _x( 'Story', 'add new on admin bar', 'site-child' ),
+		'add_new'            => _x( 'Add New', 'story', 'site-child' ),
+		'add_new_item'       => __( 'Add New Story', 'site-child' ),
+		'new_item'           => __( 'New Story', 'site-child' ),
+		'edit_item'          => __( 'Edit Story', 'site-child' ),
+		'view_item'          => __( 'View Story', 'site-child' ),
+		'all_items'          => __( 'All Stories', 'site-child' ),
+		'search_items'       => __( 'Search Stories', 'site-child' ),
+		'parent_item_colon'  => __( 'Parent Stories:', 'site-child' ),
+		'not_found'          => __( 'No stories found.', 'site-child' ),
+		'not_found_in_trash' => __( 'No stories found in Trash.', 'site-child' ),
+	);
 
-    $args = array(
-        'labels' => $labels,
-        'public' => true,
-        'has_archive' => true,
-        'menu_icon' => 'dashicons-media-document',
-        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions' ),
-        'rewrite' => array( 'slug' => 'resources' ),
-        'show_in_rest' => true,
-    );
+	$args = array(
+		'labels'             => $labels,
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'query_var'          => true,
+		'rewrite'            => array(
+			'slug'       => 'stories',
+			'with_front' => false,
+		),
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => 21,
+		'menu_icon'          => 'dashicons-book',
+		'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions' ),
+		'show_in_rest'       => true,
+	);
 
-    register_post_type( 'site_resource', $args );
+	register_post_type( 'site_story', $args );
 }
-add_action( 'init', 'site_register_resources' );
+add_action( 'init', 'site_register_stories_cpt' );
 
-// Register Partners Post Type
-function site_register_partners() {
-    $labels = array(
-        'name' => 'Partners',
-        'singular_name' => 'Partner',
-        'add_new' => 'Add New',
-        'add_new_item' => 'Add New Partner',
-        'edit_item' => 'Edit Partner',
-        'new_item' => 'New Partner',
-        'view_item' => 'View Partner',
-        'search_items' => 'Search Partners',
-        'not_found' => 'No partners found',
-        'not_found_in_trash' => 'No partners found in Trash',
-    );
+/**
+ * Register Resources Custom Post Type.
+ */
+function site_register_resources_cpt() {
+	$labels = array(
+		'name'               => _x( 'Resources', 'post type general name', 'site-child' ),
+		'singular_name'      => _x( 'Resource', 'post type singular name', 'site-child' ),
+		'menu_name'          => _x( 'Resources', 'admin menu', 'site-child' ),
+		'name_admin_bar'     => _x( 'Resource', 'add new on admin bar', 'site-child' ),
+		'add_new'            => _x( 'Add New', 'resource', 'site-child' ),
+		'add_new_item'       => __( 'Add New Resource', 'site-child' ),
+		'new_item'           => __( 'New Resource', 'site-child' ),
+		'edit_item'          => __( 'Edit Resource', 'site-child' ),
+		'view_item'          => __( 'View Resource', 'site-child' ),
+		'all_items'          => __( 'All Resources', 'site-child' ),
+		'search_items'       => __( 'Search Resources', 'site-child' ),
+		'parent_item_colon'  => __( 'Parent Resources:', 'site-child' ),
+		'not_found'          => __( 'No resources found.', 'site-child' ),
+		'not_found_in_trash' => __( 'No resources found in Trash.', 'site-child' ),
+	);
 
-    $args = array(
-        'labels' => $labels,
-        'public' => true,
-        'has_archive' => true,
-        'menu_icon' => 'dashicons-groups',
-        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions' ),
-        'rewrite' => array( 'slug' => 'partners' ),
-        'show_in_rest' => true,
-    );
+	$args = array(
+		'labels'             => $labels,
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'query_var'          => true,
+		'rewrite'            => array(
+			'slug'       => 'resources',
+			'with_front' => false,
+		),
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => 22,
+		'menu_icon'          => 'dashicons-media-document',
+		'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions' ),
+		'show_in_rest'       => true,
+	);
 
-    register_post_type( 'site_partner', $args );
+	register_post_type( 'site_resource', $args );
 }
-add_action( 'init', 'site_register_partners' );
+add_action( 'init', 'site_register_resources_cpt' );
 
-// Flush rewrite rules on activation
-function site_rewrite_flush() {
-    site_register_projects();
-    site_register_stories();
-    site_register_resources();
-    site_register_partners();
-    flush_rewrite_rules();
+/**
+ * Register Partners Custom Post Type.
+ */
+function site_register_partners_cpt() {
+	$labels = array(
+		'name'               => _x( 'Partners', 'post type general name', 'site-child' ),
+		'singular_name'      => _x( 'Partner', 'post type singular name', 'site-child' ),
+		'menu_name'          => _x( 'Partners', 'admin menu', 'site-child' ),
+		'name_admin_bar'     => _x( 'Partner', 'add new on admin bar', 'site-child' ),
+		'add_new'            => _x( 'Add New', 'partner', 'site-child' ),
+		'add_new_item'       => __( 'Add New Partner', 'site-child' ),
+		'new_item'           => __( 'New Partner', 'site-child' ),
+		'edit_item'          => __( 'Edit Partner', 'site-child' ),
+		'view_item'          => __( 'View Partner', 'site-child' ),
+		'all_items'          => __( 'All Partners', 'site-child' ),
+		'search_items'       => __( 'Search Partners', 'site-child' ),
+		'parent_item_colon'  => __( 'Parent Partners:', 'site-child' ),
+		'not_found'          => __( 'No partners found.', 'site-child' ),
+		'not_found_in_trash' => __( 'No partners found in Trash.', 'site-child' ),
+	);
+
+	$args = array(
+		'labels'             => $labels,
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'query_var'          => true,
+		'rewrite'            => array(
+			'slug'       => 'partners',
+			'with_front' => false,
+		),
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => 23,
+		'menu_icon'          => 'dashicons-groups',
+		'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions' ),
+		'show_in_rest'       => true,
+	);
+
+	register_post_type( 'site_partner', $args );
 }
-register_activation_hook( __FILE__, 'site_rewrite_flush' );
+add_action( 'init', 'site_register_partners_cpt' );

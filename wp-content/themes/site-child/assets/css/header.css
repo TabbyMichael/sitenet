@@ -1,0 +1,816 @@
+/* ==========================================================================
+   SITE Enterprise Promotion — Modern Header / Navigation
+   --------------------------------------------------------------------------
+   Rebuilt header system for the site-child theme. Loaded after style.css.
+
+   Architecture:
+     .site-header      sticky wrapper (utility bar slides away on scroll)
+     .site-utility     LEVEL 1 — slim charcoal utility bar
+     .site-nav         LEVEL 2 — white main navigation (sticky)
+     .site-nav__list   primary menu (WP "primary" location)
+     .sub-menu         white dropdown panels (Resources, Our Work)
+
+   Colors follow the existing SITE brand:
+     navy/charcoal = surface for utility, ink for text
+     gold          = interaction / active / CTA
+     green         = subtle secondary accent only
+   ========================================================================== */
+
+:root {
+    --site-utility-bg: #151d27;
+    --site-utility-text: rgba(255, 255, 255, 0.82);
+    --site-nav-bg: #ffffff;
+    --site-ink: #1d2b3a;
+    --site-ink-soft: #43505e;
+    --site-gold: #f9c802;
+    --site-gold-dark: #7a6100;
+    --site-gold-tint: #fdf7dd;
+    --site-green: #01622c;
+    --site-line: #e8ecf0;
+    --site-shadow-soft: 0 1px 2px rgba(16, 24, 40, 0.05);
+    --site-shadow-dropdown: 0 12px 32px rgba(15, 23, 42, 0.14), 0 2px 8px rgba(15, 23, 42, 0.08);
+    --site-header-h-utility: 36px;
+    --site-header-h-nav: 78px;
+    --site-header-h-nav-compact: 68px;
+    --site-header-ease: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.site-container {
+    max-width: 1240px;
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   Header wrapper — fixed on top.
+   The entire navbar (utility + nav) stays static at the very top of the
+   viewport while all other page sections scroll underneath.
+   -------------------------------------------------------------------------- */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1100;
+}
+
+body.admin-bar .site-header {
+    top: 32px;
+}
+
+/* WP admin bar offset for fixed positioning */
+@media (max-width: 782px) {
+    body.admin-bar .site-header {
+        top: 46px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Body spacer — prevents content from being hidden behind the fixed header.
+   The navbar totals ~114px (utility 36px + nav 78px). We add the same amount
+   as padding-top to the page body so that, on every non-homepage route, the
+   first row of content starts below the navbar instead of underneath it.
+   On mobile the compact nav is 108px, so we use a CSS clamp that adapts.
+   -------------------------------------------------------------------------- */
+body:not(.home) {
+    padding-top: calc(var(--site-header-h-utility) + var(--site-header-h-nav));
+}
+
+/* Keep it snug on mobile where the nav is shorter */
+@media (max-width: 1023px) {
+    body:not(.home) {
+        padding-top: calc(var(--site-header-h-utility) + var(--site-header-h-nav-compact));
+    }
+}
+
+/* Admin-bar already pushes the page down on small screens — undo the extra */
+@media (max-width: 782px) {
+    body.admin-bar:not(.home) {
+        padding-top: calc(var(--site-header-h-utility) + 46px + var(--site-header-h-nav-compact));
+    }
+}
+
+/* Admin-bar compensation for desktop */
+@media (min-width: 783px) {
+    body.admin-bar:not(.home) {
+        padding-top: calc(var(--site-header-h-utility) + 32px + var(--site-header-h-nav));
+    }
+}
+
+/* --------------------------------------------------------------------------
+   LEVEL 1 — Utility bar
+   -------------------------------------------------------------------------- */
+.site-utility {
+    background-color: rgba(21, 29, 39, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--site-utility-text);
+    font-size: 12px;
+    line-height: 1;
+}
+
+.site-utility__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: var(--site-header-h-utility);
+}
+
+.site-utility__brand {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.site-utility__list {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.site-utility__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 14px;
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+    white-space: nowrap;
+}
+
+.site-utility__item:first-child {
+    border-left: 0;
+}
+
+.site-utility__item a {
+    color: var(--site-utility-text);
+    text-decoration: none;
+    transition: color var(--site-header-ease);
+}
+
+.site-utility__item a:hover,
+.site-utility__item a:focus-visible {
+    color: var(--site-gold);
+}
+
+.site-utility__icon {
+    flex-shrink: 0;
+    opacity: 0.75;
+}
+
+.site-utility__social {
+    gap: 4px;
+}
+
+.site-utility__social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+}
+
+.site-utility__social a:hover,
+.site-utility__social a:focus-visible {
+    color: var(--site-gold);
+}
+
+/* Hide location + hours on small screens; keep phone + social (spec §1). */
+@media (max-width: 1023px) {
+    .site-utility__item--location,
+    .site-utility__item--hours {
+        display: none;
+    }
+    .site-utility__item--phone {
+        border-left: 0;
+        padding-left: 0;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   LEVEL 2 — Main navigation bar
+   -------------------------------------------------------------------------- */
+.site-nav__toggle {
+    display: none; /* hamburger lives in the mobile media query below */
+}
+
+.site-nav {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: var(--site-shadow-soft);
+    transition: box-shadow var(--site-header-ease);
+}
+
+.site-nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: var(--site-header-h-nav);
+    transition: min-height var(--site-header-ease);
+}
+
+/* Logo — visual anchor, pinned to the far LEFT of the container.
+   The negative left margin cancels the container's 24px padding so the
+   logo sits flush against the viewport's left edge. */
+.site-logo {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin: 0 0 0 -24px;
+    padding: 6px 0;
+    text-decoration: none;
+    transition: transform var(--site-header-ease);
+}
+
+.site-logo:hover {
+    transform: scale(1.01);
+}
+
+.site-logo img {
+    display: block;
+    width: 130px;
+    height: auto;
+}
+
+.site-logo__text {
+    color: var(--site-green);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+/* Primary menu list */
+.site-nav__menu {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.site-nav__list {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.site-nav__list > li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.site-nav__list > li > a {
+    position: relative;
+    display: block;
+    padding: 12px 14px;
+    color: var(--site-ink);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    outline-offset: -2px;
+    transition: color var(--site-header-ease);
+}
+
+/* Expanding gold underline — grows from center on hover. */
+.site-nav__list > li > a::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 4px;
+    height: 2.5px;
+    border-radius: 2px;
+    background-color: var(--site-gold);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--site-header-ease);
+}
+
+.site-nav__list > li > a:hover,
+.site-nav__list > li > a:focus-visible,
+.site-nav__list > li.current-menu-item > a,
+.site-nav__list > li.current-menu-ancestor > a,
+.site-nav__list > li.current_page_ancestor > a {
+    color: var(--site-gold-dark);
+}
+
+.site-nav__list > li > a:hover::after,
+.site-nav__list > li > a:focus-visible::after,
+.site-nav__list > li.current-menu-item > a::after,
+.site-nav__list > li.current-menu-ancestor > a::after,
+.site-nav__list > li.current_page_ancestor > a::after {
+    transform: scaleX(1);
+}
+
+/* Dropdown parents: chevron indicator (not color-only state cue). */
+.site-nav__list > li.menu-item-has-children > a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-right: 20px;
+}
+
+.site-nav__list > li.menu-item-has-children > a::before {
+    content: "";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-70%) rotate(45deg);
+    transition: transform var(--site-header-ease);
+}
+
+.site-nav__list > li.is-open > a::before {
+    transform: translateY(-30%) rotate(225deg);
+}
+
+@media (max-width: 479px) {
+    .site-utility__brand {
+        display: none;
+    }
+    .site-utility__inner {
+        justify-content: flex-end;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown panels (Resources, Our Work) — white, readable, accessible.
+   Desktop: opens on hover AND on .is-open (keyboard / touch handled in JS).
+   -------------------------------------------------------------------------- */
+.site-nav__list .sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 250px;
+    margin: 0;
+    padding: 10px;
+    list-style: none;
+    background-color: #ffffff;
+    border: 1px solid var(--site-line);
+    border-radius: 8px;
+    box-shadow: var(--site-shadow-dropdown);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition:
+        opacity 180ms ease,
+        transform 180ms ease,
+        visibility 180ms ease;
+    z-index: 1200;
+}
+
+/* Invisible bridge so the pointer can travel from link to panel. */
+.site-nav__list .sub-menu::before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 12px;
+}
+
+.site-nav__list > li:hover > .sub-menu,
+.site-nav__list > li.is-open > .sub-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.site-nav__list .sub-menu li {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.site-nav__list .sub-menu li a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 14px;
+    border-radius: 6px;
+    color: var(--site-ink-soft);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 1.35;
+    text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease;
+}
+
+/* Small arrow appears on hover (subtle affordance). */
+.site-nav__list .sub-menu li a::after {
+    content: "\2192";
+    font-size: 13px;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.site-nav__list .sub-menu li a:hover,
+.site-nav__list .sub-menu li a:focus-visible,
+.site-nav__list .sub-menu li.current-menu-item > a {
+    background-color: var(--site-gold-tint);
+    color: var(--site-gold-dark);
+}
+
+.site-nav__list .sub-menu li a:hover::after,
+.site-nav__list .sub-menu li a:focus-visible::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* --------------------------------------------------------------------------
+   CTA — the Partnership item (last top-level item) becomes the gold CTA.
+   -------------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+    .site-nav__list > li:last-child > a {
+        margin-left: 10px;
+        padding: 11px 20px;
+        border-radius: 6px;
+        background-color: var(--site-gold);
+        color: #14202c;
+        font-weight: 700;
+        box-shadow: 0 1px 2px rgba(20, 32, 44, 0.12);
+        transition: background-color var(--site-header-ease), transform var(--site-header-ease), box-shadow var(--site-header-ease);
+    }
+
+    .site-nav__list > li:last-child > a::after {
+        display: none;
+    }
+
+    .site-nav__list > li:last-child > a::before {
+        display: none;
+    }
+
+    .site-nav__list > li:last-child > a:hover,
+    .site-nav__list > li:last-child > a:focus-visible,
+    .site-nav__list > li:last-child.current-menu-item > a {
+        background-color: #e6b800;
+        color: #14202c;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(20, 32, 44, 0.16);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Scrolled (compact) state — toggled by JS on the header element.
+   -------------------------------------------------------------------------- */
+.site-header--scrolled .site-nav {
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.1);
+}
+
+.site-header--scrolled .site-nav__inner {
+    min-height: var(--site-header-h-nav-compact);
+}
+
+.site-header--scrolled .site-logo img {
+    width: 110px;
+}
+
+/* --------------------------------------------------------------------------
+   Keyboard focus states (WCAG 2.4.7) — never color-only.
+   -------------------------------------------------------------------------- */
+.site-header a:focus-visible,
+.site-header button:focus-visible {
+    outline: 2px solid var(--site-green);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.site-nav__list > li > a:focus-visible {
+    outline-offset: -2px;
+}
+
+
+/* --------------------------------------------------------------------------
+   TABLET (768px–1023px) — tighter spacing, smaller logo and type.
+   -------------------------------------------------------------------------- */
+@media (max-width: 1199px) {
+    .site-nav__list > li > a {
+        padding: 12px 10px;
+        font-size: 13px;
+        letter-spacing: 0.03em;
+    }
+
+    .site-nav__list > li > a::after {
+        left: 10px;
+        right: 10px;
+    }
+
+    .site-logo img {
+        width: 120px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .site-nav__list > li:last-child > a {
+        margin-left: 6px;
+        padding: 10px 14px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   MOBILE (below 1024px) — full-width dropdown panel + hamburger toggle.
+   -------------------------------------------------------------------------- */
+@media (max-width: 1023px) {
+    .site-nav__toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        margin-right: -10px;
+        padding: 0;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .site-nav__toggle-bars {
+        position: relative;
+        display: block;
+        width: 22px;
+        height: 16px;
+    }
+
+    .site-nav__toggle-bar {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 2.4px;
+        border-radius: 2px;
+        background-color: var(--site-ink);
+        transition: transform 220ms ease, opacity 180ms ease, top 220ms ease;
+    }
+
+    .site-nav__toggle-bar:nth-child(1) { top: 0; }
+    .site-nav__toggle-bar:nth-child(2) { top: 7px; }
+    .site-nav__toggle-bar:nth-child(3) { top: 14px; }
+
+    /* Hamburger → X morph */
+    .site-nav--open .site-nav__toggle-bar:nth-child(1) {
+        top: 7px;
+        transform: rotate(45deg);
+    }
+    .site-nav--open .site-nav__toggle-bar:nth-child(2) {
+        opacity: 0;
+    }
+    .site-nav--open .site-nav__toggle-bar:nth-child(3) {
+        top: 7px;
+        transform: rotate(-45deg);
+    }
+
+    /* Full-width dropdown panel */
+    .site-nav__menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        max-height: calc(100vh - 140px);
+        overflow-y: auto;
+        padding: 8px 16px 20px;
+        background-color: #ffffff;
+        border-top: 1px solid var(--site-line);
+        border-bottom: 1px solid var(--site-line);
+        box-shadow: 0 18px 32px rgba(15, 23, 42, 0.12);
+    }
+
+    .site-nav--open .site-nav__menu {
+        display: block;
+        animation: site-mobile-panel 200ms ease;
+    }
+
+    .site-nav {
+        position: relative;
+    }
+
+
+    .site-nav__list {
+        display: block;
+    }
+
+    .site-nav__list > li {
+        border-bottom: 1px solid #f0f3f6;
+    }
+
+    .site-nav__list > li:last-child {
+        border-bottom: 0;
+    }
+
+    .site-nav__list > li > a {
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        padding: 10px 4px;
+        font-size: 14px;
+    }
+
+    .site-nav__list > li > a::after {
+        content: none;
+    }
+
+    /* Accordion submenus */
+    .site-nav__list .sub-menu {
+        position: static;
+        display: none;
+        min-width: 0;
+        margin: 0 0 10px;
+        padding: 0 0 0 14px;
+        border: 0;
+        border-left: 2px solid var(--site-line);
+        border-radius: 0;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition: none;
+    }
+
+    .site-nav__list .sub-menu::before {
+        content: none;
+    }
+
+    .site-nav__list > li:hover > .sub-menu {
+        display: none;
+    }
+
+    .site-nav__list > li.is-open > .sub-menu {
+        display: block;
+        animation: site-mobile-submenu 180ms ease;
+    }
+
+    .site-nav__list .sub-menu li a {
+        min-height: 48px;
+        padding: 11px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    /* Partnership CTA inside the panel */
+    .site-nav__list > li:last-child > a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 14px 0 4px;
+        padding: 14px 18px;
+        border-radius: 8px;
+        background-color: var(--site-gold);
+        color: #14202c;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .site-nav__list > li:last-child > a:hover,
+    .site-nav__list > li:last-child > a:focus-visible {
+        background-color: #e6b800;
+        color: #14202c;
+        transform: none;
+    }
+
+    /* Sticky compact state off on mobile (panel is already space-efficient) */
+    .site-header--scrolled .site-logo img {
+        width: 100px;
+    }
+}
+
+@keyframes site-mobile-panel {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes site-mobile-submenu {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Logo width on mobile per spec §3. */
+@media (max-width: 767px) {
+    .site-logo img {
+        width: 100px;
+    }
+
+    /* Keep a touch of breathing room on the smallest screens. */
+    .site-logo {
+        margin-left: -16px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion — honor the user preference everywhere in the header.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .site-header,
+    .site-header *,
+    .site-header *::before,
+    .site-header *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .site-logo:hover {
+        transform: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Print — collapse the header chrome.
+   -------------------------------------------------------------------------- */
+@media print {
+    .site-utility,
+    .site-nav__toggle {
+        display: none;
+    }
+
+    .site-header {
+        position: static;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Colour theme toggle (light/dark) — base styles for BOTH modes.
+   The button lives in .site-nav__actions next to the hamburger.
+   -------------------------------------------------------------------------- */
+.site-nav__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* The hamburger overrides its own right margin to sit flush (desktop:hidden). */
+.site-nav__actions .site-nav__toggle {
+    margin-right: 0;
+}
+
+.site-theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--site-line);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--site-ink);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
+}
+
+.site-theme-toggle:hover {
+    background-color: var(--site-gold-tint);
+    border-color: var(--site-gold);
+    box-shadow: 0 0 0 1px var(--site-gold);
+}
+
+.site-theme-toggle:focus-visible {
+    outline: 2px solid var(--site-gold);
+    outline-offset: 2px;
+}
+
+/* Icon shown tells you the state: sun in light mode, moon in dark mode. */
+.site-theme-toggle__icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    display: block;
+}
+
+.site-theme-toggle__icon--sun { display: inline-block; }
+.site-theme-toggle__icon--moon { display: none; }
