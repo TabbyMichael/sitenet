@@ -1,0 +1,191 @@
+<!-- ============================================================
+     OUR PARTNERS & DONORS — Swiper.js Carousel (Option B)
+     Copy EVERYTHING in this file into a Custom HTML block
+     (Gutenberg) or an Elementor HTML widget.
+     ============================================================ -->
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+<style>
+/* ---------- Section wrapper ---------- */
+.pd-section{max-width:1200px;margin:0 auto;padding:70px 24px 40px;font-family:inherit}
+.pd-header{text-align:center;max-width:760px;margin:0 auto 56px}
+.pd-title{font-size:clamp(30px,4.5vw,44px);font-weight:800;line-height:1.15;letter-spacing:-.5px;margin:0 0 18px;color:#1a3c34}
+.pd-lede{font-size:17px;line-height:1.75;color:#5f6b68;margin:0}
+.pd-lede strong{color:#1a3c34}
+
+/* ---------- Carousel sub-headings ---------- */
+.pd-sub{display:flex;align-items:center;gap:16px;font-size:14px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;color:#1a7a4a;margin:0 0 22px}
+.pd-sub::after{content:"";flex:1;height:1px;background:repeating-linear-gradient(90deg,#d9d9d9 0 8px,transparent 8px 16px)}
+
+/* ---------- Cards ---------- */
+.pd-card{display:flex;align-items:center;justify-content:center;text-align:center;
+  height:96px;padding:18px 20px;background:#fff;border:1px solid #ececec;border-radius:14px;
+  box-shadow:0 4px 14px rgba(0,0,0,.06);
+  transition:transform .35s ease,box-shadow .35s ease,filter .35s ease;
+  filter:grayscale(100%);cursor:pointer;user-select:none}
+.pd-card:hover{filter:grayscale(0);transform:translateY(-5px);
+  box-shadow:0 12px 26px rgba(0,0,0,.12)}
+.pd-card img{max-height:52px;max-width:80%;width:auto;object-fit:contain}
+
+/* Text-based logos (replace with <img> tags when you have real logos) */
+.pd-card .pd-logo-text{font-weight:800;font-size:19px;letter-spacing:.4px}
+.lg-apt   {color:#2e7d32}.lg-cipe  {color:#1565c0}.lg-kmt   {color:#e67e22}
+.lg-mespt {color:#5e35b1}.lg-mci   {color:#e67e22}.lg-ilo   {color:#c62828}
+.lg-eu    {color:#003399}.lg-kenya {color:#c62828}.lg-county{color:#e67e22}
+.lg-youth {color:#1565c0}.lg-nca   {color:#e67e22}.lg-fao   {color:#2e7d32}
+.lg-dca   {color:#37474f}.lg-adse  {color:#2e7d32}
+
+/* ---------- Navigation & pagination ---------- */
+.pd-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:42px;height:42px;
+  display:flex;align-items:center;justify-content:center;border:1px solid #ececec;border-radius:50%;
+  background:#fff;color:#1a3c34;box-shadow:0 4px 12px rgba(0,0,0,.10);cursor:pointer;
+  transition:background .25s,color .25s}
+.pd-nav:hover{background:#1a3c34;color:#fff}
+.pd-prev{left:-8px}.pd-next{right:-8px}
+.pd-nav svg{width:18px;height:18px}
+.pd-nav.swiper-button-disabled{opacity:.35;cursor:default}
+.pd-nav.swiper-button-disabled:hover{background:#fff;color:#1a3c34}
+
+.pd-swiper .swiper-pagination{position:static;margin-top:22px}
+.pd-swiper .swiper-pagination-bullet{width:9px;height:9px;background:#c9cfc9;opacity:1;transition:.25s}
+.pd-swiper .swiper-pagination-bullet-active{background:#1a7a4a;width:26px;border-radius:6px}
+
+/* Slide sizing: 5 desktop / 3 tablet / 2 mobile (JS also enforces this) */
+.pd-swiper .swiper-slide{display:flex;align-items:center}
+
+@media (max-width:767px){
+  .pd-section{padding:48px 18px 32px}
+  .pd-prev{left:-4px}.pd-next{right:-4px}
+}
+</style>
+
+<!-- ======================= MARKUP ======================= -->
+<section class="pd-section" aria-label="Our partners and donors">
+
+  <!-- Header & gratitude copy -->
+  <div class="pd-header">
+    <h2 class="pd-title">Our Partners &amp; Donors</h2>
+    <p class="pd-lede">We extend our deepest appreciation to our dedicated donors and strategic
+      partners. Your continued collaboration empowers our mission and creates
+      <strong>sustainable community impact</strong>.</p>
+  </div>
+
+  <!-- ================= DONORS CAROUSEL ================= -->
+  <h3 class="pd-sub">Our Donors</h3>
+  <div class="swiper pd-swiper" data-pd-carousel>
+    <div class="swiper-wrapper">
+
+      <!-- Set A -->
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-apt">APT</span></div></div>
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-cipe">CIPE</span></div></div>
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-kmt">KMT</span></div></div>
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-mespt">MESPT</span></div></div>
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-mci">MCI Relief</span></div></div>
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-ilo">ILO</span></div></div>
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-eu">EU</span></div></div>
+
+      <!-- Set B (duplicate of Set A — required for a seamless loop with 5 visible slides.
+           Duplicates are hidden from screen readers.
+           When you add real logos, replace each <span> with:
+           <img src="/wp-content/uploads/2026/01/apt.png" alt="APT" loading="lazy">
+           and duplicate your 7 image slides the same way. -->
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-apt">APT</span></div></div>
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-cipe">CIPE</span></div></div>
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-kmt">KMT</span></div></div>
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-mespt">MESPT</span></div></div>
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-mci">MCI Relief</span></div></div>
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-ilo">ILO</span></div></div>
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-eu">EU</span></div></div>
+    </div>
+
+    <button class="pd-nav pd-prev" type="button" aria-label="Previous donors">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="pd-nav pd-next" type="button" aria-label="Next donors">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <div class="swiper-pagination"></div>
+  </div>
+
+  <!-- ================= PARTNERS CAROUSEL ================= -->
+  <h3 class="pd-sub" style="margin-top:56px">Our Partners</h3>
+  <div class="swiper pd-swiper" data-pd-carousel>
+    <div class="swiper-wrapper">
+
+      <!-- Set A -->
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-kenya">Kenya</span></div></div>
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-county">County Gov.</span></div></div>
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-youth">Youth Fund</span></div></div>
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-nca">NCA</span></div></div>
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-fao">FAO</span></div></div>
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-dca">DCA</span></div></div>
+      <div class="swiper-slide"><div class="pd-card"><span class="pd-logo-text lg-adse">ADSE</span></div></div>
+
+      <!-- Set B (duplicate — see note in Donors section above) -->
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-kenya">Kenya</span></div></div>
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-county">County Gov.</span></div></div>
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-youth">Youth Fund</span></div></div>
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-nca">NCA</span></div></div>
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-fao">FAO</span></div></div>
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-dca">DCA</span></div></div>
+      <div class="swiper-slide" aria-hidden="true"><div class="pd-card"><span class="pd-logo-text lg-adse">ADSE</span></div></div>
+    </div>
+
+    <button class="pd-nav pd-prev" type="button" aria-label="Previous partners">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="pd-nav pd-next" type="button" aria-label="Next partners">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+(function () {
+  function initCarousels() {
+    document.querySelectorAll('[data-pd-carousel]').forEach(function (el) {
+      if (el.dataset.pdInit) return;
+      el.dataset.pdInit = '1';
+
+      new Swiper(el, {
+        slidesPerView: 2,            /* Mobile < 640px */
+        spaceBetween: 16,
+        loop: true,
+        grabCursor: true,            /* touch/swipe affordance */
+        speed: 650,
+        autoplay: {
+          delay: 3000,               /* <- customize slide speed here (ms) */
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true    /* pause while hovering a logo */
+        },
+        pagination: { el: el.querySelector('.swiper-pagination'), clickable: true },
+        navigation: {
+          nextEl: el.querySelector('.pd-next'),
+          prevEl: el.querySelector('.pd-prev')
+        },
+        breakpoints: {
+          640:  { slidesPerView: 3, spaceBetween: 18 },  /* Tablet */
+          1024: { slidesPerView: 5, spaceBetween: 20 }   /* Desktop */
+        }
+
+        /* OPTIONAL — "smooth continuous" marquee mode (never stops):
+           remove the autoplay block above and use instead:
+        autoplay: { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: true },
+        speed: 4500,
+        */
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCarousels);
+  } else {
+    initCarousels();
+  }
+})();
+</script>

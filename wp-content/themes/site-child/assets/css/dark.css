@@ -1,0 +1,452 @@
+/* ==========================================================================
+   SITE — Dark Mode
+   --------------------------------------------------------------------------
+   Light mode is the default and is NOT touched by this file.
+   Dark mode activates when <html data-theme="dark"> is present (set by
+   assets/js/theme-init.js). All dark rules are scoped under that attribute.
+   Loaded last (functions.php priority 30) so it wins specificity ties.
+
+   Palette:
+     --dm-bg        #0f1613   deep green-tinted charcoal (page)
+     --dm-bg-raised #141d19   subtle section lift
+     --dm-surface   #1a241f   cards / panels
+     --dm-surface-2 #18211c   card alternate
+     --dm-ink       #e7edea   headings
+     --dm-text      #aab7ae   body copy
+     --dm-muted     #8d9b92   captions / meta
+     --dm-line      rgba(255,255,255,0.14)
+     --dm-green     #58c07f   readable SITE green on dark
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Theme toggle button — dark-mode overrides only.
+   Base styles (both modes) live in header.css.
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .site-theme-toggle__icon--sun { display: none; }
+[data-theme="dark"] .site-theme-toggle__icon--moon { display: inline-block; }
+
+[data-theme="dark"] .site-theme-toggle {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--site-ink);
+}
+
+[data-theme="dark"] .site-theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   Dark palette + shared variables (overrides header.css :root for dark)
+   -------------------------------------------------------------------------- */
+html[data-theme="dark"] {
+    color-scheme: dark;
+
+    /* Header / nav variables — re-point the existing header.css system. */
+    --site-nav-bg: #131b17;
+    --site-ink: #e7edea;
+    --site-ink-soft: #aab5ac;
+    --site-gold: #f9c802;
+    --site-gold-dark: #e0b402;
+    --site-gold-tint: #2b2415;
+    --site-green: #58c07f;
+    --site-line: rgba(255, 255, 255, 0.14);
+    --site-shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --site-shadow-dropdown: 0 12px 32px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="dark"] body {
+    background-color: #0f1613;
+    color: #d9e0db;
+}
+
+html[data-theme="dark"] .front-page-content {
+    background: #0f1613;
+}
+
+/* Generic fallbacks for inner pages / loose content. */
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] h5,
+html[data-theme="dark"] h6 {
+    color: #eaf0ec;
+}
+
+html[data-theme="dark"] p,
+html[data-theme="dark"] li {
+    color: #aab7ae;
+}
+
+/* --------------------------------------------------------------------------
+   Theme toggle in dark mode (swap icon)
+   -------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------
+   Header — hard-coded whites & panel separators
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .site-nav__list .sub-menu {
+    background-color: rgba(24, 33, 28, 0.55);
+}
+
+[data-theme="dark"] .site-nav__menu {
+    background-color: rgba(19, 27, 23, 0.55);
+}
+
+[data-theme="dark"] .site-nav {
+    background-color: rgba(19, 27, 23, 0.55);
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .site-nav__list > li {
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .site-nav__list .sub-menu li a {
+    color: var(--site-ink-soft);
+}
+
+[data-theme="dark"] .site-nav__list .sub-menu li a:hover,
+[data-theme="dark"] .site-nav__list .sub-menu li a:focus {
+    background-color: rgba(255, 255, 255, 0.07);
+    color: var(--site-gold);
+}
+/* --------------------------------------------------------------------------
+   Hero carousel
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .site-carousel-frame {
+    background: #1a231e;
+}
+
+[data-theme="dark"] .site-carousel-panel {
+    background: rgba(19, 27, 23, 0.94);
+    border-color: rgba(255, 255, 255, 0.22);
+}
+
+[data-theme="dark"] .site-carousel-eyebrow {
+    color: #f9c802;
+}
+
+[data-theme="dark"] .site-carousel-title {
+    color: #eef2ef;
+}
+
+[data-theme="dark"] .site-carousel-description {
+    color: #b9c4bc;
+}
+
+[data-theme="dark"] .site-carousel-cta-secondary {
+    color: #7fd39b;
+}
+
+[data-theme="dark"] .site-carousel-footer {
+    background: #131b17;
+}
+
+[data-theme="dark"] .site-carousel-counter-current,
+[data-theme="dark"] .site-carousel-counter-sep {
+    color: #aab5ac;
+}
+
+[data-theme="dark"] .site-carousel-toggle {
+    background: #1a231e;
+    border-color: rgba(255, 255, 255, 0.22);
+    color: #e7edea;
+}
+
+[data-theme="dark"] .site-carousel-toggle:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: #131b17;
+}
+
+/* --------------------------------------------------------------------------
+   About / org intro
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .site-org-intro-section {
+    background: linear-gradient(135deg, rgba(4, 64, 34, 0.38), rgba(249, 200, 2, 0.05)), #141d19;
+}
+
+[data-theme="dark"] .intro-content-block h2,
+[data-theme="dark"] .intro-content-block h3,
+[data-theme="dark"] .site-section-title h2 {
+    color: #eaf0ec;
+}
+
+[data-theme="dark"] .intro-content-block .site-about-kicker,
+[data-theme="dark"] .sub-title {
+    color: #4fbf7e;
+}
+
+[data-theme="dark"] .intro-content-block .site-about-lead {
+    color: #b7c2ba;
+}
+
+[data-theme="dark"] .site-about-value,
+[data-theme="dark"] .intro-badge-wrapper {
+    background: #1a241f;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .site-about-value h3 {
+    color: #e7edea;
+}
+
+[data-theme="dark"] .site-about-value p,
+[data-theme="dark"] .site-about-proof span {
+    color: #a9b7ad;
+}
+
+[data-theme="dark"] .site-about-proof {
+    border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .site-about-proof strong {
+    color: #4fbf7e;
+}
+
+[data-theme="dark"] .site-about-secondary-link {
+    background: #1a241f;
+    color: #7fd39b;
+    border-color: rgba(255, 255, 255, 0.22);
+}
+
+[data-theme="dark"] .site-about-secondary-link:hover,
+[data-theme="dark"] .site-about-secondary-link:focus {
+    color: #a3e0be;
+    border-color: rgba(255, 255, 255, 0.42);
+}
+/* --------------------------------------------------------------------------
+   Section chrome — titles, kickers, leads, buttons
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .site-modern-section-title h2 {
+    color: #eaf0ec;
+}
+
+[data-theme="dark"] .site-section-kicker,
+[data-theme="dark"] .focus-card-kicker {
+    color: #4fbf7e;
+}
+
+[data-theme="dark"] .section-lead,
+[data-theme="dark"] .pd-lede {
+    color: #aab7ae;
+}
+
+[data-theme="dark"] .site-section-button {
+    background: #1b2620;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #7fd39b;
+}
+
+[data-theme="dark"] .site-section-button:hover,
+[data-theme="dark"] .site-section-button:focus {
+    background: #2c9e5f;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .site-more-link,
+[data-theme="dark"] .site-section-title-row > a {
+    color: #58c07f;
+}
+
+/* --------------------------------------------------------------------------
+   Focus Areas
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .site-focus-areas-section {
+    background-color: #121a16 !important;
+    background-image: none !important;
+}
+
+[data-theme="dark"] .focus-card {
+    background: #18211c;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .site-focus-areas-section .focus-card-title {
+    color: #e7edea;
+}
+
+[data-theme="dark"] .site-focus-areas-section .focus-card-text {
+    color: #aab7ae;
+}
+
+[data-theme="dark"] .site-focus-areas-section .focus-card-link {
+    color: #58c07f;
+}
+
+[data-theme="dark"] .site-focus-areas-section .focus-card-link:hover,
+[data-theme="dark"] .site-focus-areas-section .focus-card-link:focus {
+    color: #7fd39b;
+}
+
+[data-theme="dark"] .site-focus-areas-section .focus-card-media {
+    background: #24332b;
+}
+
+/* --------------------------------------------------------------------------
+   Our Work / Ecosystem
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .site-featured-ecosystem-section {
+    background: #0f1613;
+}
+
+[data-theme="dark"] .ecosystem-card {
+    background: #18211c;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .ecosystem-card-thumb {
+    background: #24332b;
+}
+
+[data-theme="dark"] .ecosystem-card-title,
+[data-theme="dark"] .ecosystem-card-title a {
+    color: #e7edea;
+}
+
+[data-theme="dark"] .ecosystem-card-title a:hover {
+    color: #58c07f;
+}
+
+[data-theme="dark"] .ecosystem-card-excerpt {
+    color: #aab7ae;
+}
+
+[data-theme="dark"] .ecosystem-card-meta {
+    color: #e0b402;
+}
+
+[data-theme="dark"] .ecosystem-card:hover .ecosystem-card-overlay,
+[data-theme="dark"] .ecosystem-card:focus-within .ecosystem-card-overlay {
+    background: rgba(0, 0, 0, 0.22);
+}
+
+[data-theme="dark"] .ecosystem-read-more {
+    color: #58c07f;
+}
+
+[data-theme="dark"] .ecosystem-read-more:hover,
+[data-theme="dark"] .ecosystem-read-more:focus {
+    color: #7fd39b;
+}
+
+/* --------------------------------------------------------------------------
+   Impact / Our Reach
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .site-impact-counter-section {
+    background: #0f1613;
+}
+
+/* Cards are already brand-green with white text — they work as-is in dark. */
+/* --------------------------------------------------------------------------
+   Partners, Donors & logo strips
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .site-partners-section {
+    background: #0f1613;
+}
+
+[data-theme="dark"] .site-logo-strip,
+[data-theme="dark"] .site-donor-grid,
+[data-theme="dark"] .site-partner-logo-grid {
+    background: #141c18;
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="dark"] .pd-title,
+[data-theme="dark"] .pd-lede strong {
+    color: #e7edea;
+}
+
+[data-theme="dark"] .pd-sub {
+    color: #4fbf7e;
+}
+
+[data-theme="dark"] .pd-sub::after {
+    background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0 8px, transparent 8px 16px);
+}
+
+[data-theme="dark"] .pd-card {
+    background: #161f1a;
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .pd-card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.55), 0 0 0 2px rgba(249, 200, 2, 0.5);
+}
+
+[data-theme="dark"] .pd-nav {
+    background: #161f1a;
+    border-color: rgba(255, 255, 255, 0.14);
+    color: #d9e0db;
+}
+
+[data-theme="dark"] .pd-nav:hover {
+    background: #0e2a1e;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .pd-nav.swiper-button-disabled:hover {
+    background: #161f1a;
+    color: #aab7ae;
+}
+
+[data-theme="dark"] .pd-swiper .swiper-pagination-bullet {
+    background: #3a4a42;
+}
+
+/* --------------------------------------------------------------------------
+   Testimonials
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .site-testimonials-section {
+    background: #121a16;
+}
+
+[data-theme="dark"] .site-testimonial p {
+    background: #1a241f;
+    color: #dde4e0;
+}
+
+[data-theme="dark"] .site-testimonial p::before {
+    color: #3c4c44;
+}
+
+[data-theme="dark"] .site-testimonial strong {
+    color: #e7edea;
+}
+
+[data-theme="dark"] .site-testimonial span {
+    color: #58c07f;
+}
+
+[data-theme="dark"] .testimonial-controls span {
+    background: #f9c802;
+    color: #1a3c34;
+}
+
+/* --------------------------------------------------------------------------
+   Map + misc
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .site-location-map-section {
+    background: #0f1613;
+}
+
+[data-theme="dark"] .site-section-kicker::before,
+[data-theme="dark"] .site-modern-section-title .site-section-kicker::before {
+    background: #f9c802;
+}
+
+[data-theme="dark"] .site-about-value-icon {
+    background: #2c9e5f;
+}
+
+[data-theme="dark"] .site-about-primary-link {
+    background: #2c9e5f;
+    box-shadow: 0 12px 24px -16px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .site-about-primary-link:hover,
+[data-theme="dark"] .site-about-primary-link:focus {
+    background: #246f4a;
+}
