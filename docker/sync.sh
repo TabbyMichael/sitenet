@@ -60,10 +60,36 @@ docker exec -u 1000 sitenet-wordpress wp search-replace \
     "https://site.local" "$SITE_URL" --all-tables --path=/var/www/html --quiet || true
 docker exec -u 1000 sitenet-wordpress wp search-replace \
     "http://site.local" "$SITE_URL" --all-tables --path=/var/www/html --quiet || true
+
+# --- 4. Public tunnel (if running) --------------------------------------------
+# Content URLs must end up pointing at whatever friends actually use. If a
+# Cloudflare Quick Tunnel is running, its hostname is the public face of the
+# site, so re-point stored URLs (including any stale tunnel hostnames from
+# previous runs) at the current tunnel URL.
+FINAL_URL="$SITE_URL"
+if pgrep -f 'cloudflared tunnel' >/dev/null 2>&1; then
+    TUNNEL_URL="$(grep -oE 'https://[a-z0-9-]+\.trycloudflare\.com' /tmp/cloudflared.log 2>/dev/null | head -1 || true)"
+    if [ -n "$TUNNEL_URL" ]; then
+        echo "==> Quick Tunnel detected — re-pointing content URLs at $TUNNEL_URL ..."
+        docker exec -u 1000 sitenet-wordpress wp search-replace \
+            "$SITE_URL" "$TUNNEL_URL" --all-tables --path=/var/www/html --quiet
+        # Sweep any leftover hostnames from earlier tunnel runs.
+        docker exec -u 1000 sitenet-wordpress wp search-replace \
+            --regex 'https://[a-z0-9-]+\.trycloudflare\.com' "$TUNNEL_URL" \
+            --all-tables --path=/var/www/html --quiet || true
+        FINAL_URL="$TUNNEL_URL"
+    else
+        echo "    !! cloudflared is running but no URL in /tmp/cloudflared.log — keeping LAN URLs."
+    fi
+else
+    echo "==> No Quick Tunnel running — content URLs stay on the LAN address."
+fi
+
 docker exec -u 1000 sitenet-wordpress wp cache flush --path=/var/www/html --quiet || true
 
 echo ""
 echo "✅ Sync complete."
-echo "   Local:      http://localhost:2026"
+echo "   Local:       http://localhost:2026"
 echo "   LAN/friends: $SITE_URL"
+echo "   Public face: $FINAL_URL"
 echo "   phpMyAdmin:  http://localhost:2027 (root/root)"

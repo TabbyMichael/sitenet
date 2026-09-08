@@ -62,11 +62,37 @@ Docker site matches `main` exactly.
 - **Same WiFi/LAN:** send friends `http://<your-LAN-IP>:2026`
   (`hostname -I` shows your IP). Open the port if a firewall is active:
   `sudo ufw allow 2026/tcp`.
-- **Internet (later):** Cloudflare Quick Tunnel:
-  `cloudflared tunnel --url http://localhost:2026` — free HTTPS link; run
-  `sync.sh`-style search-replace against the tunnel hostname if you want
-  absolute URLs to use it (not required — `wp-config-docker.php` derives
-  `WP_HOME`/`WP_SITEURL` from the request host automatically).
+- **Internet (free, no account): Cloudflare Quick Tunnel.**
+
+  ```bash
+  cd docker
+  ./tunnel-start.sh        # detached tunnel (survives closing the terminal)
+  ```
+
+  It prints a public HTTPS URL like `https://<words>.trycloudflare.com`.
+  `--protocol http2` is required on this network: outbound QUIC/UDP 7844 to
+  some Cloudflare regions is blocked (the pre-check "critical failures" about
+  region2 are expected and harmless — region1 carries the traffic).
+
+  After **every** tunnel (re)start the hostname changes; re-point the URLs
+  stored inside post/page content with:
+
+  ```bash
+  ./retarget-tunnel.sh https://<old>.trycloudflare.com https://<new>.trycloudflare.com
+  ```
+
+  (Theme/plugin asset URLs need no rewrite — `wp-config-docker.php` derives
+  them from the request, proxy-aware via `X-Forwarded-Proto`.)
+
+  **Keep-alive rules:** the tunnel lives until reboot or
+  `pkill -f 'cloudflared tunnel'`. Logs: `/tmp/cloudflared.log`. Only ever run
+  ONE cloudflared process — an orphaned one keeps a dead hostname alive in DNS
+  while the real tunnel is unreachable. Browsers cache 301s/blocked assets:
+  after fixes, test with a hard refresh (Ctrl+Shift+R) or incognito.
+
+  `sync.sh` is tunnel-aware: if a tunnel is running it finishes by re-pointing
+  content URLs at the live tunnel hostname, so syncing never breaks the
+  public link.
 
 ## Management commands
 
