@@ -1,0 +1,81 @@
+# SITE Enterprise Promotion — Docker deployment
+# The WordPress files are served directly from this git repository's working
+# tree (the folder above this docker/ directory), so whatever commit you have
+# checked out is exactly what the Docker site serves. No file copies, no drift.
+#
+# Usage:
+#   docker compose -p sitenet up -d --build     (start)
+#   ./sync.sh                                   (pull main + fresh DB + URL fix)
+
+services:
+  wordpress:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sitenet-wordpress:latest
+    container_name: sitenet-wordpress
+    restart: unless-stopped
+    ports:
+      - "2026:80"
+    # Bypass the stock wordpress entrypoint so it never chowns the mounted
+    # repo files (LocalWP must keep ownership). Apache workers run as uid/gid
+    # 1000 (kibuguian) via APACHE_RUN_USER/GROUP below.
+    entrypoint: ["apache2-foreground"]
+    command: []
+    environment:
+      APACHE_RUN_USER: "#1000"
+      APACHE_RUN_GROUP: "#1000"
+    volumes:
+      # Repo working tree = webroot (quoted: path contains a space)
+      - "../:/var/www/html"
+      # Docker-specific config overlaid on top of the (gitignored) LocalWP one
+      - ./wp-config-docker.php:/var/www/html/wp-config.php:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - sitenet-network
+
+  db:
+    image: mysql:8.4
+    container_name: sitenet-db
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppass123
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - sitenet-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: sitenet-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "2027:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - sitenet-network
+
+volumes:
+  db_data:
+
+networks:
+  sitenet-network:
