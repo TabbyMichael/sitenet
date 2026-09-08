@@ -33,6 +33,17 @@ $table_prefix = 'wp_';
 /* Docker-specific values. */
 
 /**
+ * Normalize the request scheme behind TLS-terminating proxies (Cloudflare
+ * Tunnel reaches Apache over plain HTTP but sends X-Forwarded-Proto: https).
+ * Without this, is_ssl() is false at the origin while WP_HOME is https, and
+ * redirect_canonical() emits a self-referential 301 loop on every page load.
+ */
+if ( ( ! empty( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === strtolower( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) )
+	|| ( ! empty( $_SERVER['HTTP_X_FORWARDED_SSL'] ) && 'on' === strtolower( $_SERVER['HTTP_X_FORWARDED_SSL'] ) ) ) {
+	$_SERVER['HTTPS'] = 'on';
+}
+
+/**
  * Serve the site from whichever host the visitor used (localhost:2026,
  * LAN IP http://192.168.x.x:2026, or a future tunnel hostname) without
  * redirects or broken asset URLs. Must be defined BEFORE wp-settings.php.
