@@ -36,9 +36,21 @@ $table_prefix = 'wp_';
  * Serve the site from whichever host the visitor used (localhost:2026,
  * LAN IP http://192.168.x.x:2026, or a future tunnel hostname) without
  * redirects or broken asset URLs. Must be defined BEFORE wp-settings.php.
+ *
+ * Proxy-aware: Cloudflare Tunnel (and most reverse proxies) terminate TLS at
+ * the edge and reach Apache over plain HTTP, signalling the original scheme
+ * via X-Forwarded-Proto. Without this, enqueued CSS/JS would be printed as
+ * http:// URLs on an https:// page and browsers would block them as mixed
+ * content ("site renders with no styling").
  */
 if ( ! empty( $_SERVER['HTTP_HOST'] ) ) {
-	$scheme = ( ! empty( $_SERVER['HTTPS'] ) && 'off' !== $_SERVER['HTTPS'] ) ? 'https' : 'http';
+	$scheme = 'http';
+	if ( ( ! empty( $_SERVER['HTTPS'] ) && 'off' !== $_SERVER['HTTPS'] )
+		|| ( ! empty( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === strtolower( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) )
+		|| ( ! empty( $_SERVER['HTTP_X_FORWARDED_SSL'] ) && 'on' === strtolower( $_SERVER['HTTP_X_FORWARDED_SSL'] ) )
+		|| ( isset( $_SERVER['SERVER_PORT'] ) && 443 === (int) $_SERVER['SERVER_PORT'] ) ) {
+		$scheme = 'https';
+	}
 	define( 'WP_HOME', $scheme . '://' . $_SERVER['HTTP_HOST'] );
 	define( 'WP_SITEURL', WP_HOME );
 }
