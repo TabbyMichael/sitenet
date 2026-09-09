@@ -47,10 +47,9 @@
 .site-footer__logo {
 	display: block;
 	filter: brightness(1.05);
-	height: auto;
-	max-width: 170px;
-	transition: opacity 0.25s ease;
+	height: 72px;
 	width: auto;
+	transition: opacity 0.25s ease;
 }
 
 .site-footer__logo-link {

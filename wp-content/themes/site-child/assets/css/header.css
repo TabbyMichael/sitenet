@@ -68,35 +68,40 @@ body.admin-bar .site-header {
 }
 
 /* --------------------------------------------------------------------------
-   Body spacer — prevents content from being hidden behind the fixed header.
-   The navbar totals ~114px (utility 36px + nav 78px). We add the same amount
-   as padding-top to the page body so that, on every non-homepage route, the
-   first row of content starts below the navbar instead of underneath it.
-   On mobile the compact nav is 108px, so we use a CSS clamp that adapts.
+   Page layout offset — body padding-top approach.
+   The header is position:fixed, so every non-home page gets a top padding
+   equal to the measured header height (+ breathing room) on <body> itself.
+   Body padding cannot collapse (unlike margins on inner elements), so it
+   works for every layout entry point at once:
+     1. .page-header — title-band pages (Resources, Our Work, Stories...)
+     2. .content     — band-less pages (Contact Us, Make Appointment...)
+     3. archives     — Our Work / Stories / Resources listing views
+     4. single posts — individual story and work-item pages
+   The exact pixel value lives in --site-header-offset, measured live by
+   assets/js/header.js (handles logo scaling + every breakpoint). The
+   fallback below covers no-JS: utility (36px) + nav with 130px logo and
+   12px vertical padding (142px) = 178px.
+   Home is excluded — its full-viewport hero intentionally flows under
+   the transparent header (see carousel.js --site-hero-offset).
+   No admin-bar variants needed: WP’s own html margin holds the bar’s
+   32px/46px, and the header’s top:32px/46px rule keeps it aligned.
    -------------------------------------------------------------------------- */
+:root {
+    --site-header-offset: 178px;
+}
+
 body:not(.home) {
-    padding-top: calc(var(--site-header-h-utility) + var(--site-header-h-nav));
+    padding-top: calc(var(--site-header-offset) + 20px);
 }
 
-/* Keep it snug on mobile where the nav is shorter */
-@media (max-width: 1023px) {
-    body:not(.home) {
-        padding-top: calc(var(--site-header-h-utility) + var(--site-header-h-nav-compact));
-    }
-}
-
-/* Admin-bar already pushes the page down on small screens — undo the extra */
-@media (max-width: 782px) {
-    body.admin-bar:not(.home) {
-        padding-top: calc(var(--site-header-h-utility) + 46px + var(--site-header-h-nav-compact));
-    }
-}
-
-/* Admin-bar compensation for desktop */
-@media (min-width: 783px) {
-    body.admin-bar:not(.home) {
-        padding-top: calc(var(--site-header-h-utility) + 32px + var(--site-header-h-nav));
-    }
+/* Inner elements must not add their own offset on top of the body padding. */
+body:not(.home) .page-header,
+body:not(.home) .content,
+body.archive .page-header,
+body.archive .content,
+body.single .page-header,
+body.single .content {
+    margin-top: 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -239,8 +244,8 @@ body:not(.home) {
 
 .site-logo img {
     display: block;
-    width: 130px;
-    height: auto;
+    width: auto;
+    height: 64px;
 }
 
 .site-logo__text {
@@ -485,7 +490,7 @@ body:not(.home) {
 }
 
 .site-header--scrolled .site-logo img {
-    width: 110px;
+    height: 54px;
 }
 
 /* --------------------------------------------------------------------------
@@ -519,7 +524,7 @@ body:not(.home) {
     }
 
     .site-logo img {
-        width: 120px;
+        height: 58px;
     }
 }
 
@@ -692,7 +697,7 @@ body:not(.home) {
 
     /* Sticky compact state off on mobile (panel is already space-efficient) */
     .site-header--scrolled .site-logo img {
-        width: 100px;
+        height: 48px;
     }
 }
 
@@ -718,10 +723,10 @@ body:not(.home) {
     }
 }
 
-/* Logo width on mobile per spec §3. */
+/* Logo height on mobile per spec §3. */
 @media (max-width: 767px) {
     .site-logo img {
-        width: 100px;
+        height: 48px;
     }
 
     /* Keep a touch of breathing room on the smallest screens. */

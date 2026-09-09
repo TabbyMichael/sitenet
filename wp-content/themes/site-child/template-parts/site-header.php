@@ -19,9 +19,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Brand logo — ships with the child theme (source: wp-includes/images/Logo/apple-touch-icon.png).
+// Brand logo — official SITE logo (assets/images/logo.png, 599x542).
 // Referenced as a theme asset so the header works without any DB/Customizer dependency.
-$site_logo        = esc_url( get_stylesheet_directory_uri() . '/assets/images/apple-touch-icon.png' );
+$site_logo        = esc_url( get_stylesheet_directory_uri() . '/assets/images/logo.png' );
 $site_logo_retina = '';
 $site_logo_srcset = $site_logo;
 ?>
@@ -40,7 +40,7 @@ $site_logo_srcset = $site_logo;
 
 					<li class="site-utility__item site-utility__item--location">
 						<svg class="site-utility__icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 21s-7-5.1-7-11a7 7 0 1 1 14 0c0 5.9-7 11-7 11z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="2"/></svg>
-						<span>ISMA Building, Along Ngong Road, Nairobi</span>
+						<a href="https://www.google.com/maps/dir/?api=1&amp;destination=Waleeh%20Motors%2C%20Ngong%20Road%2C%20Nairobi%2C%20Kenya" target="_blank" rel="noopener noreferrer" aria-label="Get directions to Waleeh Motors, Ngong Road, Nairobi">ISMA Building, Along Ngong Road, Nairobi</a>
 					</li>
 
 					<li class="site-utility__item site-utility__item--phone">
@@ -88,8 +88,8 @@ $site_logo_srcset = $site_logo;
 						src="<?php echo $site_logo; // esc_url() applied above. ?>"
 						srcset="<?php echo esc_attr( $site_logo_srcset ); ?>"
 						alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>"
-						width="180"
-						height="180"
+						width="152"
+						height="138"
 						fetchpriority="high"
 						decoding="async"
 					/>

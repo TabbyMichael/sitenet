@@ -66,6 +66,7 @@ get_header();
 	get_template_part( 'template-parts/homepage/focus-areas' );
 	get_template_part( 'template-parts/homepage/impact-counter' );
 	get_template_part( 'template-parts/homepage/featured-ecosystem' );
+	get_template_part( 'template-parts/homepage/testimonials' );
 	get_template_part( 'template-parts/homepage/partner-carousel' );
 	get_template_part( 'template-parts/homepage/location-map' );
 	?>

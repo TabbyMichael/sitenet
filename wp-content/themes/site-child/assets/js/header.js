@@ -31,6 +31,32 @@
 	);
 
 	/* ------------------------------------------------------------------
+	 * 0. Measure the fixed header and expose its height to CSS.
+	 * header.css offsets non-home pages with
+	 *   body:not(.home) { padding-top: calc(var(--site-header-offset) + 20px); }
+	 * so content always starts below the navbar instead of under it.
+	 * Re-measured on resize (logo scales per breakpoint) and skipped on
+	 * the home page, whose hero intentionally flows under the header.
+	 * ------------------------------------------------------------------ */
+	function updateHeaderOffset() {
+		if ( document.body && document.body.classList.contains( 'home' ) ) {
+			return;
+		}
+		var h = header.offsetHeight || 0;
+		if ( h > 0 ) {
+			document.documentElement.style.setProperty( '--site-header-offset', h + 'px' );
+		}
+	}
+
+	if ( document.readyState === 'loading' ) {
+		document.addEventListener( 'DOMContentLoaded', updateHeaderOffset );
+	} else {
+		updateHeaderOffset();
+	}
+	window.addEventListener( 'load', updateHeaderOffset );
+	window.addEventListener( 'resize', updateHeaderOffset );
+
+	/* ------------------------------------------------------------------
 	 * 1. Scrolled state (rAF-throttled scroll listener)
 	 * ------------------------------------------------------------------ */
 	var ticking = false;
