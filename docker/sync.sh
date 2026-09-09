@@ -4,7 +4,8 @@
 #
 # Aligns the Docker deployment (http://localhost:2026) with:
 #   1. The latest code on git main   (repo files ARE the webroot — just pull)
-#   2. A fresh dump of the live LocalWP database (with URL search-replace)
+#   2. A fresh dump of the live LocalWP database, OR a seed dump if LocalWP
+#      is not running (with URL search-replace)
 #
 # Usage:  ./sync.sh            from the docker/ directory
 # =============================================================================
@@ -14,6 +15,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(dirname "$SCRIPT_DIR")"
 DUMP_DIR="$HOME/docker-site/db"
 DUMP_FILE="$DUMP_DIR/site-latest.sql"
+SEED_FILE="$DUMP_DIR/site-seed.sql"
 LAN_IP="$(hostname -I | awk '{print $1}')"
 SITE_URL="http://${LAN_IP}:2026"
 
@@ -34,28 +36,38 @@ cd "$SCRIPT_DIR"
 docker compose -p sitenet up -d --build
 
 # --- 3. Database -------------------------------------------------------------
-SOCKET="$(find "$HOME/.config/Local/run" -maxdepth 3 -name mysqld.sock 2>/dev/null | head -1)"
-if [ -z "$SOCKET" ]; then
-    echo "    !! LocalWP MySQL socket not found — is the LocalWP site started?"
-    echo "    Skipping database refresh (code is still synced)."
+SOCKET="$(find "$HOME/.config/Local/run" -maxdepth 3 -name mysqld.sock 2>/dev/null | head -1 || true)"
+
+mkdir -p "$DUMP_DIR"
+
+if [ -n "$SOCKET" ]; then
+    echo "==> LocalWP MySQL socket found ($SOCKET) — dumping live database..."
+    mysqldump --socket="$SOCKET" -uroot -proot \
+        --single-transaction --routines --triggers \
+        --default-character-set=utf8mb4 --column-statistics=0 \
+        local > "$DUMP_FILE"
+    echo "    Dump saved to $DUMP_FILE"
+    echo "    (To use this as the offline seed, copy it to $SEED_FILE)"
+    IMPORT_FILE="$DUMP_FILE"
+elif [ -f "$SEED_FILE" ]; then
+    echo "==> LocalWP not running — using seed database: $SEED_FILE"
+    IMPORT_FILE="$SEED_FILE"
+else
+    echo "!! LocalWP MySQL socket not found and no seed database at $SEED_FILE" >&2
+    echo "!! Skipping database refresh (code is still synced)." >&2
+    echo "!! To create a seed dump, start LocalWP and run:" >&2
+    echo "!!   mysqldump --socket=<socket> -uroot -proot local > $SEED_FILE" >&2
     exit 0
 fi
-
-echo "==> Dumping live LocalWP database (socket: $SOCKET)..."
-mkdir -p "$DUMP_DIR"
-mysqldump --socket="$SOCKET" -uroot -proot \
-    --single-transaction --routines --triggers \
-    --default-character-set=utf8mb4 --column-statistics=0 \
-    local > "$DUMP_FILE"
 
 echo "==> Importing dump into Docker MySQL (replaces previous data)..."
 docker exec -i sitenet-db mysql -uroot -proot \
     -e "DROP DATABASE IF EXISTS wordpress; CREATE DATABASE wordpress CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-docker exec -i sitenet-db mysql -uroot -proot wordpress < "$DUMP_FILE"
+docker exec -i sitenet-db mysql -uroot -proot wordpress < "$IMPORT_FILE"
 
 echo "==> Rewriting URLs (localhost:10003 / site.local -> $SITE_URL)..."
 docker exec -u 1000 sitenet-wordpress wp search-replace \
-    "http://localhost:10003" "$SITE_URL" --all-tables --path=/var/www/html --quiet
+    "http://localhost:10003" "$SITE_URL" --all-tables --path=/var/www/html --quiet || true
 docker exec -u 1000 sitenet-wordpress wp search-replace \
     "https://site.local" "$SITE_URL" --all-tables --path=/var/www/html --quiet || true
 docker exec -u 1000 sitenet-wordpress wp search-replace \
