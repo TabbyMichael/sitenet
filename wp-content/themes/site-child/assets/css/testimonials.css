@@ -1,0 +1,355 @@
+/* --------------------------------------------------------------------------
+   CLIENT TESTIMONIALS — success stories shown two at a time
+   Self-contained: responsive breakpoints included so this component can be
+   dropped into any page. Uses a fixed background image (set via the
+   --site-tm-bg custom property) with a green overlay for readability.
+   -------------------------------------------------------------------------- */
+
+.site-testimonials {
+	position: relative;
+	padding: 96px 0 104px;
+	background: center / cover no-repeat fixed var(--site-tm-bg, #0b1f14);
+	background-color: #0b1f14;
+	color: #ffffff;
+	overflow: hidden;
+}
+
+/* Green overlay so the cards and heading stay readable over the photo. */
+.site-testimonials::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(180deg, rgba(8, 30, 17, 0.78) 0%, rgba(8, 30, 17, 0.72) 50%, rgba(8, 30, 17, 0.86) 100%),
+		radial-gradient(120% 120% at 12% 0%, rgba(22, 116, 64, 0.28) 0%, rgba(8, 30, 17, 0) 55%);
+	pointer-events: none;
+}
+
+.site-testimonials__inner {
+	position: relative;
+	z-index: 1;
+	max-width: 940px;
+}
+
+/* ---- Header ---- */
+.site-testimonials__head {
+	text-align: center;
+	margin-bottom: 46px;
+}
+
+.site-testimonials__kicker {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	padding: 6px 16px;
+	border: 1px solid rgba(249, 200, 2, 0.6);
+	border-radius: 999px;
+	background: rgba(249, 200, 2, 0.12);
+	color: #f9c802;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	margin-bottom: 16px;
+}
+
+.site-testimonials__title {
+	margin: 0 0 10px;
+	font-size: clamp(30px, 4vw, 44px);
+	font-weight: 800;
+	color: #ffffff;
+	letter-spacing: -0.01em;
+}
+
+.site-testimonials__lede {
+	margin: 0 auto;
+	max-width: 620px;
+	color: rgba(255, 255, 255, 0.86);
+	font-size: 16px;
+	line-height: 1.7;
+}
+
+/* ---- Slider (scroll-reveal start state) ---- */
+.site-testimonials__slider {
+	position: relative;
+	opacity: 0;
+	transform: translateY(24px);
+	transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.site-testimonials__slider.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.site-testimonials__viewport {
+	overflow: hidden;
+}
+
+.site-testimonials__track {
+	display: flex;
+	transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+	will-change: transform;
+}
+
+/* Each slide is a pair of cards. */
+.site-testimonials__slide {
+	flex: 0 0 100%;
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 28px;
+	align-items: stretch;
+}
+
+/* ---- Card ---- */
+.site-testimonial-card {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 40px 36px 34px;
+	background: #ffffff;
+	color: #0b1f14;
+	border: 1px solid rgba(1, 98, 44, 0.12);
+	border-top: 4px solid #f9c802;
+	border-radius: 18px;
+	box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.5);
+	transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.site-testimonial-card:hover,
+.site-testimonial-card:focus-within {
+	border-color: rgba(249, 200, 2, 0.55);
+	box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.55);
+	transform: translateY(-6px);
+}
+
+.site-testimonial-card__quote {
+	flex: 1;
+	margin: 0 0 26px;
+}
+
+.site-testimonial-card__quote-mark {
+	display: block;
+	font-family: Georgia, "Times New Roman", serif;
+	font-size: 64px;
+	line-height: 0.6;
+	color: #f9c802;
+	margin: 0 0 16px;
+}
+
+.site-testimonial-card__quote p {
+	margin: 0;
+	font-size: 18px;
+	line-height: 1.7;
+	font-weight: 500;
+	color: #23312a;
+}
+
+.site-testimonial-card__stars {
+	display: inline-flex;
+	gap: 4px;
+	margin-bottom: 24px;
+	color: #f9c802;
+	font-size: 19px;
+	letter-spacing: 2px;
+}
+
+.site-testimonial-card__author {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	border-top: 1px solid rgba(1, 98, 44, 0.12);
+	padding-top: 22px;
+}
+
+.site-testimonial-card__avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 54px;
+	height: 54px;
+	flex: 0 0 auto;
+	border-radius: 50%;
+	background: linear-gradient(135deg, #1e8a4c, #0f5a2f);
+	border: 2px solid #f9c802;
+	color: #ffffff;
+	font-size: 20px;
+	font-weight: 800;
+}
+
+.site-testimonial-card__author-meta {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	text-align: left;
+}
+
+.site-testimonial-card__name {
+	font-size: 17px;
+	font-weight: 800;
+	color: #0b1f14;
+}
+
+.site-testimonial-card__location {
+	font-size: 13px;
+	font-weight: 700;
+	color: #006b3a;
+}
+
+/* ---- Arrows (trapezium pair, below the cards) ---- */
+.site-testimonials__controls {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	margin-top: 32px;
+}
+
+.site-testimonials__arrow {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 58px;
+	height: 46px;
+	border: 0;
+	background: #f9c802;
+	color: #1a3c34;
+	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* Trapezium halves — the angled inner edges separate < from > */
+.site-testimonials__arrow--prev {
+	clip-path: polygon(0 0, 100% 12%, 100% 88%, 0 100%);
+}
+
+.site-testimonials__arrow--next {
+	clip-path: polygon(0 12%, 100% 0, 100% 100%, 0 88%);
+}
+
+.site-testimonials__arrow:hover {
+	background: #ffdd33;
+}
+
+.site-testimonials__arrow:focus-visible {
+	outline: 3px solid #ffffff;
+	outline-offset: 3px;
+}
+
+.site-testimonials__arrow svg {
+	width: 20px;
+	height: 20px;
+}
+
+/* ---- Pagination dots ---- */
+.site-testimonials__pagination {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-top: 30px;
+}
+
+.site-testimonials__dot {
+	width: 10px;
+	height: 10px;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.4);
+	cursor: pointer;
+	transition: background-color 0.2s ease, width 0.2s ease;
+}
+
+.site-testimonials__dot.is-active {
+	width: 28px;
+	background: #f9c802;
+}
+
+.site-testimonials__dot:focus-visible {
+	outline: 3px solid #ffffff;
+	outline-offset: 2px;
+}
+
+/* ---- Responsive breakpoints ---- */
+@media (max-width: 991px) {
+	.site-testimonials {
+		padding: 72px 0 80px;
+		background-attachment: scroll;
+	}
+
+	.site-testimonials__slide {
+		grid-template-columns: 1fr;
+		gap: 24px;
+	}
+
+	.site-testimonials__arrow {
+		width: 52px;
+		height: 42px;
+	}
+}
+
+@media (max-width: 767px) {
+	.site-testimonials {
+		padding: 60px 0 68px;
+	}
+
+	.site-testimonials__head {
+		margin-bottom: 34px;
+	}
+
+	.site-testimonials__title {
+		font-size: 30px;
+	}
+
+	.site-testimonial-card {
+		padding: 34px 24px 30px;
+		border-radius: 16px;
+	}
+
+	.site-testimonial-card__quote-mark {
+		font-size: 52px;
+	}
+
+	.site-testimonial-card__quote p {
+		font-size: 17px;
+	}
+}
+
+@media (max-width: 480px) {
+	.site-testimonials {
+		padding: 52px 0 60px;
+	}
+
+	.site-testimonials__kicker {
+		font-size: 12px;
+		padding: 5px 12px;
+	}
+
+	.site-testimonials__lede {
+		font-size: 15px;
+	}
+
+	.site-testimonial-card__author {
+		gap: 12px;
+	}
+
+	.site-testimonial-card__avatar {
+		width: 46px;
+		height: 46px;
+		font-size: 17px;
+	}
+}
+
+/* Respect users who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+	.site-testimonials__slider {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+
+	.site-testimonials__track {
+		transition: none;
+	}
+}

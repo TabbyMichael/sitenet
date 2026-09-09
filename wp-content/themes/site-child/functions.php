@@ -137,6 +137,67 @@ function site_child_enqueue_partners_donors_assets() {
 add_action( 'wp_enqueue_scripts', 'site_child_enqueue_partners_donors_assets', 20 );
 
 /**
+ * Enqueue the homepage responsive overrides (front page only).
+ *
+ * Styling: assets/css/homepage-responsive.css — breakpoint bands covering
+ * large monitors, laptops, iPad landscape/portrait, huge phones, small
+ * phones and old 4" phones. Loaded after the carousel and partners/donors
+ * stylesheets so it wins equal-specificity ties. Versioned with filemtime()
+ * for cache busting during development.
+ */
+function site_child_enqueue_homepage_responsive_assets() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	$responsive_css_path = get_stylesheet_directory() . '/assets/css/homepage-responsive.css';
+
+	wp_enqueue_style(
+		'site-homepage-responsive',
+		get_stylesheet_directory_uri() . '/assets/css/homepage-responsive.css',
+		array( 'site-child-style', 'site-carousel', 'site-partners-donors' ),
+		file_exists( $responsive_css_path ) ? (string) filemtime( $responsive_css_path ) : '1.0.0'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_homepage_responsive_assets', 25 );
+
+/**
+ * Enqueue assets for the reusable Client Testimonials slider
+ * (rendered by template-parts/homepage/testimonials.php).
+ *
+ * Styling: assets/css/testimonials.css  — self-contained responsive component.
+ * Behaviour: assets/js/testimonials.js  — vanilla, no dependencies, deferred.
+ * Versioned with filemtime() for cache busting during development.
+ */
+function site_child_enqueue_testimonials_assets() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	$tm_css_path = get_stylesheet_directory() . '/assets/css/testimonials.css';
+	$tm_js_path  = get_stylesheet_directory() . '/assets/js/testimonials.js';
+
+	wp_enqueue_style(
+		'site-testimonials',
+		get_stylesheet_directory_uri() . '/assets/css/testimonials.css',
+		array( 'site-child-style' ),
+		file_exists( $tm_css_path ) ? (string) filemtime( $tm_css_path ) : '1.0.0'
+	);
+
+	wp_enqueue_script(
+		'site-testimonials',
+		get_stylesheet_directory_uri() . '/assets/js/testimonials.js',
+		array(),
+		file_exists( $tm_js_path ) ? (string) filemtime( $tm_js_path ) : '1.0.0',
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+}
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_testimonials_assets', 26 );
+
+/**
  * Enqueue the rebuilt header / navigation assets (site-wide).
  *
  * Styling: assets/css/header.css  — loaded after style.css so it wins ties.

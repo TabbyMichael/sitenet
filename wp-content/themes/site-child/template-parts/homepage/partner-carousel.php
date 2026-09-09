@@ -2,10 +2,10 @@
 /**
  * Our Partners & Donors — Swiper.js carousels.
  *
- * Donors are defined below (swap text labels for image entries when real
- * logos are available). Partners come from the site_partner CPT (ACF
- * "partner_logo" field) with fallback to auto-detected folder images.
- * Empty carousels are skipped entirely.
+ * Both carousels use the auto-detected logo images from
+ * assets/images/partners/ (drop in new logo files and they appear
+ * automatically). The pool is split in half: first half → donors,
+ * second half → partners. Empty carousels are skipped entirely.
  *
  * Assets (Swiper 11 CDN + theme CSS/JS) are enqueued in functions.php.
  *
@@ -91,40 +91,6 @@ $site_pd_split    = ceil( count( $site_pd_images ) / 2 );
 $site_pd_donors   = array_slice( $site_pd_images, 0, $site_pd_split );
 $site_pd_partners = array_slice( $site_pd_images, $site_pd_split );
 
-// Try to populate partners from site_partner CPT if available
-$site_partner_query = new WP_Query( array(
-	'post_type'      => 'site_partner',
-	'posts_per_page' => -1,
-	'post_status'    => 'publish',
-	'orderby'        => 'title',
-	'order'          => 'ASC',
-) );
-
-if ( $site_partner_query->have_posts() ) {
-	$site_pd_partners = array();
-	while ( $site_partner_query->have_posts() ) {
-		$site_partner_query->the_post();
-		$partner_logo = get_field( 'partner_logo', get_the_ID() );
-		
-		if ( $partner_logo ) {
-			$site_pd_partners[] = array(
-				'type'  => 'image',
-				'id'    => $partner_logo['ID'],
-				'src'   => $partner_logo['url'],
-				'alt'   => get_the_title(),
-				'title' => get_the_title(),
-			);
-		} else {
-			$site_pd_partners[] = array(
-				'type'  => 'text',
-				'label' => get_the_title(),
-				'class' => 'lg-partner',
-			);
-		}
-	}
-	wp_reset_postdata();
-}
-
 // Fall back to text labels only when no logo images exist at all.
 if ( empty( $site_pd_images ) ) {
 	$site_pd_donors = array(
@@ -152,9 +118,9 @@ if ( empty( $site_pd_images ) ) {
 	);
 }
 
-// Partners are populated from site_partner CPT when available,
-// with fallback to auto-detected folder images (assets/images/partners/).
-// Drop logo files into that folder and they appear automatically as fallback.
+// Both carousels use the same auto-detected folder images
+// (assets/images/partners/) - drop logo files into that folder and they
+// appear automatically, split between "Our Donors" and "Our Partners".
 
 $site_pd_groups = array(
 	array( 'label' => 'Our Donors', 'items' => $site_pd_donors, 'noun' => 'donors' ),

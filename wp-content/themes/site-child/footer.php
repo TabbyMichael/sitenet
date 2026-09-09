@@ -22,9 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Brand logo — ships with the child theme (source: wp-includes/images/Logo/apple-touch-icon.png).
+// Brand logo — official SITE logo (assets/images/logo.png, 599x542).
 // Referenced as a theme asset so the footer works without any DB/Customizer dependency.
-$footer_logo        = esc_url( get_stylesheet_directory_uri() . '/assets/images/apple-touch-icon.png' );
+$footer_logo        = esc_url( get_stylesheet_directory_uri() . '/assets/images/logo.png' );
 $footer_logo_retina = '';
 $footer_logo_srcset = $footer_logo;
 
@@ -44,9 +44,9 @@ $footer_hours    = array(
 $footer_explore = array(
 	'About Us'    => home_url( '/about-us/' ),
 	'Our Work'    => home_url( '/ourwork/' ),
-	'Stories'     => home_url( '/stories/' ),
+	'Stories'     => home_url( '/blog/' ),
 	'Blog'        => home_url( '/blog/' ),
-	'Partnership' => home_url( '/partnership/' ),
+	'Partnership' => home_url( '/make-an-appointment/' ),
 	'Contact Us'  => home_url( '/contact-us/' ),
 );
 ?>
@@ -65,8 +65,8 @@ $footer_explore = array(
 							src="<?php echo $footer_logo; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedImage -- theme_mod URL, same pattern as header. ?>"
 							srcset="<?php echo esc_attr( $footer_logo_srcset ); ?>"
 							alt="SITE Enterprise Promotion logo"
-							width="160"
-							height="48"
+							width="152"
+							height="138"
 							decoding="async"
 						>
 					</a>
@@ -120,8 +120,9 @@ $footer_explore = array(
 				<h2 class="site-footer__heading">Explore</h2>
 				<ul class="site-footer__links">
 					<?php foreach ( $footer_explore as $footer_label => $footer_url ) : ?>
+						<?php $footer_is_external = ( 0 === strpos( $footer_url, 'http' ) && false === strpos( $footer_url, wp_parse_url( home_url(), PHP_URL_HOST ) ) ); ?>
 						<li>
-							<a href="<?php echo esc_url( $footer_url ); ?>">
+							<a href="<?php echo esc_url( $footer_url ); ?>"<?php echo $footer_is_external ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
 								<span><?php echo esc_html( $footer_label ); ?></span>
 								<svg class="site-footer__link-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 							</a>
@@ -157,9 +158,11 @@ $footer_explore = array(
 							<span>+254 (0) 721 229029</span>
 						</a>
 					</li>
-					<li class="site-footer__contact-static">
-						<svg class="site-footer__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 21s-7-5.1-7-11a7 7 0 1 1 14 0c0 5.9-7 11-7 11z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="2"/></svg>
-						<span>ISMA Building, Along Ngong Road, Nairobi</span>
+					<li>
+						<a class="site-footer__contact-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=Waleeh%20Motors%2C%20Ngong%20Road%2C%20Nairobi%2C%20Kenya" target="_blank" rel="noopener noreferrer" aria-label="Get directions to Waleeh Motors, Ngong Road, Nairobi">
+							<svg class="site-footer__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 21s-7-5.1-7-11a7 7 0 1 1 14 0c0 5.9-7 11-7 11z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="2"/></svg>
+							<span>ISMA Building, Along Ngong Road, Nairobi</span>
+						</a>
 					</li>
 				</ul>
 			</section>

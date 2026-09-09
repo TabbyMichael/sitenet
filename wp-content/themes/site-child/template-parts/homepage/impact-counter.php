@@ -23,7 +23,7 @@ $metrics = array(
 	array(
 		'number' => '51,000+',
 		'label'  => 'Persons With Disabilities (PWDs)',
-		'icon'   => 'fa-briefcase',
+		'icon'   => 'fa-wheelchair',
 	),
 	array(
 		'number' => '460+',
