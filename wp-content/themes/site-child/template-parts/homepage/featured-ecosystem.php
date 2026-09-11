@@ -81,10 +81,17 @@ $fallback_items = array(
 
 						<a href="<?php the_permalink(); ?>" class="ecosystem-card-image-link" tabindex="-1" aria-hidden="true">
 							<div class="ecosystem-card-thumb">
-								<?php if ( has_post_thumbnail() ) : ?>
+								<?php
+								$ecosystem_thumb_id = get_post_thumbnail_id();
+								if ( ! $ecosystem_thumb_id && 'site_story' === get_post_type() && function_exists( 'get_field' ) ) {
+									$ecosystem_hero = get_field( 'hero_image' );
+									$ecosystem_thumb_id = is_array( $ecosystem_hero ) ? (int) ( $ecosystem_hero['ID'] ?? 0 ) : (int) $ecosystem_hero;
+								}
+								?>
+								<?php if ( $ecosystem_thumb_id ) : ?>
 									<?php
 									echo wp_get_attachment_image(
-										get_post_thumbnail_id(),
+										$ecosystem_thumb_id,
 										'large',
 										false,
 										array(

@@ -3,6 +3,15 @@
 > **Production restoration is done and verified.** The site is running production
 > content at `http://localhost:10003`. Day 1 is closed — proceed to Day 2.
 
+> ⚠️ **HISTORICAL RECORD — environment values below are stale.**
+> This document records the state on 2026-09-06 and is kept as evidence of the
+> restoration. Since then: LocalWP is **no longer running**; the live site is the
+> Docker stack at `http://localhost:2026`; `site-child` is now **v1.1.0 and
+> ACTIVE** (not the v1.0.0 inactive scaffold described below); WordPress is **7.1**
+> and PHP **8.2.23**. For current values see `Docs/README.md` and
+> `.clinerules/environment-and-testing.md`. For what was actually built afterwards,
+> see `Docs/REVAMP-STATUS.md`.
+
 ---
 
 ## Executive Summary
@@ -16,7 +25,7 @@
 | 5 | URL migration prod → local | ✅ Already local | DB `siteurl`/`home` = `http://localhost:10003` (restore log warned "different from https://sitenet.org" — i.e. already migrated) |
 | 6 | Database integrity | ✅ Verified | 79 tables restored; fresh DB backup succeeded post-restore |
 | 7 | WP_DEBUG enabled | ✅ Done | `wp-config.php` edited (WP_DEBUG=true, LOG=true, DISPLAY=false); `php -l` clean |
-| 8 | Plugin configurations documented | ✅ Done | `Docs/plugin-configurations.md` (23 active plugins, versions, dispositions) |
+| 8 | Plugin configurations documented | ✅ Done | `Docs/day-01/PLUGIN-CONFIGURATION.md` (23 active plugins, versions, dispositions) |
 | 9 | Site functionality test | ✅ Passed | HTTP 200, correct title, REST API live, wp-login 200 |
 
 ---
@@ -38,7 +47,7 @@
 ### Database snapshot (extracted from fresh post-restore backup)
 - 79 tables, `db_version` 61833
 - `blogname` = **SITE Enterprise Promotion** (production name ✓)
-- 23 active plugins, active theme = `the-landscaper` (see `Docs/plugin-configurations.md`)
+- 23 active plugins, active theme = `the-landscaper` (see `Docs/day-01/PLUGIN-CONFIGURATION.md`)
 - Production origin paths visible (`/home/gundihil/public_html/s/site/`)
 
 ### Filesystem
@@ -73,7 +82,7 @@
 1. Activate `site-child` (already scaffolded — verify asset dependencies)
 2. Register custom post types: Projects, Stories, Resources, Partners
 3. Register taxonomies: Programs (primary), Locations, Themes, Resource Types
-4. Begin plugin cleanup per `Docs/plugin-configurations.md` dispositions
+4. Begin plugin cleanup per `Docs/day-01/PLUGIN-CONFIGURATION.md` dispositions
 
 ---
 **Last Updated**: 2026-09-06

@@ -17,7 +17,7 @@ $focus_areas = array(
 		'image'        => content_url( 'uploads/2021/11/Gallery-1-850x567.jpg' ),
 		'image_srcset' => content_url( 'uploads/2021/11/Gallery-1-850x567.jpg' ) . ' 850w, ' . content_url( 'uploads/2021/11/Gallery-1-1536x1025.jpg' ) . ' 1536w',
 		'summary'      => 'Market-led technical, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
-		'link'         => home_url( '/program/skilling-youth-for-employment/' ),
+		'link'         => home_url( '/sample-page-2/' ),
 	),
 	array(
 		'title'        => 'Enterprise Development and Value Chains',
@@ -26,7 +26,7 @@ $focus_areas = array(
 		'image'        => content_url( 'uploads/2021/11/wrm-848x450.png' ),
 		'image_srcset' => '',
 		'summary'      => 'Business development and value-chain strengthening for entrepreneurs, MSMEs, and producer groups seeking better markets and sustainable growth.',
-		'link'         => home_url( '/program/enterprise-development-value-chains/' ),
+		'link'         => home_url( '/enterprise-development-and-value-chains/' ),
 	),
 	array(
 		'title'        => 'Empowering Women for Employment',
@@ -35,7 +35,7 @@ $focus_areas = array(
 		'image'        => content_url( 'uploads/2021/11/bilatha-850x567.jpg' ),
 		'image_srcset' => content_url( 'uploads/2021/11/bilatha-850x567.jpg' ) . ' 850w, ' . content_url( 'uploads/2021/11/bilatha-1024x647.jpg' ) . ' 1024w',
 		'summary'      => 'Practical pathways for women and marginalized groups to build income, leadership, resilience, and stronger decision-making power.',
-		'link'         => home_url( '/program/empowering-women-for-employment/' ),
+		'link'         => home_url( '/empowering-women-for-employment/' ),
 	),
 	array(
 		'title'        => 'Food Security & Climate Action',
@@ -44,7 +44,7 @@ $focus_areas = array(
 		'image'        => content_url( 'uploads/2021/11/harbole-water-850x567.jpg' ),
 		'image_srcset' => '',
 		'summary'      => 'Climate-smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
-		'link'         => home_url( '/program/food-security-climate-action/' ),
+		'link'         => home_url( '/climate-actions/' ),
 	),
 );
 ?>

@@ -38,3 +38,51 @@
 * **`site-taxonomies.php`**: Registers custom taxonomies for programs and thematic areas.
 
 > **Note**: This represents the MU plugins architecture as of Day 1. Later additions include `site-acf-fields.php`, `site-hero-seed.php`, and REST-enabled taxonomy registrations.
+
+---
+
+## Production Snapshot Provenance
+
+> Merged from the former `Docs/plugin-configurations.md` (removed 2026-09-10 as a
+> near-duplicate). Version numbers below were read from each plugin's main file
+> header on disk; the plugin table was extracted from the restored production
+> database.
+
+* **Source of truth**: `backup_2026-09-06-0539_SITE_Enterprise_Promotion_7e99c34293fb-db.gz` (79 tables)
+* **Production origin path**: `/home/gundihil/public_html/s/site/` (visible in the `recently_edited` option)
+* **Admin email**: gurphil@gmail.com
+* **Active plugin count**: 23
+
+### Content signals observed in the restored database
+
+* `show_on_front` = `page` — the homepage is a real WP page (ID 7149)
+* 35 `INSERT` batches into `wp_posts` — production content present
+* 23 × `woocommerce-placeholder-*.png` in `uploads/` — still present, never actioned
+
+### Disposition notes carried forward
+
+The full plugin stack is the "heavy load" identified in the Day 1 audit. Cleanup
+was scheduled from Day 2, on the principle that **nothing is removed until its
+replacement content or pattern exists**. As of 2026-09-10 that cleanup has **not**
+been performed — all 23 plugins remain active. See `Docs/REVAMP-STATUS.md`.
+
+---
+
+## ⚠️ Environment Values Have Changed Since Day 1
+
+The Day 1 snapshot recorded the LocalWP environment. That is no longer the live
+target. Current verified values (2026-09-10):
+
+| Item | Day 1 (stale) | Current (verified) |
+| --- | --- | --- |
+| Site URL | `http://localhost:10003` | `http://localhost:2026` (Docker) |
+| Active theme | `the-landscaper` (child inactive) | **`site-child` v1.1.0 active** |
+| Parent theme | — | `the-landscaper` v2.6.1 |
+| WordPress | 6.6.1 | **7.1** |
+| PHP | 8.2.29 (LocalWP) | **8.2.23** (Docker container) |
+| MySQL | 8.4.0 (LocalWP) | 8.4 (Docker `sitenet-db`) |
+| DB `siteurl`/`home` | `http://localhost:10003` | Cloudflare Quick Tunnel hostname |
+
+LocalWP is **not running**; the Docker stack in `docker/` serves the site directly
+from this repo's working tree. See `.clinerules/environment-and-testing.md` for the
+verified command set.
