@@ -1,184 +1,136 @@
-# SITE Website 10-Day Revamp - Documentation Overview
+# SITE Website Revamp — Documentation Index
 
-## Project Overview
-This documentation outlines a comprehensive 10-day implementation plan to revamp the SITE Enterprise Promotion Kenya website, applying **Designing Data-Intensive Applications (DDIA)** principles (Reliability, Scalability, Maintainability) while addressing 13 critical improvement areas.
+> **Read `Docs/REVAMP-STATUS.md` first.** It is the single source of truth for
+> what is actually built, verified against the live site on 2026-09-10.
+>
+> This folder was restructured on 2026-09-10. The ten `DAY-01.md` … `DAY-10.md`
+> planning documents were removed: they specified files that were never created
+> (11 of 13 MU plugins, ~24 theme files) and claimed all 13 priorities were
+> complete, which verification proved false. Their accurate content survives in
+> `Docs/day-01/` and `Docs/day-02/`. All removals are recoverable via git.
 
-## DDIA Principles Applied
+---
 
-### Reliability
-- **Fault Tolerance**: Staging environment, backup procedures, rollback plans
-- **Error Prevention**: Content validation, input sanitization, automated testing
-- **Data Integrity**: Database constraints, taxonomy validation, backup verification
+## Start here
 
-### Scalability
-- **Performance**: Image optimization, lazy loading, CDN integration, caching strategies
-- **Load Handling**: Efficient database queries, AJAX filtering, pagination
-- **Resource Management**: Optimized asset delivery, compression, minification
+| Document | Purpose |
+| --- | --- |
+| [`REVAMP-STATUS.md`](REVAMP-STATUS.md) | **Verified status** of all 13 specification items, with evidence |
+| [`ROADMAP.md`](ROADMAP.md) | Phased plan (0–7) with acceptance criteria and effort estimates |
+| [`CONTENT-PIPELINE.md`](CONTENT-PIPELINE.md) | The five supplied beneficiary stories and how they populate `site_story` |
 
-### Maintainability
-- **Operability**: Clear documentation, monitoring setup, automated tools
-- **Simplicity**: Modular components, clean code architecture, avoid unnecessary complexity
-- **Evolvability**: Custom post types, flexible taxonomies, template hierarchy
+## Architecture specifications (Day 2 — accurate)
 
-### Trade-offs Analysis
-- **Theme Choice**: Custom development vs. pre-built theme (cost vs. timeline)
-- **Plugin Usage**: Minimal plugins vs. feature richness (performance vs. functionality)
-- **Image Optimization**: Quality vs. file size (user experience vs. load times)
+| Document | Purpose |
+| --- | --- |
+| [`day-02/CONTENT-ARCHITECTURE.md`](day-02/CONTENT-ARCHITECTURE.md) | CPTs, taxonomies, entity relationships, architectural rationale |
+| [`day-02/ACF-FIELD-ARCHITECTURE.md`](day-02/ACF-FIELD-ARCHITECTURE.md) | All four field groups, field by field |
+| [`day-02/THEME-AUDIT.md`](day-02/THEME-AUDIT.md) | Parent theme audit: enqueues, features, menus, image sizes |
+| [`day-02/CHILD-THEME-VERIFICATION.md`](day-02/CHILD-THEME-VERIFICATION.md) | Child theme activation verification and regression findings |
+| [`day-02/CONTENT-MIGRATION-STRATEGY.md`](day-02/CONTENT-MIGRATION-STRATEGY.md) | Migration approach for existing content |
 
-## 13 Revamp Priorities
+## Foundation record (Day 1 — historical)
 
-1. **Homepage Redesign** - Make SITE understandable within seconds
-2. **"Our Work" Landing Page** - Rebuild with reusable project components
-3. **Image Placeholder Replacement** - Remove/replace all 850×450 placeholders
-4. **Interactive Media Gallery** - Filterable gallery with lightbox and metadata
-5. **Media Metadata Standards** - Naming conventions and comprehensive metadata
-6. **Partners & Funders Carousel** - Interactive logo carousel with relationships
-7. **Story Readability** - Enhanced typography and presentation
-8. **Knowledge Resources Hub** - Searchable, filterable resource library
-9. **Taxonomy Cleanup** - Primary program + secondary theme/tag system
-10. **Brand Identity** - Favicon, logo, structured data, social sharing
-11. **SEO Optimization** - Meta titles, descriptions, structured data
-12. **Content Quality** - Remove dummy content, fix inconsistencies
-13. **WordPress Architecture** - Reusable content types and CMS workflow
+| Document | Purpose |
+| --- | --- |
+| [`DAY-01-STATUS.md`](DAY-01-STATUS.md) | Day 1 completion record with verification evidence |
+| [`day-01/RESTORATION.md`](day-01/RESTORATION.md) | Production restoration procedure and outcome |
+| [`day-01/BACKUP-PROCEDURE.md`](day-01/BACKUP-PROCEDURE.md) | Backup sets and verification |
+| [`day-01/ENVIRONMENT.md`](day-01/ENVIRONMENT.md) | LocalWP environment record |
+| [`day-01/PLUGIN-CONFIGURATION.md`](day-01/PLUGIN-CONFIGURATION.md) | Plugin inventory, dispositions, and current-vs-Day-1 environment values |
 
-## Daily Implementation Structure
+## Operations
 
-### Day 1: Foundation & Production Restoration
-**DDIA Focus: Reliability - Fault Tolerance & Data Integrity**
-- Restore production backup
-- Set up development environment
-- Initialize Git repository
-- Baseline documentation
+| Document | Purpose |
+| --- | --- |
+| [`DEVELOPMENT-WORKFLOW.md`](DEVELOPMENT-WORKFLOW.md) | Branch strategy, commit standards, testing, deployment |
+| [`DOCKER-DEPLOYMENT.md`](DOCKER-DEPLOYMENT.md) | Running the repo with Docker |
+| [`RUN-TO-CLOUDFLARE.md`](RUN-TO-CLOUDFLARE.md) | Public sharing via Cloudflare Quick Tunnel |
+| [`RECOVERY-PROCEDURE.md`](RECOVERY-PROCEDURE.md) | Rollback and recovery checklist |
 
-**See**: [DAY-01.md](DAY-01.md)
+## Agent rules
 
-### Day 2: Theme Architecture & Content Structure
-**DDIA Focus: Maintainability - Simplicity & Evolvability**
-- Create child theme structure
-- Register custom post types
-- Define taxonomies
-- Set up ACF field groups
+| Document | Purpose |
+| --- | --- |
+| `.clinerules/wordpress-agent.md` | Role, verified architecture, DO-NOT-TOUCH list, report format |
+| `.clinerules/environment-and-testing.md` | Verified command set, broken commands, forbidden operations |
+| `.clinerules/design-rules.md` | Enqueue chain, CSS tokens, dark mode, responsive, accessibility |
 
-**See**: [DAY-02.md](DAY-02.md)
+---
 
-### Day 3: Homepage Redesign (Priority #1)
-**DDIA Focus: Scalability - Performance & Load Handling**
-- Hero section with value proposition
-- Four focus areas with featured stories
-- Impact figures section
-- Partners carousel
-- Performance optimization
+## The 13 specification priorities
 
-**See**: [DAY-03.md](DAY-03.md)
+Source: the client's *Proposed SITE Website Revamp*. Status verified 2026-09-10 —
+see `REVAMP-STATUS.md` for the evidence behind each.
 
-### Day 4: "Our Work" Landing Page Rebuild (Priority #2)
-**DDIA Focus: Data Model Design - Matching Access Patterns**
-- Remove broken SiteOrigin widgets
-- Build reusable project components
-- AJAX filtering system
-- Program cards with featured stories
+| # | Priority | Status |
+| --- | --- | --- |
+| 1 | Homepage redesign | 🟢 ~85% |
+| 2 | "Our Work" landing page rebuild | 🟡 ~60% |
+| 3 | Placeholder image replacement | 🔴 not started |
+| 4 | Interactive media gallery | 🔴 not started |
+| 5 | Media metadata standards | 🔴 not started |
+| 6 | Partners & funders carousel | 🟢 done |
+| 7 | Story readability | 🟡 list only |
+| 8 | Knowledge Resources hub | 🔴 not started |
+| 9 | Taxonomy cleanup | 🟡 registered, not applied |
+| 10 | Brand identity | 🟢 ~90% |
+| 11 | SEO optimisation | 🟡 plugin-driven only |
+| 12 | Content quality | 🔴 not started |
+| 13 | WordPress architecture | 🟡 built but empty |
 
-**See**: [DAY-04.md](DAY-04.md)
+---
 
-### Day 5: Image Placeholder Replacement & Media Gallery (Priority #3 & #4)
-**DDIA Focus: Scalability - Performance & Resource Management**
-- Site-wide placeholder audit
-- Image optimization pipeline
-- Filterable gallery with masonry layout
-- Lightbox with metadata display
+## Current environment (verified)
 
-**See**: [DAY-05.md](DAY-05.md)
+| Item | Value |
+| --- | --- |
+| Site URL | `http://localhost:2026` (Docker) |
+| Active theme | `site-child` v1.1.0 |
+| Parent theme | `the-landscaper` v2.6.1 |
+| WordPress | 7.1 |
+| PHP | 8.2.23 (container) |
+| MySQL | 8.4 (`sitenet-db`, host port 3307) |
+| LocalWP | **not running** |
 
-### Day 6: Media Metadata Standards (Priority #5)
-**DDIA Focus: Maintainability - Operability & Documentation**
-- Naming convention enforcement
-- Automatic metadata validation
-- Bulk metadata tools
-- Media library enhancements
+> The root `README.md` still states WordPress 6.6.1 and PHP 8.2.29. That is stale;
+> the values above were read from the running container and the repo working tree.
 
-**See**: [DAY-06.md](DAY-06.md)
+---
 
-### Day 7: Partners, Stories & Resources (Priority #6, #7, #8)
-**DDIA Focus: Evolvability - Modular Design**
-- Partner carousel system
-- Story page templates
-- Knowledge hub interface
-- Resource download system
+## Development principles
 
-**See**: [DAY-07.md](DAY-07.md)
+Carried forward from the original plan and still governing:
 
-### Day 8: Taxonomy, Branding & SEO (Priority #9, #10, #11)
-**DDIA Focus: Reliability - Consistency & Data Integrity**
-- Taxonomy cleanup
-- Brand identity implementation
-- SEO metadata automation
-- Structured data configuration
+* **Reliability** — fault tolerance, data integrity, safe recovery
+* **Data integrity** — pre-change snapshots, verification before destructive actions
+* **Reproducibility** — version-controlled custom code, explicit migration steps
+* **Separation of concerns** — content architecture in `mu-plugins/`, presentation in the child theme
+* **Local testing** — full verification before any deployment
 
-**See**: [DAY-08.md](DAY-08.md)
+Performance targets: page load **< 3s**, mobile usability **> 90**, Core Web Vitals passing.
 
-### Day 9: Content Quality & Architecture (Priority #12, #13)
-**DDIA Focus: Maintainability - Simplicity & Error Prevention**
-- Content audit and cleanup
-- Custom admin interfaces
-- Content validation rules
-- WordPress architecture improvements
+---
 
-**See**: [DAY-09.md](DAY-09.md)
+## Key technologies
 
-### Day 10: Testing, Performance & Launch Preparation
-**DDIA Focus: Reliability - Fault Tolerance & Performance**
-- Cross-browser testing
-- Performance optimization
-- Accessibility testing
-- Deployment procedures
-- Documentation finalization
+* **WordPress 7.1** with the `site-child` child theme
+* **ACF Pro 5.9.5** — field groups registered programmatically, not via the admin UI
+* **SiteOrigin Panels / Elementor** — present on legacy content (464 / 438 posts); being phased out for new work
+* **Swiper 11** — the only approved JS library, already loaded
+* **Bootstrap 3.4.1** and **Font Awesome 4.7.0** — inherited from the parent theme
+* **Docker** — the live test environment; the repo working tree *is* the webroot
 
-**See**: [DAY-10.md](DAY-10.md)
+---
 
-## File Creation Summary
+## Documentation maintenance
 
-### Total New Files: 40+
-- **Theme Files**: 23 files (child theme, templates, template parts, assets)
-- **Must-Use Plugins**: 13 files (custom post types, taxonomies, optimization tools)
-- **Documentation**: 4 files (standards, audit reports, checklists)
-- **Configuration**: 3 files (gitignore, README, favicon)
+* Update `REVAMP-STATUS.md` whenever a specification item's status changes.
+* Record new content decisions in `CONTENT-PIPELINE.md`.
+* Do not re-introduce day-numbered planning documents that describe unbuilt work.
+  If a plan is needed, add it to `ROADMAP.md` with acceptance criteria.
+* If a document and the filesystem disagree, **the filesystem wins** — fix the document.
 
-### Modified Files: 5+
-- `wp-config.php` - Development configuration
-- `wp-content/themes/site-child/functions.php` - Theme enhancements
-- Theme header and other core files for branding/SEO
+---
+**Last updated**: 2026-09-10
 
-## Success Metrics
-- Page load time < 3 seconds (Core Web Vitals)
-- Mobile usability score > 90
-- SEO score improvement > 30%
-- Content management efficiency (time to publish new projects/stories)
-- User engagement (time on site, bounce rate improvement)
-
-## Getting Started
-
-1. **Review Daily Plans**: Start with [DAY-01.md](DAY-01.md) and proceed sequentially
-2. **Set Up Environment**: Follow Day 1 instructions for production restoration
-3. **Track Progress**: Use the checklists in each daily file
-4. **Test Thoroughly**: Complete Day 10 testing before launch
-5. **Monitor Performance**: Use the monitoring tools implemented throughout
-
-## Key Technologies
-- **WordPress**: CMS platform
-- **ACF Pro**: Custom field management
-- **SiteOrigin Panels**: Page builder (being phased out)
-- **Elementor**: Alternative page builder
-- **WooCommerce**: E-commerce functionality
-- **LocalWP**: Local development environment
-
-## Support & Documentation
-- Daily implementation files contain detailed code examples
-- Each file includes specific deliverables and success criteria
-- Troubleshooting tips included in relevant sections
-- Performance benchmarks provided for optimization validation
-
-## Notes
-- This plan assumes a fresh LocalWP installation with production backup ready
-- All code changes should be tested in local environment first
-- Backup procedures should be followed before major changes
-- Performance monitoring should continue post-launch

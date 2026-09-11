@@ -44,8 +44,7 @@ $footer_hours    = array(
 $footer_explore = array(
 	'About Us'    => home_url( '/about-us/' ),
 	'Our Work'    => home_url( '/ourwork/' ),
-	'Stories'     => home_url( '/blog/' ),
-	'Blog'        => home_url( '/blog/' ),
+	'Stories'     => home_url( '/stories/' ),
 	'Partnership' => home_url( '/make-an-appointment/' ),
 	'Contact Us'  => home_url( '/contact-us/' ),
 );

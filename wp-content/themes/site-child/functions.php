@@ -260,6 +260,343 @@ function site_child_enqueue_footer_assets() {
 add_action( 'wp_enqueue_scripts', 'site_child_enqueue_footer_assets', 20 );
 
 /**
+ * Enqueue Our Work page assets.
+ *
+ * Loaded only on the Our Work page template. CSS + vanilla JS are scoped to
+ * .site-our-work and do not affect the locked navbar, header, or footer.
+ * Loaded before dark.css so both light and dark palettes are self-contained.
+ */
+function site_child_enqueue_our_work_assets() {
+	if ( ! is_page_template( 'page-our-work.php' ) ) {
+		return;
+	}
+
+	$ow_css_path = get_stylesheet_directory() . '/assets/css/our-work.css';
+	$ow_js_path  = get_stylesheet_directory() . '/assets/js/our-work.js';
+
+	wp_enqueue_style(
+		'site-our-work',
+		get_stylesheet_directory_uri() . '/assets/css/our-work.css',
+		array( 'site-child-style', 'site-header', 'site-footer' ),
+		file_exists( $ow_css_path ) ? (string) filemtime( $ow_css_path ) : '1.0.0'
+	);
+
+	wp_enqueue_script(
+		'site-our-work',
+		get_stylesheet_directory_uri() . '/assets/js/our-work.js',
+		array(),
+		file_exists( $ow_js_path ) ? (string) filemtime( $ow_js_path ) : '1.0.0',
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+}
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_our_work_assets', 25 );
+/**
+ * Enqueue Our Work (page-ourwork.php) assets.
+ *
+ * Loaded only on the Our Work page template. CSS is scoped to
+ * .site-ourwork and does not affect the locked navbar, header, or footer.
+ * Loaded before dark.css so both light and dark palettes are self-contained.
+ */
+function site_child_enqueue_ourwork_assets() {
+	if ( ! is_page_template( 'page-ourwork.php' ) ) {
+		return;
+	}
+
+	$owk_css_path = get_stylesheet_directory() . '/assets/css/ourwork.css';
+
+	wp_enqueue_style(
+		'site-ourwork',
+		get_stylesheet_directory_uri() . '/assets/css/ourwork.css',
+		array( 'site-child-style', 'site-header', 'site-footer' ),
+		file_exists( $owk_css_path ) ? (string) filemtime( $owk_css_path ) : '1.0.0'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_ourwork_assets', 26 );
+
+
+
+/**
+ * Enqueue About Us page assets.
+ *
+ * Loaded only on the About Us page template. CSS is scoped to
+ * .site-about-us and does not affect the locked navbar, header, or footer.
+ * Loaded before dark.css so both light and dark palettes are self-contained.
+ */
+function site_child_enqueue_about_us_assets() {
+	if ( ! is_page_template( 'page-about-us.php' ) ) {
+		return;
+	}
+
+	$au_css_path = get_stylesheet_directory() . '/assets/css/about-us.css';
+
+	wp_enqueue_style(
+		'site-about-us',
+		get_stylesheet_directory_uri() . '/assets/css/about-us.css',
+		array( 'site-child-style', 'site-header', 'site-footer' ),
+		file_exists( $au_css_path ) ? (string) filemtime( $au_css_path ) : '1.0.0'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_about_us_assets', 25 );
+
+/**
+ * Enqueue Stories (blog) page assets.
+ *
+ * Loaded only on the blog posts page. CSS + vanilla JS are scoped to
+ * .site-stories and do not affect the locked navbar, header, or footer.
+ * Loaded before dark.css so both light and dark palettes are self-contained.
+ */
+function site_child_enqueue_stories_assets() {
+	if ( ! is_home() && ! is_post_type_archive( 'site_story' ) ) {
+		return;
+	}
+
+	$st_css_path = get_stylesheet_directory() . '/assets/css/stories.css';
+	$st_js_path  = get_stylesheet_directory() . '/assets/js/stories.js';
+
+	wp_enqueue_style(
+		'site-stories',
+		get_stylesheet_directory_uri() . '/assets/css/stories.css',
+		array( 'site-child-style', 'site-header', 'site-footer' ),
+		file_exists( $st_css_path ) ? (string) filemtime( $st_css_path ) : '1.0.0'
+	);
+
+	wp_enqueue_script(
+		'site-stories',
+		get_stylesheet_directory_uri() . '/assets/js/stories.js',
+		array(),
+		file_exists( $st_js_path ) ? (string) filemtime( $st_js_path ) : '1.0.0',
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+}
+
+/**
+ * Enqueue Resources page assets.
+ *
+ * Loaded only on the Resources page template. CSS is scoped to
+ * .site-resources and does not affect the locked navbar, header, or footer.
+ * Loaded before dark.css so both light and dark palettes are self-contained.
+ */
+function site_child_enqueue_resources_assets() {
+	if ( ! is_page_template( 'page-resources.php' ) ) {
+		return;
+	}
+
+	$res_css_path = get_stylesheet_directory() . '/assets/css/resources.css';
+
+	wp_enqueue_style(
+		'site-resources',
+		get_stylesheet_directory_uri() . '/assets/css/resources.css',
+		array( 'site-child-style', 'site-header', 'site-footer' ),
+		file_exists( $res_css_path ) ? (string) filemtime( $res_css_path ) : '1.0.0'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_resources_assets', 25 );
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_stories_assets', 25 );
+
+/**
+ * Enqueue single-story (site_story detail) assets.
+ *
+ * Loaded only on singular site_story posts. CSS is scoped to
+ * .site-story-single and does not affect the locked navbar, header, or
+ * footer. Loaded before dark.css so both light and dark palettes are
+ * self-contained.
+ */
+function site_child_enqueue_story_single_assets() {
+	if ( ! is_singular( 'site_story' ) ) {
+		return;
+	}
+
+	$ss_css_path = get_stylesheet_directory() . '/assets/css/story-single.css';
+
+	wp_enqueue_style(
+		'site-story-single',
+		get_stylesheet_directory_uri() . '/assets/css/story-single.css',
+		array( 'site-child-style', 'site-header', 'site-footer' ),
+		file_exists( $ss_css_path ) ? (string) filemtime( $ss_css_path ) : '1.0.0'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_story_single_assets', 25 );
+
+/**
+ * Force the modernised revamp shells for the nine programme + resource pages.
+ *
+ * WHY: these nine pages carry legacy Elementor/SiteOrigin content. Elementor's
+ * Modules\PageTemplates\Module::template_include (priority 11) replaces the
+ * resolved template with the parent theme's page.php for builder-owned pages,
+ * so the native page-{slug}.php hierarchy never takes effect (verified via
+ * get_page_template() + $wp_filter inspection in the live stack). Hooking
+ * `template_include` at 99 deliberately runs after every plugin loader
+ * (RevSlider/WooCommerce @10, Elementor @11) and reasserts the shell.
+ *
+ * Locked boundaries: header + footer are untouched — each shell calls
+ * get_header()/get_footer() itself. Only the nine slugs below are routed;
+ * every other page (including the Our Work hub and galleries index) keeps
+ * its existing template. Never add a builder-owned page here.
+ *
+ * @param string $template Path to the template WordPress resolved.
+ * @return string Path to the revamp shell for the nine slugs, else $template.
+ */
+function site_child_revamp_page_template( $template ) {
+	if ( ! is_page() ) {
+		return $template;
+	}
+
+	$rv_shells = array(
+		'enterprise-development-and-value-chains' => 'page-enterprise-development-and-value-chains.php',
+		'climate-actions'                         => 'page-climate-actions.php',
+		'empowering-women-for-employment'         => 'page-empowering-women-for-employment.php',
+		'sample-page-2'                           => 'page-sample-page-2.php',
+		'case-studys'                             => 'page-case-studys.php',
+		'irrigation-and-drainage'                 => 'page-irrigation-and-drainage.php',
+		'papers'                                  => 'page-papers.php',
+		'gallery-full-width-2'                    => 'page-gallery-full-width-2.php',
+		'gallery-lightbox'                        => 'page-gallery-lightbox.php',
+	);
+
+	$rv_slug = get_post_field( 'post_name', get_queried_object_id() );
+	if ( ! $rv_slug || ! isset( $rv_shells[ $rv_slug ] ) ) {
+		return $template;
+	}
+
+	$rv_shell = locate_template( array( $rv_shells[ $rv_slug ] ) );
+	return $rv_shell ? $rv_shell : $template;
+}
+add_filter( 'page_template', 'site_child_revamp_page_template', 5 );
+add_filter( 'template_include', 'site_child_revamp_page_template', 99 );
+
+/**
+ * Enqueue assets for the modernised programme + resource pages.
+ *
+ * Loaded ONLY on the revamped pages (programme detail pages, resource
+ * landing pages and the two galleries). CSS + vanilla JS are scoped to
+ * .site-revamp and do not affect the locked navbar, header, or footer.
+ * Registered below priority 30, before dark.css, so the light+dark palette
+ * for these pages is self-contained in revamp.css.
+ */
+function site_child_enqueue_revamp_assets() {
+	$rv_slugs = array(
+		'enterprise-development-and-value-chains',
+		'climate-actions',
+		'empowering-women-for-employment',
+		'sample-page-2',
+		'case-studys',
+		'irrigation-and-drainage',
+		'papers',
+		'gallery-full-width-2',
+		'gallery-lightbox',
+	);
+
+	if ( ! is_page( $rv_slugs ) ) {
+		return;
+	}
+
+	$rv_css_path = get_stylesheet_directory() . '/assets/css/revamp.css';
+	$rv_js_path  = get_stylesheet_directory() . '/assets/js/revamp.js';
+
+	wp_enqueue_style(
+		'site-revamp',
+		get_stylesheet_directory_uri() . '/assets/css/revamp.css',
+		array( 'site-child-style', 'site-header', 'site-footer' ),
+		file_exists( $rv_css_path ) ? (string) filemtime( $rv_css_path ) : '1.0.0'
+	);
+
+	wp_enqueue_script(
+		'site-revamp',
+		get_stylesheet_directory_uri() . '/assets/js/revamp.js',
+		array(),
+		file_exists( $rv_js_path ) ? (string) filemtime( $rv_js_path ) : '1.0.0',
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+}
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_revamp_assets', 25 );
+
+/**
+ * Build story cards for a category (used by the revamped programme pages).
+ *
+ * Returns an array of cards (title|link|image|date) pulled from published
+ * posts assigned to $category_slug, newest first. Falls back to an empty
+ * array, which pages render as a friendly empty state.
+ */
+function site_child_revamp_stories( $category_slug, $limit = 3 ) {
+	$card_stack = array();
+
+	$category = get_category_by_slug( $category_slug );
+	if ( ! $category ) {
+		return $card_stack;
+	}
+
+	$story_posts = get_posts(
+		array(
+			'post_type'      => 'post',
+			'cat'            => $category->term_id,
+			'posts_per_page' => absint( $limit ),
+			'post_status'    => 'publish',
+			'no_found_rows'  => true,
+		)
+	);
+
+	foreach ( $story_posts as $story_post ) {
+		$story_image = '';
+		$story_thumb = get_post_thumbnail_id( $story_post );
+		if ( $story_thumb ) {
+			$story_image = wp_get_attachment_image_url( $story_thumb, 'site-story-thumb' );
+			if ( ! $story_image ) {
+				$story_image = wp_get_attachment_image_url( $story_thumb, 'medium' );
+			}
+		}
+
+		$card_stack[] = array(
+			'title' => get_the_title( $story_post ),
+			'link'  => get_permalink( $story_post ),
+			'image' => $story_image ? $story_image : '',
+			'date'  => get_the_date( '', $story_post ),
+		);
+	}
+
+	return $card_stack;
+}
+
+/**
+ * Return a reusable "arrow right" SVG icon.
+ *
+ * Used by the Stories index and site_story archive templates. Centralised here
+ * so both templates share one declaration (defining it in each template would
+ * cause a fatal "Cannot redeclare" error if both ever load in one request).
+ *
+ * @param int $size SVG width/height in pixels.
+ * @return string Raw SVG markup (already escaped for attribute context).
+ */
+function site_child_svg_arrow( $size = 16 ) {
+	$size = absint( $size );
+	return '<svg width="' . $size . '" height="' . $size . '" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+
+/**
+ * Build a styled fallback card image for Our Work items lacking a thumbnail.
+ *
+ * Returns a badge + icon block that matches the designed fallback style.
+ * Centralised here so page-our-work.php does not define its own helper
+ * (which would fatal if the template ever loads twice in one request).
+ *
+ * @param array $item Content item with optional 'badge' and 'icon' keys.
+ * @return string HTML markup for the fallback image.
+ */
+function site_child_ow_get_fallback_image( $item ) {
+	$badge = isset( $item['badge'] ) ? esc_html( $item['badge'] ) : 'Work';
+	$icon  = isset( $item['icon'] ) ? esc_attr( $item['icon'] ) : 'fa-folder';
+	return '<div class="ow-image-fallback" aria-hidden="true"><span class="ow-image-fallback__icon"><i class="fa ' . $icon . '"></i></span><span class="ow-image-fallback__label">' . $badge . '</span></div>';
+}
+
+/**
  * Output the custom favicon + apple-touch-icon links.
  *
  * Assets live in the child theme (assets/images) rather than

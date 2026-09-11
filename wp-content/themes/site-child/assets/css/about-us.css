@@ -1,0 +1,656 @@
+/* ==========================================================================
+   SITE — About Us page content
+   --------------------------------------------------------------------------
+   Locked boundaries: header + footer are untouched. This stylesheet styles
+   ONLY the main content area between them ( .site-about-us ).
+
+   Supports light/dark modes via the existing html[data-theme="dark"]
+   attribute set by assets/js/theme-init.js.
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------- */
+/* 1. CSS variables scoped to the About Us content area                       */
+/* -------------------------------------------------------------------------- */
+.site-about-us {
+	/* Light mode palette */
+	--au-bg: #f7f7f5;
+	--au-surface: #ffffff;
+	--au-surface-raised: #fcfcfb;
+	--au-ink: #171717;
+	--au-heading: #111111;
+	--au-text: #4a4a48;
+	--au-muted: #737373;
+	--au-border: rgba(0, 0, 0, 0.08);
+	--au-border-strong: rgba(0, 0, 0, 0.12);
+	--au-accent: #f9c802;
+	--au-accent-dark: #7a6100;
+	--au-accent-text: #1a1500;
+	--au-green: #01622c;
+	--au-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+	--au-shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.06), 0 16px 40px rgba(0, 0, 0, 0.10);
+	--au-radius: 16px;
+	--au-radius-sm: 12px;
+	--au-max-width: 1280px;
+	--au-transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+	--au-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, sans-serif;
+
+	background-color: var(--au-bg);
+	color: var(--au-text);
+	font-family: var(--au-font);
+	line-height: 1.6;
+}
+
+[data-theme="dark"] .site-about-us {
+	/* Dark mode palette */
+	--au-bg: #090b0d;
+	--au-surface: #111417;
+	--au-surface-raised: #15191d;
+	--au-ink: #f5f5f5;
+	--au-heading: #ffffff;
+	--au-text: #a5a9b0;
+	--au-muted: #7d828a;
+	--au-border: rgba(255, 255, 255, 0.10);
+	--au-border-strong: rgba(255, 255, 255, 0.16);
+	--au-accent: #f9c802;
+	--au-accent-dark: #e0b402;
+	--au-accent-text: #111111;
+	--au-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.40), 0 8px 24px rgba(0, 0, 0, 0.35);
+	--au-shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.45), 0 16px 40px rgba(0, 0, 0, 0.50);
+}
+
+/* Smooth theme transitions for all themed properties */
+.site-about-us,
+.site-about-us *,
+.site-about-us *::before,
+.site-about-us *::after {
+	transition: background-color 250ms ease,
+		color 250ms ease,
+		border-color 250ms ease,
+		box-shadow 250ms ease;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 2. Container + section spacing                                             */
+/* -------------------------------------------------------------------------- */
+.site-about-us .au-container {
+	width: 100%;
+	max-width: var(--au-max-width);
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 24px;
+	padding-right: 24px;
+}
+
+.site-about-us .au-hero {
+	padding: 56px 0 32px;
+}
+
+.site-about-us .au-mvv {
+	padding: 24px 0 48px;
+}
+
+.site-about-us .au-story {
+	padding: 48px 0;
+}
+
+.site-about-us .au-stats {
+	padding: 48px 0;
+}
+
+.site-about-us .au-focus {
+	padding: 48px 0;
+}
+
+.site-about-us .au-cta {
+	padding: 32px 0 96px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 3. Eyebrow + headings                                                      */
+/* -------------------------------------------------------------------------- */
+.site-about-us .au-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	color: var(--au-accent-dark);
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	margin-bottom: 12px;
+}
+
+[data-theme="dark"] .site-about-us .au-eyebrow {
+	color: var(--au-accent);
+}
+
+.site-about-us .au-eyebrow::before {
+	content: "";
+	display: inline-block;
+	width: 28px;
+	height: 2px;
+	background-color: var(--au-accent);
+	border-radius: 2px;
+}
+
+.site-about-us .au-section-title {
+	color: var(--au-heading);
+	font-size: clamp(26px, 2.8vw, 36px);
+	font-weight: 800;
+	line-height: 1.15;
+	letter-spacing: -0.02em;
+	margin: 0 0 14px;
+}
+
+.site-about-us .au-section-lead {
+	color: var(--au-text);
+	font-size: 16px;
+	line-height: 1.65;
+	max-width: 640px;
+	margin: 0;
+}
+
+.site-about-us .au-section-head {
+	margin-bottom: 40px;
+}
+
+.site-about-us .au-section-head--center {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.site-about-us .au-section-head--center .au-section-lead {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 4. Hero                                                                    */
+/* -------------------------------------------------------------------------- */
+.site-about-us .au-hero__inner {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	max-width: 760px;
+}
+
+.site-about-us .au-hero__title {
+	color: var(--au-heading);
+	font-size: clamp(34px, 4.5vw, 54px);
+	font-weight: 800;
+	line-height: 1.08;
+	letter-spacing: -0.03em;
+	margin: 0;
+}
+
+.site-about-us .au-hero__lead {
+	color: var(--au-text);
+	font-size: clamp(16px, 1.4vw, 19px);
+	line-height: 1.65;
+	margin: 12px 0 0;
+	max-width: 620px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 5. Mission / Vision / Values cards                                         */
+/* -------------------------------------------------------------------------- */
+.site-about-us .au-mvv__grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+}
+
+.site-about-us .au-mvv-card {
+	position: relative;
+	background-color: var(--au-surface);
+	border: 1px solid var(--au-border);
+	border-radius: var(--au-radius);
+	padding: 36px 30px 32px;
+	box-shadow: var(--au-shadow-card);
+	overflow: hidden;
+}
+
+.site-about-us .au-mvv-card::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 4px;
+	background: linear-gradient(90deg, var(--au-accent) 0%, var(--au-green) 100%);
+	border-radius: var(--au-radius) var(--au-radius) 0 0;
+}
+
+.site-about-us .au-mvv-card__icon {
+	width: 56px;
+	height: 56px;
+	border-radius: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 22px;
+	font-size: 22px;
+	background-color: rgba(1, 98, 44, 0.08);
+	color: var(--au-green);
+}
+
+[data-theme="dark"] .site-about-us .au-mvv-card__icon {
+	background-color: rgba(88, 192, 127, 0.12);
+	color: #58c07f;
+}
+
+.site-about-us .au-mvv-card__title {
+	color: var(--au-heading);
+	font-size: 20px;
+	font-weight: 800;
+	line-height: 1.25;
+	letter-spacing: -0.01em;
+	margin: 0 0 12px;
+}
+
+.site-about-us .au-mvv-card__text {
+	color: var(--au-text);
+	font-size: 15px;
+	line-height: 1.65;
+	margin: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 6. Our Story / Timeline                                                    */
+/* -------------------------------------------------------------------------- */
+.site-about-us .au-timeline {
+	position: relative;
+	max-width: 800px;
+	margin: 0 auto;
+	padding-left: 40px;
+}
+
+.site-about-us .au-timeline::before {
+	content: "";
+	position: absolute;
+	top: 8px;
+	bottom: 8px;
+	left: 14px;
+	width: 2px;
+	background: linear-gradient(180deg, var(--au-accent) 0%, var(--au-border) 100%);
+	border-radius: 2px;
+}
+
+.site-about-us .au-timeline__item {
+	position: relative;
+	padding-bottom: 36px;
+}
+
+.site-about-us .au-timeline__item:last-child {
+	padding-bottom: 0;
+}
+
+.site-about-us .au-timeline__dot {
+	position: absolute;
+	top: 4px;
+	left: -33px;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background-color: var(--au-accent);
+	border: 3px solid var(--au-bg);
+	box-shadow: 0 0 0 2px var(--au-accent);
+	z-index: 1;
+}
+
+.site-about-us .au-timeline__year {
+	display: inline-block;
+	color: var(--au-green);
+	font-size: 13px;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	margin-bottom: 6px;
+}
+
+[data-theme="dark"] .site-about-us .au-timeline__year {
+	color: #58c07f;
+}
+
+.site-about-us .au-timeline__title {
+	color: var(--au-heading);
+	font-size: 18px;
+	font-weight: 800;
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+	margin: 0 0 8px;
+}
+
+.site-about-us .au-timeline__text {
+	color: var(--au-text);
+	font-size: 15px;
+	line-height: 1.65;
+	margin: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 7. Impact stats                                                            */
+/* -------------------------------------------------------------------------- */
+.site-about-us .au-stats__grid {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 16px;
+}
+
+.site-about-us .au-stat {
+	text-align: center;
+	background-color: var(--au-surface);
+	border: 1px solid var(--au-border);
+	border-radius: var(--au-radius-sm);
+	padding: 32px 16px 28px;
+	box-shadow: var(--au-shadow-card);
+}
+
+.site-about-us .au-stat__number {
+	display: block;
+	color: var(--au-heading);
+	font-size: clamp(24px, 2.4vw, 32px);
+	font-weight: 800;
+	line-height: 1.15;
+	letter-spacing: -0.02em;
+	margin-bottom: 6px;
+}
+
+.site-about-us .au-stat__label {
+	display: block;
+	color: var(--au-muted);
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 8. Focus area cards                                                        */
+/* -------------------------------------------------------------------------- */
+.site-about-us .au-focus__grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 24px;
+}
+
+.site-about-us .au-focus-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--au-surface);
+	border: 1px solid var(--au-border);
+	border-radius: var(--au-radius);
+	overflow: hidden;
+	box-shadow: var(--au-shadow-card);
+}
+
+.site-about-us .au-focus-card:hover {
+	box-shadow: var(--au-shadow-card-hover);
+	transform: translateY(-4px);
+}
+
+.site-about-us .au-focus-card__media {
+	position: relative;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	background-color: var(--au-surface-raised);
+}
+
+.site-about-us .au-focus-card__media img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 350ms ease;
+}
+
+.site-about-us .au-focus-card:hover .au-focus-card__media img {
+	transform: scale(1.04);
+}
+
+.site-about-us .au-focus-card__body {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	padding: 24px 26px 28px;
+}
+
+.site-about-us .au-focus-card__kicker {
+	display: inline-block;
+	color: var(--au-accent-dark);
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	margin-bottom: 8px;
+}
+
+[data-theme="dark"] .site-about-us .au-focus-card__kicker {
+	color: var(--au-accent);
+}
+
+.site-about-us .au-focus-card__title {
+	color: var(--au-heading);
+	font-size: 18px;
+	font-weight: 800;
+	line-height: 1.25;
+	letter-spacing: -0.01em;
+	margin: 0 0 10px;
+}
+
+.site-about-us .au-focus-card__text {
+	color: var(--au-text);
+	font-size: 14px;
+	line-height: 1.6;
+	margin: 0 0 18px;
+}
+
+.site-about-us .au-focus-card__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	color: var(--au-green);
+	font-size: 14px;
+	font-weight: 700;
+	text-decoration: none;
+	margin-top: auto;
+}
+
+[data-theme="dark"] .site-about-us .au-focus-card__link {
+	color: #58c07f;
+}
+
+.site-about-us .au-focus-card__link:hover,
+.site-about-us .au-focus-card__link:focus-visible {
+	color: var(--au-accent-dark);
+}
+
+[data-theme="dark"] .site-about-us .au-focus-card__link:hover,
+[data-theme="dark"] .site-about-us .au-focus-card__link:focus-visible {
+	color: var(--au-accent);
+}
+
+.site-about-us .au-focus-card__link i {
+	font-size: 11px;
+	transition: transform 200ms ease;
+}
+
+.site-about-us .au-focus-card__link:hover i {
+	transform: translateX(3px);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 9. Closing CTA                                                             */
+/* -------------------------------------------------------------------------- */
+.site-about-us .au-cta__inner {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 32px;
+	padding: 48px 44px;
+	border-radius: var(--au-radius);
+	background: linear-gradient(135deg, var(--au-green) 0%, #014720 100%);
+	color: #ffffff;
+	overflow: hidden;
+}
+
+.site-about-us .au-cta__inner::after {
+	content: "";
+	position: absolute;
+	top: -60px;
+	right: -60px;
+	width: 240px;
+	height: 240px;
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(249, 200, 2, 0.18) 0%, rgba(249, 200, 2, 0) 65%);
+	pointer-events: none;
+}
+
+.site-about-us .au-cta__title {
+	position: relative;
+	color: #ffffff;
+	font-size: clamp(24px, 2.4vw, 32px);
+	font-weight: 800;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+	margin: 0 0 10px;
+}
+
+.site-about-us .au-cta__lead {
+	position: relative;
+	color: rgba(255, 255, 255, 0.82);
+	font-size: 16px;
+	line-height: 1.6;
+	margin: 0;
+	max-width: 480px;
+}
+
+.site-about-us .au-cta__button {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+	padding: 16px 32px;
+	border-radius: 999px;
+	background-color: var(--au-accent);
+	color: var(--au-accent-text);
+	font-size: 15px;
+	font-weight: 800;
+	text-decoration: none;
+	transition: transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+}
+
+.site-about-us .au-cta__button:hover,
+.site-about-us .au-cta__button:focus-visible {
+	transform: translateY(-2px);
+	box-shadow: 0 12px 28px rgba(249, 200, 2, 0.30);
+	background-color: #ffdc33;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 10. Responsive                                                             */
+/* -------------------------------------------------------------------------- */
+@media (max-width: 1023px) {
+	.site-about-us .au-mvv__grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 16px;
+	}
+
+	.site-about-us .au-stats__grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 14px;
+	}
+
+	.site-about-us .au-focus__grid {
+		gap: 20px;
+	}
+
+	.site-about-us .au-cta__inner {
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 40px 36px;
+	}
+}
+
+@media (max-width: 767px) {
+	.site-about-us .au-hero {
+		padding: 36px 0 24px;
+	}
+
+	.site-about-us .au-mvv,
+	.site-about-us .au-story,
+	.site-about-us .au-stats,
+	.site-about-us .au-focus {
+		padding: 32px 0;
+	}
+
+	.site-about-us .au-mvv__grid {
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+
+	.site-about-us .au-stats__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 12px;
+	}
+
+	.site-about-us .au-focus__grid {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+
+	.site-about-us .au-cta__inner {
+		padding: 32px 24px;
+	}
+
+	.site-about-us .au-cta__button {
+		width: 100%;
+		justify-content: center;
+	}
+}
+
+@media (max-width: 480px) {
+	.site-about-us .au-stats__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 10px;
+	}
+
+	.site-about-us .au-stat {
+		padding: 24px 12px 20px;
+	}
+
+	.site-about-us .au-focus-card__body {
+		padding: 20px 20px 24px;
+	}
+}
+
+/* -------------------------------------------------------------------------- */
+/* 11. Reduced motion                                                         */
+/* -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.site-about-us,
+	.site-about-us *,
+	.site-about-us *::before,
+	.site-about-us *::after {
+		transition: none !important;
+		animation: none !important;
+	}
+
+	.site-about-us .au-focus-card:hover {
+		transform: none !important;
+	}
+
+	.site-about-us .au-focus-card:hover .au-focus-card__media img {
+		transform: none !important;
+	}
+
+	.site-about-us .au-cta__button:hover {
+		transform: none !important;
+	}
+
+	.site-about-us .au-focus-card__link:hover i {
+		transform: none !important;
+	}
+}
