@@ -42,8 +42,21 @@ function site_pd_render_slide( $item, $duplicate = false ) {
 			$inner = '<img src="' . esc_url( $item['src'] ) . '" alt="' . esc_attr( $item['alt'] ) . '" loading="lazy">';
 		}
 
-		if ( ! empty( $item['link'] ) ) {
-			$inner = '<a href="' . esc_url( $item['link'] ) . '" title="' . esc_attr( $item['title'] ) . '"' . ( $duplicate ? ' tabindex="-1"' : '' ) . '>' . $inner . '</a>';
+		$stories = ( ! empty( $item['stories'] ) && is_array( $item['stories'] ) )
+			? array_values( $item['stories'] )
+			: array();
+
+		// Fall back to the full story pool so every card is clickable.
+		if ( empty( $stories ) ) {
+			$stories = site_child_get_all_story_urls();
+		}
+
+		if ( ! empty( $stories ) ) {
+			$inner = '<a class="pd-card-link" href="' . esc_url( $stories[0] ) . '"'
+				. ' data-pd-stories="' . esc_attr( wp_json_encode( array_values( $stories ) ) ) . '"'
+				. ' title="' . esc_attr__( 'Read one of our stories', 'site-child' ) . '"'
+				. ( $duplicate ? ' tabindex="-1"' : '' )
+				. '>' . $inner . '</a>';
 		}
 	} else {
 		$inner = '<span class="pd-logo-text ' . esc_attr( $item['class'] ) . '">' . esc_html( $item['label'] ) . '</span>';
@@ -78,10 +91,11 @@ if ( is_dir( $site_pd_image_dir ) ) {
 		$site_pd_label = ucwords( trim( $site_pd_label ) );
 
 		$site_pd_images[] = array(
-			'type'  => 'image',
-			'src'   => $site_pd_url,
-			'alt'   => $site_pd_label,
-			'title' => $site_pd_label,
+			'type'    => 'image',
+			'src'     => $site_pd_url,
+			'alt'     => $site_pd_label,
+			'title'   => $site_pd_label,
+			'stories' => site_child_resolve_donor_stories( $site_pd_basename ),
 		);
 	}
 }

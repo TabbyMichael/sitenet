@@ -1181,6 +1181,69 @@
     transform: scale(1.06);
 }
 
+/* Grouped gallery: a collection heading sits above each grid. */
+.site-revamp .rv-gallery-group {
+    margin: 0 0 52px;
+}
+
+.site-revamp .rv-gallery-group:last-child {
+    margin-bottom: 0;
+}
+
+.site-revamp .rv-gallery-group__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 0 22px;
+}
+
+.site-revamp .rv-gallery-group__title {
+    color: var(--rv-heading);
+    font-size: clamp(19px, 1.8vw, 24px);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    margin: 0;
+}
+
+.site-revamp .rv-gallery-group__desc {
+    color: var(--rv-text);
+    font-size: 15px;
+    line-height: 1.65;
+    margin: 0;
+    max-width: 720px;
+}
+
+.site-revamp .rv-gallery-group__count {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border: 1px solid var(--rv-border);
+    border-radius: 999px;
+    background-color: var(--rv-surface-raised);
+    color: var(--rv-muted);
+    font-size: 12.5px;
+    font-weight: 700;
+}
+
+/* Photo tile: image on top, caption always visible underneath. */
+.site-revamp .rv-photo-grid__item {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-family: var(--rv-font);
+}
+
+.site-revamp .rv-photo-grid__caption {
+    display: block;
+    padding: 12px 14px 14px;
+    color: var(--rv-text);
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
 .site-revamp.rv-lightbox-open {
     overflow: hidden;
 }
@@ -1492,6 +1555,28 @@
         flex-direction: column;
         align-items: flex-start;
         padding: 34px 26px;
+    }
+
+    .site-revamp .rv-gallery-group {
+        margin-bottom: 40px;
+    }
+
+    .site-revamp .rv-gallery-group__head {
+        gap: 8px;
+        margin-bottom: 18px;
+    }
+
+    .site-revamp .rv-gallery-group__title {
+        font-size: 19px;
+    }
+
+    .site-revamp .rv-gallery-group__desc {
+        font-size: 14.5px;
+    }
+
+    .site-revamp .rv-photo-grid__caption {
+        padding: 11px 13px 13px;
+        font-size: 13px;
     }
 }
 

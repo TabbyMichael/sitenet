@@ -413,6 +413,7 @@ function site_child_enqueue_story_single_assets() {
 	}
 
 	$ss_css_path = get_stylesheet_directory() . '/assets/css/story-single.css';
+	$ss_js_path  = get_stylesheet_directory() . '/assets/js/story-single.js';
 
 	wp_enqueue_style(
 		'site-story-single',
@@ -420,8 +421,243 @@ function site_child_enqueue_story_single_assets() {
 		array( 'site-child-style', 'site-header', 'site-footer' ),
 		file_exists( $ss_css_path ) ? (string) filemtime( $ss_css_path ) : '1.0.0'
 	);
+
+	wp_enqueue_script(
+		'site-story-single',
+		get_stylesheet_directory_uri() . '/assets/js/story-single.js',
+		array(),
+		file_exists( $ss_js_path ) ? (string) filemtime( $ss_js_path ) : '1.0.0',
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
 }
 add_action( 'wp_enqueue_scripts', 'site_child_enqueue_story_single_assets', 25 );
+
+/**
+ * Build the shared "Donors & Promoters" rotating logo loop markup.
+ *
+ * Four logo-only cards (no text) that rotate continuously in a seamless
+ * loop: the set is rendered twice, the second copy aria-hidden, and a CSS
+ * keyframe animation translates the track by exactly one set width. The
+ * animation pauses on hover and is fully disabled for visitors who prefer
+ * reduced motion (a plain swipeable row remains). Logo images live in
+ * assets/images/partners/. Used by the the_content filter, the site_story
+ * template, and available via template-parts/donors.php.
+ *
+ * @return string HTML for the donors loop section (fully escaped).
+ */
+function site_child_get_donors_html() {
+	$sd_logos = array(
+		array( 'file' => 'partners/2-3.png',          'w' => 200, 'h' => 188 ),
+		array( 'file' => 'partners/ilo.png',          'w' => 820, 'h' => 729 ),
+		array( 'file' => 'partners/12.png',           'w' => 150, 'h' => 138 ),
+		array( 'file' => 'partners/15.png',           'w' => 150, 'h' => 141 ),
+		array( 'file' => 'partners/5-2-100x100.jpg',  'w' => 100, 'h' => 100 ),
+		array( 'file' => 'partners/13.jpg',           'w' => 150, 'h' => 141 ),
+		array( 'file' => 'partners/10.jpg',           'w' => 150, 'h' => 141 ),
+		array( 'file' => 'partners/11.jpg',           'w' => 150, 'h' => 141 ),
+		array( 'file' => 'partners/5-100x100.png',    'w' => 100, 'h' => 100 ),
+		array( 'file' => 'partners/8.png',            'w' => 150, 'h' => 57 ),
+		array( 'file' => 'partners/9-1.png',          'w' => 150, 'h' => 90 ),
+		array( 'file' => 'partners/9-2.png',          'w' => 200, 'h' => 188 ),
+		array( 'file' => 'partners/eu.jpg',           'w' => 256, 'h' => 238 ),
+	);
+
+	$sd_cards = '';
+	foreach ( $sd_logos as $sd_logo ) {
+		$sd_path = get_theme_file_path( 'assets/images/' . $sd_logo['file'] );
+		if ( ! file_exists( $sd_path ) ) {
+			continue;
+		}
+		$sd_url    = get_theme_file_uri( 'assets/images/' . $sd_logo['file'] );
+		$sd_cards .= '<li class="sd-card"><img class="sd-logo" src="' . esc_url( $sd_url ) . '" alt="" width="' . (int) $sd_logo['w'] . '" height="' . (int) $sd_logo['h'] . '" loading="lazy" decoding="async"></li>';
+	}
+
+	if ( '' === $sd_cards ) {
+		return '';
+	}
+
+	// Second, aria-hidden copy of the set makes the loop seamless.
+	$sd_clones = str_replace( 'class="sd-card"', 'class="sd-card sd-clone" aria-hidden="true"', $sd_cards );
+
+	return '<section class="site-donors" aria-labelledby="sd-title">'
+		. '<h2 class="sd-title" id="sd-title">' . esc_html__( 'Donors & Promoters', 'site-child' ) . '</h2>'
+		. '<div class="sd-viewport">'
+		. '<ul class="sd-track">' . $sd_cards . $sd_clones . '</ul>'
+		. '</div>'
+		. '</section>';
+}
+
+/**
+ * Append the donors section to the main content on the four programme /
+ * resource revamp pages and on single posts.
+ *
+ * Runs late on the_content so builders and shortcodes finish first. Scoped
+ * with is_main_query() (excludes widgets and secondary queries) rather than
+ * in_the_loop() because the revamp shells call the_content() outside a formal
+ * loop. Feed output is never touched (feeds don't run this template), and
+ * empty content is left empty.
+ *
+ * @param string $content Post content.
+ * @return string Content with the donors section appended.
+ */
+function site_child_append_donors_to_content( $content ) {
+	if ( is_admin() || wp_doing_ajax() || ! is_main_query() ) {
+		return $content;
+	}
+
+	$sd_pages = array(
+		'climate-actions',
+		'sample-page-2',
+		'enterprise-development-and-value-chains',
+		'empowering-women-for-employment',
+	);
+
+	if ( ! ( is_singular( 'post' ) || is_page( $sd_pages ) ) ) {
+		return $content;
+	}
+
+	if ( '' === trim( (string) $content ) ) {
+		return $content;
+	}
+
+	return $content . site_child_get_donors_html();
+}
+add_filter( 'the_content', 'site_child_append_donors_to_content', 20 );
+
+/**
+ * Donor / partner logo → stories map for the homepage carousel.
+ *
+ * Keys are logo FILENAMES from assets/images/partners/ (basename only, e.g.
+ * 'ilo.png'). Values are arrays of story SLUGS (posts or site_story) in which
+ * that donor or partner features. Clicking a card routes the visitor to a
+ * story chosen at random from its list — a different one each click.
+ *
+ * To associate a logo with stories, add a line like:
+ *     'ilo.png' => array(
+ *         'camel-milk-child-nutrition-fafi-bare',
+ *         'a-young-small-scale-trader-with-big-dreams',
+ *     ),
+ * Logos without an entry fall back to a random published story (see
+ * site_child_get_all_story_urls()), so every card is clickable.
+ *
+ * Developers can also extend this via the site_child_donor_story_map filter.
+ *
+ * @return array Map of logo basename => array of story slugs.
+ */
+function site_child_get_donor_story_map() {
+	$map = array(
+		// 'ilo.png' => array(
+		// 	'camel-milk-child-nutrition-fafi-bare',
+		// 	'a-young-small-scale-trader-with-big-dreams',
+		// ),
+	);
+
+	return apply_filters( 'site_child_donor_story_map', $map );
+}
+
+/**
+ * Resolve a logo's mapped story slugs to published permalinks.
+ *
+ * @param string $basename Logo filename, e.g. 'ilo.png'.
+ * @return string[] Permalink URLs, or an empty array when unmapped.
+ */
+function site_child_resolve_donor_stories( $basename ) {
+	static $sd_resolved = array();
+
+	if ( isset( $sd_resolved[ $basename ] ) ) {
+		return $sd_resolved[ $basename ];
+	}
+
+	$map  = site_child_get_donor_story_map();
+	$urls = array();
+
+	if ( ! empty( $map[ $basename ] ) && is_array( $map[ $basename ] ) ) {
+		foreach ( $map[ $basename ] as $sd_slug ) {
+			$sd_posts = get_posts(
+				array(
+					'name'           => sanitize_title( $sd_slug ),
+					'post_type'      => array( 'post', 'site_story' ),
+					'post_status'    => 'publish',
+					'numberposts'    => 1,
+					'no_found_rows'  => true,
+				)
+			);
+			if ( $sd_posts ) {
+				$urls[] = get_permalink( $sd_posts[0] );
+			}
+		}
+		$urls = array_values( array_unique( $urls ) );
+	}
+
+	$sd_resolved[ $basename ] = $urls;
+	return $urls;
+}
+
+/**
+ * Permalinks of every published story (posts + site_story).
+ *
+ * Used as the fallback target pool for logo cards that have no entry in the
+ * donor map, so every card routes somewhere meaningful.
+ *
+ * @return string[] Permalink URLs.
+ */
+function site_child_get_all_story_urls() {
+	static $sd_all = null;
+
+	if ( null !== $sd_all ) {
+		return $sd_all;
+	}
+
+	$sd_all = array();
+	$sd_posts = get_posts(
+		array(
+			'post_type'      => array( 'post', 'site_story' ),
+			'post_status'    => 'publish',
+			'numberposts'    => 100,
+			'no_found_rows'  => true,
+			'fields'         => 'ids',
+		)
+	);
+	foreach ( $sd_posts as $sd_id ) {
+		$sd_all[] = get_permalink( $sd_id );
+	}
+
+	return $sd_all;
+}
+
+/**
+ * Enqueue the shared donors section assets.
+ *
+ * Loaded ONLY on the pages/posts listed in site_child_append_donors_to_content
+ * plus single site_story pages. Styling: assets/css/donors.css — the rotating
+ * loop is pure CSS (no JavaScript needed). Registered below priority 30 so
+ * dark.css stays last.
+ */
+function site_child_enqueue_donors_assets() {
+	$sd_pages = array(
+		'climate-actions',
+		'sample-page-2',
+		'enterprise-development-and-value-chains',
+		'empowering-women-for-employment',
+	);
+
+	if ( ! ( is_singular( 'post' ) || is_singular( 'site_story' ) || is_page( $sd_pages ) ) ) {
+		return;
+	}
+
+	$sd_css_path = get_stylesheet_directory() . '/assets/css/donors.css';
+
+	wp_enqueue_style(
+		'site-donors',
+		get_stylesheet_directory_uri() . '/assets/css/donors.css',
+		array( 'site-child-style', 'site-header', 'site-footer' ),
+		file_exists( $sd_css_path ) ? (string) filemtime( $sd_css_path ) : '1.0.0'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_donors_assets', 25 );
 
 /**
  * Force the modernised revamp shells for the nine programme + resource pages.

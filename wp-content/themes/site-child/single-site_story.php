@@ -142,6 +142,8 @@ $ss_share_title = rawurlencode( wp_strip_all_tags( get_the_title() ) );
 				</div>
 			<?php endif; ?>
 
+			<?php echo site_child_get_donors_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built and escaped in the helper. ?>
+
 			<div class="ss-share">
 				<span class="ss-share-label"><?php esc_html_e( 'Share this story:', 'site-child' ); ?></span>
 				<a class="ss-share-link" href="<?php echo esc_url( 'https://wa.me/?text=' . $ss_share_title . '%20' . $ss_share_url ); ?>" rel="noopener nofollow" target="_blank"><?php esc_html_e( 'WhatsApp', 'site-child' ); ?></a>

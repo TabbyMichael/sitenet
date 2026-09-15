@@ -55,16 +55,50 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 	$site_hero_dir = get_stylesheet_directory() . '/assets/images/hero';
 
 	/**
+	 * Slides withheld from the hero carousel, keyed by filename label.
+	 *
+	 * - 'Capture8' : the 768x364 thumbnail originally used for slide 1. It was
+	 *   byte-identical to WordPress's own thumbnail of the parent upload, so it
+	 *   is superseded by Capture8-hd-1358x643.jpg - the same photograph at
+	 *   roughly 1.8x the linear resolution. The low-res file stays on disk but
+	 *   is no longer claimed by the carousel.
+	 * - 'Capture8-hd' : former slide 1 photograph, replaced on request by
+	 *   youth-1242x730.jpg. File stays on disk so the slide can be restored
+	 *   by deleting this one line.
+	 * - 'WWD-in-Machakos-during-soap-making-training' : slide 7, withdrawn on
+	 *   request. Its entry in $site_hero_content below is deliberately kept so
+	 *   the slide can be restored by deleting this one line.
+	 *
+	 * Neither image file is deleted: testimonials.php also renders the Machakos
+	 * photograph, and the folder scan below would re-add any unclaimed file.
+	 *
+	 * @var string[]
+	 */
+	$site_hero_exclude = array(
+		'Capture8',
+		'Capture8-hd',
+		'WWD-in-Machakos-during-soap-making-training',
+	);
+
+	/**
 	 * Detailed banner content per image (keyed by filename without extension).
 	 * Each slide gets a unique title, description and CTA — edit these to match
 	 * what each photo actually shows.
 	 */
 	$site_hero_content = array(
-		'Capture8'       => array(
+		'youth'          => array(
 			'title'       => 'Enterprise Skills for Young Entrepreneurs',
 			'description' => 'Hands-on business training equipping youth and women with the tools to launch, manage and grow sustainable micro-enterprises across Kenyan communities.',
 			'cta_text'    => 'Our Programs',
 			'cta_url'     => '/our-work/',
+			'alt'         => 'Young entrepreneurs taking part in a SITE enterprise and business skills training session',
+		),
+		'Capture8-hd'    => array(
+			'title'       => 'Enterprise Skills for Young Entrepreneurs',
+			'description' => 'Hands-on business training equipping youth and women with the tools to launch, manage and grow sustainable micro-enterprises across Kenyan communities.',
+			'cta_text'    => 'Our Programs',
+			'cta_url'     => '/our-work/',
+			'alt'         => 'Graduates of a SITE enterprise and business skills training programme',
 		),
 		'5-1'            => array(
 			'title'       => 'Building Resilient Livelihoods',
@@ -138,14 +172,20 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 
 			// 1. Slides that have explicit content — in content-array order.
 			foreach ( $site_hero_content as $site_key => $site_content ) {
+				if ( in_array( $site_key, $site_hero_exclude, true ) ) {
+					continue;
+				}
 				if ( ! isset( $site_file_index[ $site_key ] ) ) {
 					continue;
 				}
 				$site_label = ucwords( trim( preg_replace( '/\s+/', ' ', preg_replace( '/[-_]+/', ' ', $site_key ) ) ) );
+				// Prefer an explicit alt from the content array; otherwise fall
+				// back to the cleaned-up filename, as the alphabetical pass does.
+				$site_alt = ! empty( $site_content['alt'] ) ? $site_content['alt'] : $site_label;
 				$site_slides[] = array(
 					'type'        => 'file',
 					'url'         => $site_file_index[ $site_key ]['url'],
-					'alt'         => $site_label,
+					'alt'         => $site_alt,
 					'title'       => ! empty( $site_content['title'] ) ? $site_content['title'] : $site_label,
 					'description' => isset( $site_content['description'] ) ? $site_content['description'] : '',
 					'cta_url'     => isset( $site_content['cta_url'] ) ? $site_content['cta_url'] : '',
@@ -158,6 +198,9 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 			// 2. Any remaining files not in the content array — alphabetical.
 			ksort( $site_file_index );
 			foreach ( $site_file_index as $site_key => $site_file ) {
+				if ( in_array( $site_key, $site_hero_exclude, true ) ) {
+					continue;
+				}
 				$site_label = ucwords( trim( preg_replace( '/\s+/', ' ', preg_replace( '/[-_]+/', ' ', $site_key ) ) ) );
 				$site_slides[] = array(
 					'type'        => 'file',

@@ -396,6 +396,21 @@
 	}
 }
 
+/* ---- Scroll reveal (JS adds .ss-reveal, then .is-revealed transitions in).
+   Without JavaScript nothing is hidden; with reduced motion the JS bails out
+   and .ss-reveal is never added. ---------------------------------------- */
+
+.site-story-single .ss-reveal {
+	opacity: 0;
+	transform: translateY(18px);
+	transition: opacity 450ms ease, transform 450ms ease, box-shadow var(--ss-transition), border-color var(--ss-transition);
+}
+
+.site-story-single .ss-reveal.is-revealed {
+	opacity: 1;
+	transform: translateY(0);
+}
+
 /* ---- Dark mode (attribute-driven; never prefers-color-scheme) -------- */
 
 [data-theme="dark"] .site-story-single {
@@ -422,8 +437,15 @@
 @media (prefers-reduced-motion: reduce) {
 	.site-story-single .ss-share-link,
 	.site-story-single .ss-cta-button,
-	.site-story-single .ss-related-card {
+	.site-story-single .ss-related-card,
+	.site-story-single .ss-reveal {
 		transition: none;
+	}
+
+	/* Belt and braces: even if .ss-reveal were somehow applied, stay visible. */
+	.site-story-single .ss-reveal {
+		opacity: 1;
+		transform: none;
 	}
 }
 
