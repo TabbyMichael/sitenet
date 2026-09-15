@@ -5,8 +5,9 @@
      visitor prefers reduced motion or IntersectionObserver is missing —
      cards stay statically visible).
    - Accessible photo lightbox driven by the [data-rv-lightbox-grid]
-     button grid: prev/next, caption, close via button / backdrop /
-     Escape, focus returned to the trigger, body scroll locked.
+     button grids (one per photo collection): prev/next, caption, close via
+     button / backdrop / Escape, focus returned to the trigger, body scroll
+     locked. Items from every grid are walked in document order.
    Vanilla JS only, no dependencies. Deferred + in footer by
    site_child_enqueue_revamp_assets().
    ========================================================================== */
@@ -14,17 +15,17 @@
 ( function () {
 	'use strict';
 
-	var root = document.querySelector( '.site-revamp' );
+	const root = document.querySelector( '.site-revamp' );
 	if ( ! root ) {
 		return;
 	}
 
-	var prefersReducedMotion = window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
+	const prefersReducedMotion = window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
 
 	/* ------------------------------------------------------------------
 	 * Reveal-on-scroll.
 	 * ------------------------------------------------------------------ */
-	var revealTargets = Array.from(
+	const revealTargets = Array.from(
 		root.querySelectorAll( '.rv-feature-card, .rv-program-card, .rv-story-card, .rv-case-card, .rv-paper-card, .rv-video-card, .rv-resource-link, .rv-imagery__item, .rv-showcase__item, .rv-photo-grid__item' )
 	);
 
@@ -33,7 +34,7 @@
 			card.classList.add( 'is-revealed' );
 		} );
 	} else {
-		var revealObserver = new IntersectionObserver(
+		const revealObserver = new IntersectionObserver(
 			function ( entries ) {
 				entries.forEach( function ( entry ) {
 					if ( entry.isIntersecting ) {
@@ -57,61 +58,67 @@
 	/* ------------------------------------------------------------------
 	 * Photo lightbox.
 	 * ------------------------------------------------------------------ */
-	var grid = root.querySelector( '[data-rv-lightbox-grid]' );
-	if ( ! grid ) {
+	const grids = Array.from( root.querySelectorAll( '[data-rv-lightbox-grid]' ) );
+	if ( grids.length === 0 ) {
 		return;
 	}
 
-	var items = Array.from( grid.querySelectorAll( '.rv-photo-grid__item' ) );
+	/* The gallery can be split into several collections, each with its own
+	   grid — collect every item in document order so prev/next walks them all. */
+	let items = [];
+	grids.forEach( function ( grid ) {
+		items = items.concat( Array.from( grid.querySelectorAll( '.rv-photo-grid__item' ) ) );
+	} );
+
 	if ( items.length === 0 ) {
 		return;
 	}
 
-	var currentIndex = 0;
-	var lastTrigger  = null;
-	var allowScroll  = true;
+	let currentIndex = 0;
+	let lastTrigger  = null;
+	let allowScroll  = true;
 
-	var state = {
+	const state = {
 		overlay: null,
 	};
 
-	function buildOverlay() {
-		var overlay = document.createElement( 'div' );
+	const buildOverlay = function () {
+		const overlay = document.createElement( 'div' );
 		overlay.className = 'rv-lightbox';
 		overlay.setAttribute( 'role', 'dialog' );
 		overlay.setAttribute( 'aria-modal', 'true' );
 		overlay.setAttribute( 'aria-label', 'Photo viewer' );
 
-		var dialog = document.createElement( 'div' );
+		const dialog = document.createElement( 'div' );
 		dialog.className = 'rv-lightbox__dialog';
 
-		var figure = document.createElement( 'figure' );
+		const figure = document.createElement( 'figure' );
 		figure.className = 'rv-lightbox__figure';
 
-		var img = document.createElement( 'img' );
+		const img = document.createElement( 'img' );
 		img.className = 'rv-lightbox__img';
 		img.setAttribute( 'alt', '' );
 
-		var caption = document.createElement( 'figcaption' );
+		const caption = document.createElement( 'figcaption' );
 		caption.className = 'rv-lightbox__caption';
 
-		var counter = document.createElement( 'p' );
+		const counter = document.createElement( 'p' );
 		counter.className = 'rv-lightbox__counter';
 		counter.setAttribute( 'aria-hidden', 'true' );
 
-		var closeBtn = document.createElement( 'button' );
+		const closeBtn = document.createElement( 'button' );
 		closeBtn.type = 'button';
 		closeBtn.className = 'rv-lightbox__close';
 		closeBtn.setAttribute( 'aria-label', 'Close photo viewer' );
 		closeBtn.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>';
 
-		var prevBtn = document.createElement( 'button' );
+		const prevBtn = document.createElement( 'button' );
 		prevBtn.type = 'button';
 		prevBtn.className = 'rv-lightbox__prev';
 		prevBtn.setAttribute( 'aria-label', 'Show previous photo' );
 		prevBtn.innerHTML = '<i class="fa fa-angle-left" aria-hidden="true"></i>';
 
-		var nextBtn = document.createElement( 'button' );
+		const nextBtn = document.createElement( 'button' );
 		nextBtn.type = 'button';
 		nextBtn.className = 'rv-lightbox__next';
 		nextBtn.setAttribute( 'aria-label', 'Show next photo' );
@@ -146,22 +153,22 @@
 
 		state.overlay = overlay;
 		return overlay;
-	}
+	};
 
-	function showPhoto( index ) {
-		var overlay = state.overlay;
+	const showPhoto = function ( index ) {
+		const { overlay } = state;
 		if ( ! overlay ) {
 			return;
 		}
 		currentIndex = index;
 
-		var item    = items[ currentIndex ];
-		var url     = item.getAttribute( 'data-photo-url' ) || '';
-		var caption = item.getAttribute( 'data-photo-caption' ) || '';
+		const item    = items[ currentIndex ];
+		const url     = item.getAttribute( 'data-photo-url' ) || '';
+		const caption = item.getAttribute( 'data-photo-caption' ) || '';
 
-		var img     = overlay.querySelector( '.rv-lightbox__img' );
-		var capEl   = overlay.querySelector( '.rv-lightbox__caption' );
-		var countEl = overlay.querySelector( '.rv-lightbox__counter' );
+		const img     = overlay.querySelector( '.rv-lightbox__img' );
+		const capEl   = overlay.querySelector( '.rv-lightbox__caption' );
+		const countEl = overlay.querySelector( '.rv-lightbox__counter' );
 
 		if ( img ) {
 			img.setAttribute( 'src', url );
@@ -173,10 +180,10 @@
 		if ( countEl ) {
 			countEl.textContent = ( currentIndex + 1 ) + ' of ' + items.length;
 		}
-	}
+	};
 
-	function openOverlay( index, trigger ) {
-		var overlay = state.overlay || buildOverlay();
+	const openOverlay = function ( index, trigger ) {
+		const overlay = state.overlay || buildOverlay();
 		lastTrigger = trigger || null;
 
 		allowScroll = document.body.style.overflow !== 'hidden';
@@ -186,14 +193,14 @@
 		showPhoto( index );
 		overlay.classList.add( 'is-visible' );
 
-		var closeBtn = overlay.querySelector( '.rv-lightbox__close' );
+		const closeBtn = overlay.querySelector( '.rv-lightbox__close' );
 		if ( closeBtn ) {
 			closeBtn.focus();
 		}
-	}
+	};
 
-	function closeOverlay() {
-		var overlay = state.overlay;
+	const closeOverlay = function () {
+		const { overlay } = state;
 		if ( ! overlay || ! overlay.parentNode ) {
 			return;
 		}
@@ -206,10 +213,10 @@
 		if ( lastTrigger ) {
 			lastTrigger.focus();
 		}
-	}
+	};
 
-	function handleKeys( event ) {
-		var overlay = state.overlay;
+	const handleKeys = function ( event ) {
+		const { overlay } = state;
 		if ( ! overlay || ! overlay.parentNode ) {
 			return;
 		}

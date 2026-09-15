@@ -1,0 +1,152 @@
+/* ==========================================================================
+   SITE — Donors & Promoters (shared rotating logo loop)
+   --------------------------------------------------------------------------
+   Locked boundaries: header + footer are untouched. This stylesheet styles
+   ONLY .site-donors (output by site_child_get_donors_html() /
+   template-parts/donors.php).
+   The loop is pure CSS: the logo set is rendered twice (second copy
+   aria-hidden) and the track translates by exactly one set width, so the
+   rotation is seamless. Pauses on hover; fully static for visitors who
+   prefer reduced motion.
+   Supports light/dark modes via the existing html[data-theme="dark"]
+   attribute set by assets/js/theme-init.js.
+   ========================================================================== */
+
+.site-donors {
+	--sd-surface: #ffffff;
+	--sd-surface-raised: #fcfcfb;
+	--sd-ink: #171717;
+	--sd-heading: #111111;
+	--sd-border: rgba(0, 0, 0, 0.08);
+	--sd-border-strong: rgba(0, 0, 0, 0.12);
+	--sd-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+	--sd-shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.06), 0 16px 40px rgba(0, 0, 0, 0.10);
+	--sd-radius: 16px;
+	--sd-radius-sm: 12px;
+	--sd-transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+	margin: 48px 0;
+	padding: 28px;
+	background: var(--sd-surface);
+	border: 1px solid var(--sd-border);
+	border-radius: var(--sd-radius);
+	box-shadow: var(--sd-shadow-card);
+}
+
+.site-donors .sd-title {
+	margin: 0 0 20px;
+	font-size: 20px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	color: var(--sd-heading);
+}
+
+/* ---- Rotating loop --------------------------------------------------------
+   Each card carries a trailing margin (no flex gap) so that translating the
+   track by exactly -50% lands seamlessly on the start of the second copy. */
+
+.site-donors .sd-viewport {
+	overflow: hidden;
+	-webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+	mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.site-donors .sd-track {
+	display: flex;
+	width: max-content;
+	animation: sd-rotate 24s linear infinite;
+}
+
+.site-donors .sd-viewport:hover .sd-track {
+	animation-play-state: paused;
+}
+
+@keyframes sd-rotate {
+	from {
+		transform: translateX(0);
+	}
+
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+.site-donors .sd-card {
+	flex: 0 0 auto;
+	width: 200px;
+	min-height: 128px;
+	margin-right: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+	background: var(--sd-surface-raised);
+	border: 1px solid var(--sd-border);
+	border-radius: var(--sd-radius-sm);
+	transition: box-shadow var(--sd-transition), border-color var(--sd-transition);
+}
+
+.site-donors .sd-card:hover {
+	box-shadow: var(--sd-shadow-card-hover);
+	border-color: var(--sd-border-strong);
+}
+
+.site-donors .sd-logo {
+	max-width: 132px;
+	max-height: 96px;
+	width: auto;
+	height: auto;
+	object-fit: contain;
+}
+
+/* ---- Responsive ----------------------------------------------------------- */
+
+@media (max-width: 480px) {
+	.site-donors {
+		padding: 20px;
+	}
+
+	.site-donors .sd-card {
+		width: 160px;
+		min-height: 104px;
+	}
+
+	.site-donors .sd-logo {
+		max-width: 112px;
+		max-height: 72px;
+	}
+}
+
+/* ---- Dark mode (attribute-driven; never prefers-color-scheme) ------------- */
+
+[data-theme="dark"] .site-donors {
+	--sd-surface: #1a241f;
+	--sd-surface-raised: #18211c;
+	--sd-ink: #e7edea;
+	--sd-heading: #ffffff;
+	--sd-border: rgba(255, 255, 255, 0.10);
+	--sd-border-strong: rgba(255, 255, 255, 0.16);
+	--sd-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.40), 0 8px 24px rgba(0, 0, 0, 0.35);
+	--sd-shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.45), 0 16px 40px rgba(0, 0, 0, 0.50);
+}
+
+/* ---- Reduced motion ---------------------------------------------------------
+   No rotation at all: the aria-hidden clones are hidden and the four real
+   cards remain as a plain swipeable row. ------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+	.site-donors .sd-track {
+		animation: none;
+		width: auto;
+	}
+
+	.site-donors .sd-viewport {
+		overflow-x: auto;
+		-webkit-mask-image: none;
+		mask-image: none;
+	}
+
+	.site-donors .sd-clone {
+		display: none;
+	}
+}
