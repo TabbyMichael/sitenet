@@ -26,40 +26,12 @@ $owk_stats = array(
 	array( 'value' => '20,000+',  'label' => 'Youth' ),
 );
 
-$owk_focus = array(
-	array(
-		'kicker'  => 'Youth & Skills',
-		'title'   => 'Skilling Youth for Employment',
-		'icon'    => 'fa-graduation-cap',
-		'image'   => content_url( 'uploads/2021/11/Gallery-1-850x567.jpg' ),
-		'summary' => 'Market-led technical, vocational, entrepreneurship and mentorship support that helps young people move into dignified work.',
-		'link'    => home_url( '/sample-page-2/' ),
-	),
-	array(
-		'kicker'  => 'Inclusive Markets',
-		'title'   => 'Enterprise Development & Value Chains',
-		'icon'    => 'fa-line-chart',
-		'image'   => content_url( 'uploads/2021/11/journeyofgrowth-850x567.jpg' ),
-		'summary' => 'Business development and value-chain strengthening for entrepreneurs, MSMEs and producer groups seeking better markets.',
-		'link'    => home_url( '/enterprise-development-and-value-chains/' ),
-	),
-	array(
-		'kicker'  => 'Women & Inclusion',
-		'title'   => 'Empowering Women for Employment',
-		'icon'    => 'fa-female',
-		'image'   => content_url( 'uploads/2021/11/bilatha-850x567.jpg' ),
-		'summary' => 'Pathways for women and marginalized groups to build income, leadership, resilience and stronger decision-making power.',
-		'link'    => home_url( '/empowering-women-for-employment/' ),
-	),
-	array(
-		'kicker'  => 'Resilient Communities',
-		'title'   => 'Food Security & Climate Action',
-		'icon'    => 'fa-leaf',
-		'image'   => content_url( 'uploads/2021/11/harbole-water-850x567.jpg' ),
-		'summary' => 'Climate-smart livelihood actions that improve food security, household incomes and community capacity to adapt.',
-		'link'    => home_url( '/climate-actions/' ),
-	),
-);
+/*
+ * The Focus Areas section is shared with the homepage and the About Us page.
+ * It is rendered by template-parts/sections/focus-areas.php from the canonical
+ * dataset in site_child_get_focus_areas(), so this page no longer keeps its own
+ * copy of the array or its own card markup (the two had already drifted apart).
+ */
 
 $owk_programs = array(
 	array(
@@ -93,9 +65,25 @@ $owk_programs = array(
 		</div>
 	</section>
 
-	<!-- START STATS ROW -->
+	<!--
+		IMPACT IN NUMBERS — one separate card per figure, matching the About Us
+		page. The old markup wrapped all five figures in a single panel card;
+		the card treatment is now applied per <li> in ourwork.css, so each number
+		reads as its own card, exactly like `.au-stat` on About Us.
+
+		The section now also carries the same "Our Reach / Impact in Numbers"
+		head as About Us. This previously had no accessible name at all: it used
+		aria-labelledby="owk-stats-title", but no element ever carried that id.
+		The visible <h2> now provides that id, so the label and the visible text
+		finally agree.
+	-->
 	<section class="owk-stats" aria-labelledby="owk-stats-title">
 		<div class="owk-container">
+			<div class="owk-section-head">
+				<span class="owk-eyebrow">Our Reach</span>
+				<h2 id="owk-stats-title" class="owk-section-head__title">Impact in Numbers</h2>
+				<p class="owk-section-head__lead">Real lives transformed through enterprise, skills and inclusive markets.</p>
+			</div>
 			<ul class="owk-stats__grid" role="list">
 				<?php foreach ( $owk_stats as $stat ) : ?>
 					<li class="owk-stat">
@@ -107,35 +95,8 @@ $owk_programs = array(
 		</div>
 	</section>
 
-	<!-- FOCUS AREAS -->
-	<section class="owk-focus" id="owk-focus" aria-labelledby="owk-focus-title">
-		<div class="owk-container">
-			<div class="owk-section-head">
-				<span class="owk-eyebrow">What we do</span>
-				<h2 id="owk-focus-title" class="owk-section-head__title">Focus areas</h2>
-				<p class="owk-section-head__lead">Our programmes connect skills, enterprise growth, gender inclusion and climate resilience so communities can build sustainable incomes.</p>
-			</div>
-			<div class="owk-focus__grid">
-				<?php foreach ( $owk_focus as $area ) : ?>
-					<article class="owk-focus-card" aria-label="<?php echo esc_attr( $area['title'] ); ?>">
-						<a class="owk-focus-card__media" href="<?php echo esc_url( $area['link'] ); ?>" tabindex="-1" aria-hidden="true">
-							<img src="<?php echo esc_url( $area['image'] ); ?>"
-								alt="<?php echo esc_attr( $area['title'] ); ?>"
-								loading="lazy"
-								decoding="async"
-								width="850"
-								height="567" />
-						</a>
-						<div class="owk-focus-card__body">
-							<span class="owk-focus-card__kicker"><?php echo esc_html( $area['kicker'] ); ?></span>
-							<h3 class="owk-focus-card__title"><a href="<?php echo esc_url( $area['link'] ); ?>"><?php echo esc_html( $area['title'] ); ?></a></h3>
-							<p class="owk-focus-card__text"><?php echo esc_html( $area['summary'] ); ?></p>
-						</div>
-					</article>
-				<?php endforeach; ?>
-			</div>
-		</div>
-	</section>
+	<!-- FOCUS AREAS (shared component — identical to the homepage) -->
+	<?php get_template_part( 'template-parts/sections/focus-areas' ); ?>
 
 	<!-- PROGRAMMES -->
 	<section class="owk-programs" aria-labelledby="owk-programs-title">

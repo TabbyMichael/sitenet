@@ -5,6 +5,9 @@
  * keyboard arrows, touch/pointer swipe with drag tracking, numeric counter,
  * ARIA live slide announcements, respects prefers-reduced-motion.
  *
+ * Also keeps the hero clear of the fixed site header by publishing the
+ * measured header height as --site-hero-offset (see setHeroOffset).
+ *
  * Expects markup from template-parts/homepage/header-hero.php.
  */
 (function () {
@@ -217,14 +220,36 @@
 	};
 
 	/**
-	 * Full-height hero: measure the site header and expose its bottom edge as
-	 * a CSS custom property so .site-carousel-frame can fill the remaining
-	 * viewport exactly (100vh - header). Re-measured on resize.
+	 * Hero offset: the site header is position:fixed, so the hero is pushed
+	 * down by the navbar's height (carousel.css) and the frame height is
+	 * reduced by the same amount — the hero starts just below the navbar and
+	 * still ends exactly at the bottom edge of the viewport. Re-measured on
+	 * resize.
 	 */
 	function setHeroOffset() {
-		/* Carousel fills the full viewport height — it extends right up to the
-		   top of the navbar so the hero image flows underneath the header. */
-		document.documentElement.style.setProperty('--site-hero-offset', '0px');
+		var header = document.getElementById('site-header');
+		if (!header) {
+			return;
+		}
+
+		/* The header compacts once the page is scrolled. The hero sits at the
+		   top of the page, so the full (un-scrolled) height is the correct one:
+		   the compact class is lifted for the measurement only and restored
+		   before the browser paints, so nothing flickers. */
+		var compact = header.classList.contains('site-header--scrolled');
+		if (compact) {
+			header.classList.remove('site-header--scrolled');
+		}
+
+		var height = header.offsetHeight || 0;
+
+		if (compact) {
+			header.classList.add('site-header--scrolled');
+		}
+
+		if (height > 0) {
+			document.documentElement.style.setProperty('--site-hero-offset', height + 'px');
+		}
 	}
 
 	function init() {

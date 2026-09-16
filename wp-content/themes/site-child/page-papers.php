@@ -21,7 +21,7 @@ $rv = array(
 	'title'         => 'Papers',
 	'lead'          => 'Research, surveys, policy briefs and reports from SITE and its partners — available as free downloads.',
 	'actions'       => array(
-		array( 'label' => 'Browse case studies', 'url' => '/resources/case-studys/', 'variant' => 'primary' ),
+		array( 'label' => 'Browse case studies', 'url' => site_child_resource_hub_url( 'case-studys' ), 'variant' => 'primary' ),
 		array( 'label' => 'View all stories', 'url' => '/stories/', 'variant' => 'ghost' ),
 	),
 	'intro_head'    => 'Publications',
@@ -73,13 +73,13 @@ $rv = array(
 			'icon'  => 'fa-book',
 			'title' => 'Case studies',
 			'desc'  => 'In-depth looks at how our projects create measurable change.',
-			'url'   => '/resources/case-studys/',
+			'url'   => site_child_resource_hub_url( 'case-studys' ),
 		),
 		array(
 			'icon'  => 'fa-bullhorn',
 			'title' => 'Press releases',
 			'desc'  => 'Official statements, announcements and updates from SITE.',
-			'url'   => '/resources/irrigation-and-drainage/',
+			'url'   => site_child_resource_hub_url( 'irrigation-and-drainage' ),
 		),
 		array(
 			'icon'  => 'fa-camera',

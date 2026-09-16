@@ -57,90 +57,74 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 	/**
 	 * Slides withheld from the hero carousel, keyed by filename label.
 	 *
-	 * - 'Capture8' : the 768x364 thumbnail originally used for slide 1. It was
-	 *   byte-identical to WordPress's own thumbnail of the parent upload, so it
-	 *   is superseded by Capture8-hd-1358x643.jpg - the same photograph at
-	 *   roughly 1.8x the linear resolution. The low-res file stays on disk but
-	 *   is no longer claimed by the carousel.
-	 * - 'Capture8-hd' : former slide 1 photograph, replaced on request by
-	 *   youth-1242x730.jpg. File stays on disk so the slide can be restored
-	 *   by deleting this one line.
-	 * - 'WWD-in-Machakos-during-soap-making-training' : slide 7, withdrawn on
-	 *   request. Its entry in $site_hero_content below is deliberately kept so
-	 *   the slide can be restored by deleting this one line.
+	 * A label is the basename minus its extension and any "-WxH" suffix, e.g.
+	 * "camelmmilk-848x450.png" -> "camelmmilk". The folder scan below re-adds
+	 * every file it finds, so this array is the only way to withhold a photo
+	 * without deleting it — add a label here to drop that slide, e.g.
+	 * array( 'camelmmilk' ).
 	 *
-	 * Neither image file is deleted: testimonials.php also renders the Machakos
-	 * photograph, and the folder scan below would re-add any unclaimed file.
+	 * Three photos are withheld so the hero runs six slides:
+	 *   - Agri-business-in-Meru                           (was slide 2)
+	 *   - WWD-in-Machakos-during-soap-making-training     (was slide 8)
+	 *   - WWDs-learning-how-to-make-liquid-soap-in-Machakos (was slide 9)
+	 * Their entries are deliberately left in $site_hero_content below, so
+	 * deleting a line here restores that slide with its curated alt text, in
+	 * its original position.
+	 *
+	 * Note that testimonials.php also renders
+	 * WWD-in-Machakos-during-soap-making-training-1536x1024.jpg, so that file
+	 * must stay on disk even though its slide is withheld.
 	 *
 	 * @var string[]
 	 */
 	$site_hero_exclude = array(
-		'Capture8',
-		'Capture8-hd',
+		'Agri-business-in-Meru',
 		'WWD-in-Machakos-during-soap-making-training',
+		'WWDs-learning-how-to-make-liquid-soap-in-Machakos',
 	);
 
 	/**
-	 * Detailed banner content per image (keyed by filename without extension).
-	 * Each slide gets a unique title, description and CTA — edit these to match
-	 * what each photo actually shows.
+	 * Hero slide order and alt text, keyed by filename label.
+	 *
+	 * Order: slides are built in the order listed here, so 'transforming lives'
+	 * is pinned as slide 1 and the remaining photos of the folder follow it.
+	 * Any file missing from this array is appended alphabetically afterwards.
+	 *
+	 * Text: 'alt' is the only per-slide text — the headline, description and
+	 * CTA banner that used to float over every photo was removed on request,
+	 * so the hero is image-only. A banner still renders for any slide that
+	 * supplies 'title' / 'description' / 'cta_text' + 'cta_url' here, so a
+	 * single caption can be restored without touching any markup.
+	 *
+	 * @var array<string, array<string, string>>
 	 */
 	$site_hero_content = array(
-		'youth'          => array(
-			'title'       => 'Enterprise Skills for Young Entrepreneurs',
-			'description' => 'Hands-on business training equipping youth and women with the tools to launch, manage and grow sustainable micro-enterprises across Kenyan communities.',
-			'cta_text'    => 'Our Programs',
-			'cta_url'     => '/our-work/',
-			'alt'         => 'Young entrepreneurs taking part in a SITE enterprise and business skills training session',
+		'transforming lives' => array(
+			'alt' => 'Camels and donkeys at a community water point while herders fill their jerrycans',
 		),
-		'Capture8-hd'    => array(
-			'title'       => 'Enterprise Skills for Young Entrepreneurs',
-			'description' => 'Hands-on business training equipping youth and women with the tools to launch, manage and grow sustainable micro-enterprises across Kenyan communities.',
-			'cta_text'    => 'Our Programs',
-			'cta_url'     => '/our-work/',
-			'alt'         => 'Graduates of a SITE enterprise and business skills training programme',
+		'Agri-business-in-Meru' => array(
+			'alt' => 'Farmers gathered around a compost-making demonstration in Meru',
 		),
-		'5-1'            => array(
-			'title'       => 'Building Resilient Livelihoods',
-			'description' => 'Community-led development that strengthens household incomes, improves market access and creates lasting economic opportunity for families.',
-			'cta_text'    => 'Learn More',
-			'cta_url'     => '/about-us/',
+		'camelmmilk' => array(
+			'alt' => 'Children and community members drinking camel milk at a SITE nutrition event',
 		),
-		'camelmmilk'     => array(
-			'title'       => 'Camel Milk Value Chain Development',
-			'description' => 'Supporting pastoralist communities to add value, improve hygiene and connect camel milk products to profitable regional and urban markets.',
-			'cta_text'    => 'See Our Impact',
-			'cta_url'     => '/impact/',
+		'potato-farming-in-Meru' => array(
+			'alt' => 'A woman farmer holding freshly harvested potatoes in a field in Meru',
 		),
-		'Capture'        => array(
-			'title'       => 'Transforming Lives Since 1996',
-			'description' => 'For over 25 years SITE has championed inclusive enterprise development, reaching thousands of entrepreneurs, women, youth and marginalized groups.',
-			'cta_text'    => 'About SITE',
-			'cta_url'     => '/about-us/',
+		'poultry-keepiong-in-machakos' => array(
+			'alt' => 'Community members attending a poultry-keeping training session in Machakos',
 		),
-		'Masinga-group-training' => array(
-			'title'       => 'Group Training in Masinga',
-			'description' => 'Participatory enterprise and financial-literacy training sessions that give community groups the confidence to pool resources, start ventures and grow together.',
-			'cta_text'    => 'Explore Training',
-			'cta_url'     => '/our-work/',
+		'PWDs-sensitization-forum-in-Machakos-1' => array(
+			'alt' => 'Persons with disabilities, relatives and caregivers at a sensitization forum in Machakos',
 		),
-		'PWD-leaders'    => array(
-			'title'       => 'Persons with Disabilities Leading Change',
-			'description' => 'PWD leaders driving inclusive entrepreneurship — proving that with the right skills, mentorship and market linkabilities, disability is no barrier to business success.',
-			'cta_text'    => 'Inclusion Work',
-			'cta_url'     => '/focus-areas/',
+		'sanitary' => array(
+			'alt' => 'Schoolgirls receiving sanitary towels at a SITE distribution event supported by the European Union',
 		),
 		'WWD-in-Machakos-during-soap-making-training' => array(
-			'title'       => 'Soap-Making Training in Machakos',
-			'description' => 'Women gaining practical soap-manufacturing skills to produce quality hygiene products, generate income and meet growing local demand in Machakos County.',
-			'cta_text'    => 'View Programs',
-			'cta_url'     => '/our-work/',
+			'alt' => 'Women learning soap-making skills during a SITE training session in Machakos',
 		),
 		'WWDs-learning-how-to-make-liquid-soap-in-Machakos' => array(
-			'title'       => 'Liquid Soap Production Skills',
-			'description' => 'Step-by-step liquid-soap training that enables women-led groups to create market-ready products, reduce household costs and build small enterprises.',
-			'cta_text'    => 'Get Involved',
-			'cta_url'     => '/partnership/',
+			'alt' => 'Women learning to make liquid soap during a SITE training session in Machakos',
 		),
 	);
 
@@ -181,12 +165,14 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 				$site_label = ucwords( trim( preg_replace( '/\s+/', ' ', preg_replace( '/[-_]+/', ' ', $site_key ) ) ) );
 				// Prefer an explicit alt from the content array; otherwise fall
 				// back to the cleaned-up filename, as the alphabetical pass does.
+				// Title/description/CTA are left empty so no caption banner is
+				// rendered over the photo (see the content array's docblock).
 				$site_alt = ! empty( $site_content['alt'] ) ? $site_content['alt'] : $site_label;
 				$site_slides[] = array(
 					'type'        => 'file',
 					'url'         => $site_file_index[ $site_key ]['url'],
 					'alt'         => $site_alt,
-					'title'       => ! empty( $site_content['title'] ) ? $site_content['title'] : $site_label,
+					'title'       => ! empty( $site_content['title'] ) ? $site_content['title'] : '',
 					'description' => isset( $site_content['description'] ) ? $site_content['description'] : '',
 					'cta_url'     => isset( $site_content['cta_url'] ) ? $site_content['cta_url'] : '',
 					'cta_text'    => isset( $site_content['cta_text'] ) ? $site_content['cta_text'] : '',
@@ -206,7 +192,7 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 					'type'        => 'file',
 					'url'         => $site_file['url'],
 					'alt'         => $site_label,
-					'title'       => $site_label,
+					'title'       => '',
 					'description' => '',
 					'cta_url'     => '',
 					'cta_text'    => '',
@@ -229,13 +215,30 @@ if ( empty( $site_slides ) ) {
 }
 
 $site_total = count( $site_slides );
+
+/*
+ * data-autoplay-delay (below) is the slide interval in milliseconds:
+ * 2000 = advance to the next slide every 2s, as requested. carousel.js reads
+ * the attribute, but the pause button, hover/focus inside the carousel, a
+ * hidden tab and prefers-reduced-motion still stop the rotation.
+ */
 ?>
 <section
 	class="site-hero-carousel"
 	aria-roledescription="carousel"
 	aria-label="<?php esc_attr_e( 'Featured stories', 'site-child' ); ?>"
-	data-autoplay-delay="6000"
+	data-autoplay-delay="2000"
 >
+	<?php
+	/*
+	 * The slides are image-only, so the homepage would otherwise have no
+	 * h1 (the slide headline used to supply it). Keep the page's single h1
+	 * in the DOM and hide it visually; the .screen-reader-text utility is
+	 * defined in assets/css/carousel.css.
+	 */
+	?>
+	<h1 class="screen-reader-text"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></h1>
+
 	<div class="site-carousel-frame">
 		<div class="site-carousel-track" data-carousel-track>
 
@@ -296,7 +299,7 @@ $site_total = count( $site_slides );
 				$site_image_markup = '<img src="' . esc_url( $site_slide['url'] ) . '"' . $site_attr_string . ' width="1920" height="730" />';
 			}
 
-			$site_eyebrow  = $site_slide['eyebrow'];
+			$site_eyebrow  = isset( $site_slide['eyebrow'] ) ? $site_slide['eyebrow'] : '';
 			$site_title    = $site_slide['title'];
 			$site_desc     = $site_slide['description'];
 			$site_cta_url  = $site_slide['cta_url'];

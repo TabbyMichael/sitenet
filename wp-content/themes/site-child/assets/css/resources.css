@@ -359,10 +359,15 @@
 	border-color: var(--res-border-strong);
 }
 
-/* Image / gradient placeholder at top */
+/* Image / gradient placeholder at top.
+   The ratio deliberately matches .res-cat-card__media (16 / 10) above so both
+   card rows on this page share one proportion. It was 3 / 4, which rendered a
+   ~523px-tall cover at the 1280px container and dominated the section; 16 / 10
+   brings the cover down to ~245px while keeping the document frame readable.
+   Keep in sync with the SVG viewBox in page-resources.php (480 x 300 = 16:10). */
 .site-resources .res-pub-card__media {
 	position: relative;
-	aspect-ratio: 3 / 4;
+	aspect-ratio: 16 / 10;
 	overflow: hidden;
 	background: linear-gradient(135deg, var(--res-green) 0%, #014720 100%);
 }

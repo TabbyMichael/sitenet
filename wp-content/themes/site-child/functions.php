@@ -296,12 +296,12 @@ add_action( 'wp_enqueue_scripts', 'site_child_enqueue_our_work_assets', 25 );
 /**
  * Enqueue Our Work (page-ourwork.php) assets.
  *
- * Loaded only on the Our Work page template. CSS is scoped to
+ * Loaded only on the Our Work page (slug: ourwork). CSS is scoped to
  * .site-ourwork and does not affect the locked navbar, header, or footer.
  * Loaded before dark.css so both light and dark palettes are self-contained.
  */
 function site_child_enqueue_ourwork_assets() {
-	if ( ! is_page_template( 'page-ourwork.php' ) ) {
+	if ( ! is_page( 'ourwork' ) ) {
 		return;
 	}
 
@@ -660,6 +660,140 @@ function site_child_enqueue_donors_assets() {
 add_action( 'wp_enqueue_scripts', 'site_child_enqueue_donors_assets', 25 );
 
 /**
+ * Render the homepage location map on the Contact Us and Partnership pages.
+ *
+ * WHY it is done here rather than in a template:
+ * /contact-us/ (ID 227) and /make-an-appointment/ (ID 5268) are legacy
+ * SiteOrigin Panels pages. Their bodies live in the DATABASE — post_content
+ * begins <div class="panel-layout"> — so there is no markup to edit in PHP,
+ * and rewriting them would mean migrating live builder content. Creating a
+ * page-{slug}.php override is also fragile on this install, because plugin
+ * template loaders (Elementor's PageTemplates module hooks template_include
+ * at priority 11) can take template resolution away from the child theme.
+ * A hook is immune to that, so it works no matter which template wins.
+ *
+ * WHY the `get_footer` action:
+ * The parent theme's page.php renders the builder content via the_content(),
+ * closes <div class="content">, then calls get_footer(). The `get_footer`
+ * action fires before footer.php is loaded, and this child theme's footer.php
+ * only closes <div class="layout-boxed"> at its very end. The map is therefore
+ * printed as a SIBLING of .content — outside .container — which reproduces the
+ * edge-to-edge width it has on the homepage exactly.
+ *
+ * No new CSS is required: the partial's light-mode rules live in style.css and
+ * its dark-mode rule in dark.css, both of which already load site-wide. The
+ * partial is reused verbatim, so the map stays in sync with the homepage.
+ * To remove the map from a page, delete its slug from the is_page() list.
+ *
+ * (get_footer() also passes the footer template name; it is unused here.)
+ */
+function site_child_maybe_render_location_map() {
+	if ( ! is_page( array( 'contact-us', 'make-an-appointment' ) ) ) {
+		return;
+	}
+
+	get_template_part( 'template-parts/homepage/location-map' );
+}
+add_action( 'get_footer', 'site_child_maybe_render_location_map', 10 );
+
+/**
+ * Resolve the canonical URL of a child page under the Resources hub.
+ *
+ * WHY: the "Resources" hub (post 921) has the slug `services`, so its children
+ * live at /services/papers/, /services/case-studys/ and
+ * /services/irrigation-and-drainage/. Templates previously hardcoded
+ * /resources/... and /resource-hub/... — neither prefix exists, so every one of
+ * those links returned a 404. Resolving the permalink from the page itself means
+ * the links follow the hub if its slug or the page hierarchy ever changes.
+ *
+ * Falls back to the literal path so a link is never rendered empty.
+ *
+ * @param string $slug Slug of the child page, e.g. 'papers'.
+ * @return string Absolute permalink, or the fallback path when not found.
+ */
+function site_child_resource_hub_url( $slug ) {
+	static $rv_urls = array();
+
+	$rv_slug = sanitize_title( $slug );
+	if ( ! $rv_slug ) {
+		return home_url( '/services/' );
+	}
+
+	if ( isset( $rv_urls[ $rv_slug ] ) ) {
+		return $rv_urls[ $rv_slug ];
+	}
+
+	$rv_page = get_page_by_path( 'services/' . $rv_slug, OBJECT, 'page' );
+	if ( ! $rv_page ) {
+		$rv_page = get_page_by_path( $rv_slug, OBJECT, 'page' );
+	}
+
+	if ( $rv_page && 'publish' === get_post_status( $rv_page ) ) {
+		$rv_urls[ $rv_slug ] = get_permalink( $rv_page );
+	} else {
+		$rv_urls[ $rv_slug ] = home_url( '/services/' . $rv_slug . '/' );
+	}
+
+	return $rv_urls[ $rv_slug ];
+}
+
+/**
+ * Human-readable size of a file referenced by a site uploads URL.
+ *
+ * WHY: the Papers page offers PDFs as free downloads. Showing each file's size
+ * lets a visitor judge the download before starting it, which matters most on
+ * metered mobile data. These legacy PDFs are referenced by literal uploads
+ * paths rather than attachment IDs, so the size is read from disk.
+ *
+ * WHY wp_get_upload_dir(): unlike wp_upload_dir() it never attempts to create
+ * the uploads directory, so rendering a page stays free of write side effects.
+ *
+ * Compares URL *paths* rather than whole URLs because the stored uploads baseurl
+ * may be an absolute hostname while the template supplies root-relative links.
+ *
+ * Returns '' when the URL is outside the uploads directory or the file cannot
+ * be read, so callers omit the size rather than print a misleading "0 bytes".
+ *
+ * @param string $url Absolute or site-relative uploads URL.
+ * @return string Formatted size such as "99 KB", or '' when unavailable.
+ */
+function site_child_upload_size( $url ) {
+	if ( ! is_string( $url ) || '' === $url ) {
+		return '';
+	}
+
+	$url_path = wp_parse_url( $url, PHP_URL_PATH );
+	if ( ! $url_path ) {
+		return '';
+	}
+
+	$uploads     = wp_get_upload_dir();
+	$uploads_url = wp_parse_url( $uploads['baseurl'], PHP_URL_PATH );
+
+	if ( ! $uploads_url || 0 !== strpos( $url_path, $uploads_url ) ) {
+		return '';
+	}
+
+	$relative = ltrim( substr( $url_path, strlen( $uploads_url ) ), '/' );
+	if ( '' === $relative ) {
+		return '';
+	}
+
+	$absolute = trailingslashit( $uploads['basedir'] ) . $relative;
+	if ( ! is_readable( $absolute ) ) {
+		return '';
+	}
+
+	$bytes = filesize( $absolute );
+	if ( ! $bytes ) {
+		return '';
+	}
+
+	return size_format( $bytes, 0 );
+}
+
+
+/**
  * Force the modernised revamp shells for the nine programme + resource pages.
  *
  * WHY: these nine pages carry legacy Elementor/SiteOrigin content. Elementor's
@@ -833,6 +967,83 @@ function site_child_ow_get_fallback_image( $item ) {
 }
 
 /**
+ * Base URI for the child-theme Focus Areas imagery folder.
+ *
+ * The folder name contains a space ("assets/images/focus area/"), so it is
+ * percent-encoded exactly once here. Centralising the rule keeps every template
+ * that renders the Focus Areas section consistent: esc_url() encodes a literal
+ * space in `src`, while esc_attr() (used for the `srcset` candidate list) would
+ * leave it raw and split the list on it.
+ *
+ * @return string Trailing-slash base URI.
+ */
+function site_child_focus_area_image_uri() {
+	return get_stylesheet_directory_uri() . '/assets/images/' . rawurlencode( 'focus area' ) . '/';
+}
+
+/**
+ * Canonical Focus Areas dataset.
+ *
+ * Single source of truth shared by the homepage, the About Us page and both
+ * Our Work templates, so the four cards can never drift apart in image, copy,
+ * order or destination again. Imagery lives in the child theme
+ * (assets/images/focus area/) rather than the Media Library, so it travels with
+ * the code and stays version-controlled.
+ *
+ * @return array List of focus-area definitions.
+ */
+function site_child_get_focus_areas() {
+	$image_uri = site_child_focus_area_image_uri();
+
+	return array(
+		array(
+			'title'     => 'Skilling Youth for Employment',
+			'kicker'    => 'Youth & Skills',
+			'icon'      => 'fa-graduation-cap',
+			'image'     => $image_uri . 'youth-768x513.jpg',
+			'image_alt' => 'SITE trainees in blue overalls, lab coats and yellow safety helmets with trainers after a youth skills session',
+			'image_w'   => 768,
+			'image_h'   => 513,
+			'summary'   => 'Market-led technical, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
+			'link'      => home_url( '/sample-page-2/' ),
+		),
+		array(
+			'title'     => 'Enterprise Development and Value Chains',
+			'kicker'    => 'Inclusive Markets',
+			'icon'      => 'fa-line-chart',
+			'image'     => $image_uri . 'Capture23-768x330.jpg',
+			'image_alt' => 'Hands pouring milk from a stainless steel vessel into processing machinery',
+			'image_w'   => 768,
+			'image_h'   => 330,
+			'summary'   => 'Business development and value-chain strengthening for entrepreneurs, MSMEs, and producer groups seeking better markets and sustainable growth.',
+			'link'      => home_url( '/enterprise-development-and-value-chains/' ),
+		),
+		array(
+			'title'     => 'Empowering Women for Employment',
+			'kicker'    => 'Women & Inclusion',
+			'icon'      => 'fa-female',
+			'image'     => $image_uri . 'women-empowerment.jpg',
+			'image_alt' => 'Two women in hijabs and hairnets filling plastic bottles from funnels at a production table',
+			'image_w'   => 2048,
+			'image_h'   => 1536,
+			'summary'   => 'Practical pathways for women and marginalized groups to build income, leadership, resilience, and stronger decision-making power.',
+			'link'      => home_url( '/empowering-women-for-employment/' ),
+		),
+		array(
+			'title'     => 'Food Security & Climate Action',
+			'kicker'    => 'Resilient Communities',
+			'icon'      => 'fa-leaf',
+			'image'     => $image_uri . 'Gallery-3b-800x730.jpg',
+			'image_alt' => 'Women sorting grains and beans into buckets during an outdoor community agriculture meeting',
+			'image_w'   => 800,
+			'image_h'   => 730,
+			'summary'   => 'Climate-smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
+			'link'      => home_url( '/climate-actions/' ),
+		),
+	);
+}
+
+/**
  * Output the custom favicon + apple-touch-icon links.
  *
  * Assets live in the child theme (assets/images) rather than
@@ -881,3 +1092,40 @@ function site_child_enqueue_dark_assets() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'site_child_enqueue_dark_assets', 30 );
+
+/**
+ * Enqueue the shared Focus Areas responsive stylesheet.
+ *
+ * The Focus Areas cards are rendered by one shared part
+ * (template-parts/sections/focus-areas.php) on the homepage, on the About Us
+ * page and on the Our Work pages. Its base styling is already global (style.css,
+ * scoped to .site-focus-areas-section) and its dark styling is global (dark.css,
+ * also scoped), but its *responsive* overrides live in homepage-responsive.css,
+ * which is front-page only. This loads the focus-area-specific equivalent on the
+ * other pages that render the section, so the cards break down identically at
+ * every breakpoint instead of snapping back to desktop sizes.
+ *
+ * Guarded: front page, About Us template, the Our Work page (slug "ourwork") and
+ * the Our Work template. Versioned with filemtime() for cache busting during
+ * development. Registered below priority 30 so dark.css still loads last.
+ */
+function site_child_enqueue_focus_areas_assets() {
+	$renders_focus_areas = is_front_page()
+		|| is_page_template( 'page-about-us.php' )
+		|| is_page_template( 'page-our-work.php' )
+		|| is_page( 'ourwork' );
+
+	if ( ! $renders_focus_areas ) {
+		return;
+	}
+
+	$focus_css_path = get_stylesheet_directory() . '/assets/css/focus-areas.css';
+
+	wp_enqueue_style(
+		'site-focus-areas',
+		get_stylesheet_directory_uri() . '/assets/css/focus-areas.css',
+		array( 'site-child-style' ),
+		file_exists( $focus_css_path ) ? (string) filemtime( $focus_css_path ) : '1.0.0'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_focus_areas_assets', 26 );

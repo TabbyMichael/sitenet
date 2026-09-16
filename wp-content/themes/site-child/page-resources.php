@@ -28,21 +28,21 @@ $res_categories = array(
 		'desc'	=> 'In-depth looks at how our projects and partnerships create measurable change across Kenya.',
 		'icon'	=> 'fa-book',
 		'image' => content_url( 'uploads/2021/11/Gallery-1-850x567.jpg' ),
-		'link'	=> home_url( '/resource-hub/case-studys/' ),
+		'link'	=> site_child_resource_hub_url( 'case-studys' ),
 	),
 	array(
 		'title' => 'Papers',
 		'desc'	=> 'Research, surveys and reports from our work in enterprise development and value chains.',
 		'icon'	=> 'fa-file-text-o',
 		'image' => content_url( 'uploads/2021/11/journeyofgrowth-850x567.jpg' ),
-		'link'	=> home_url( '/resource-hub/papers/' ),
+		'link'	=> site_child_resource_hub_url( 'papers' ),
 	),
 	array(
 		'title' => 'Press Releases',
 		'desc'	=> 'Official statements and media releases from SITE Enterprise Promotion.',
 		'icon'	=> 'fa-bullhorn',
 		'image' => content_url( 'uploads/2021/11/harbole-water-850x567.jpg' ),
-		'link'	=> home_url( '/resource-hub/irrigation-and-drainage/' ),
+		'link'	=> site_child_resource_hub_url( 'irrigation-and-drainage' ),
 	),
 	array(
 		'title' => 'Video Gallery',
@@ -60,17 +60,17 @@ $res_publications = array(
 	array(
 		'title' => 'Aspirations and gains of small-scale camel owners in Isiolo County, Kenya',
 		'meta'	=> 'Research Paper &mdash; 2023',
-		'link'	=> home_url( '/resource-hub/papers/' ),
+		'link'	=> site_child_resource_hub_url( 'papers' ),
 	),
 	array(
 		'title' => 'Harbole watering point: community-led rangeland management',
 		'meta'	=> 'Case Study &mdash; 2022',
-		'link'	=> home_url( '/resource-hub/case-studys/' ),
+		'link'	=> site_child_resource_hub_url( 'case-studys' ),
 	),
 	array(
 		'title' => 'Policy brief: working spaces in Mathare informal settlement',
 		'meta'	=> 'Policy Brief &mdash; 2023',
-		'link'	=> home_url( '/resource-hub/papers/' ),
+		'link'	=> site_child_resource_hub_url( 'papers' ),
 	),
 );
 ?>
@@ -127,21 +127,21 @@ $res_publications = array(
 					<article class="res-pub-card">
 						<div class="res-pub-card__media">
 							<span class="res-pub-card__badge">Publication</span>
-							<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" style="width:100%;height:100%;display:block;">
-								<rect width="300" height="400" fill="url(#res-pub-grad)"/>
+							<svg viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" style="width:100%;height:100%;display:block;">
+								<rect width="480" height="300" fill="url(#res-pub-grad)"/>
 								<defs>
 									<linearGradient id="res-pub-grad" x1="0%" y1="0%" x2="100%" y2="100%">
 										<stop offset="0%" style="stop-color:#01622c;stop-opacity:1" />
 										<stop offset="100%" style="stop-color:#014720;stop-opacity:1" />
 									</linearGradient>
 								</defs>
-								<rect x="30" y="30" width="240" height="340" rx="4" fill="none" stroke="rgba(249,200,2,0.3)" stroke-width="1.5"/>
-								<line x1="60" y1="80" x2="240" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-								<line x1="60" y1="100" x2="220" y2="100" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-								<line x1="60" y1="120" x2="230" y2="120" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-								<line x1="60" y1="140" x2="180" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-								<rect x="100" y="280" width="100" height="30" rx="15" fill="#f9c802"/>
-								<text x="150" y="300" text-anchor="middle" fill="#1a1500" font-family="sans-serif" font-size="11" font-weight="700">PDF</text>
+								<rect x="26" y="26" width="428" height="248" rx="4" fill="none" stroke="rgba(249,200,2,0.3)" stroke-width="1.5"/>
+								<line x1="120" y1="70" x2="360" y2="70" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+								<line x1="134" y1="90" x2="346" y2="90" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+								<line x1="124" y1="110" x2="356" y2="110" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+								<line x1="148" y1="130" x2="332" y2="130" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+								<rect x="180" y="200" width="120" height="34" rx="17" fill="#f9c802"/>
+								<text x="240" y="222" text-anchor="middle" fill="#1a1500" font-family="sans-serif" font-size="14" font-weight="700">PDF</text>
 							</svg>
 						</div>
 						<div class="res-pub-card__content">

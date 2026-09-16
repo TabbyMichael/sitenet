@@ -31,7 +31,13 @@ $au_mvv = array(
 		'text'	=> 'Better quality of life for people and communities through economic dignity and sustainable enterprise.',
 	),
 	array(
-		'icon'	=> 'fa-gem',
+		/*
+		 * Font Awesome 4 only (verified: the theme loads FA 4.7.0). The gem/VIP
+		 * icon is `fa-diamond` in FA4 — `fa-gem` is an FA5+ name and renders as
+		 * an empty box, which is why this card showed no icon next to Mission
+		 * and Vision. Do not "restore" fa-gem.
+		 */
+		'icon'	=> 'fa-diamond',
 		'title' => 'Values',
 		'text'	=> 'Inclusion, integrity, innovation, and impact — guiding every partnership, program, and investment we make.',
 	),
@@ -73,36 +79,12 @@ $au_stats = array(
 	array( 'value' => '20,000+',  'label' => 'Youth' ),
 );
 
-$au_focus = array(
-	array(
-		'kicker'  => 'Youth & Skills',
-		'title'	  => 'Skilling Youth for Employment',
-		'image'	  => content_url( 'uploads/2021/11/Gallery-1-850x567.jpg' ),
-		'summary' => 'Market-led technical, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
-		'link'	  => home_url( '/sample-page-2/' ),
-	),
-	array(
-		'kicker'  => 'Inclusive Markets',
-		'title'	  => 'Enterprise Development & Value Chains',
-		'image'	  => content_url( 'uploads/2021/11/journeyofgrowth-850x567.jpg' ),
-		'summary' => 'Business development and value-chain strengthening for entrepreneurs, MSMEs, and producer groups seeking better markets and sustainable growth.',
-		'link'	  => home_url( '/enterprise-development-and-value-chains/' ),
-	),
-	array(
-		'kicker'  => 'Women & Inclusion',
-		'title'	  => 'Empowering Women for Employment',
-		'image'	  => content_url( 'uploads/2021/11/bilatha-850x567.jpg' ),
-		'summary' => 'Practical pathways for women and marginalized groups to build income, leadership, resilience, and stronger decision-making power.',
-		'link'	  => home_url( '/empowering-women-for-employment/' ),
-	),
-	array(
-		'kicker'  => 'Resilient Communities',
-		'title'	  => 'Food Security & Climate Action',
-		'image'	  => content_url( 'uploads/2021/11/harbole-water-850x567.jpg' ),
-		'summary' => 'Climate-smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
-		'link'	  => home_url( '/climate-actions/' ),
-	),
-);
+/*
+ * The Focus Areas section is shared with the homepage and the Our Work pages.
+ * It is rendered by template-parts/sections/focus-areas.php from the canonical
+ * dataset in site_child_get_focus_areas(), so this page no longer keeps its own
+ * copy of the array or its own card markup.
+ */
 ?>
 
 <main id="primary" class="site-main site-about-us">
@@ -188,41 +170,8 @@ $au_focus = array(
 		</div>
 	</section>
 
-	<!-- FOCUS AREAS -->
-	<section class="au-focus" aria-labelledby="au-focus-title">
-		<div class="au-container">
-			<div class="au-section-head au-section-head--center">
-				<span class="au-eyebrow">Strategic Focus</span>
-				<h2 id="au-focus-title" class="au-section-title">Focus Areas</h2>
-				<p class="au-section-lead">
-					Our programs connect skills, enterprise growth, gender inclusion, and climate resilience so communities can solve local challenges and build sustainable incomes.
-				</p>
-			</div>
-
-			<div class="au-focus__grid">
-				<?php foreach ( $au_focus as $area ) : ?>
-					<article class="au-focus-card" aria-label="<?php echo esc_attr( $area['title'] ); ?>">
-						<div class="au-focus-card__media">
-							<img src="<?php echo esc_url( $area['image'] ); ?>"
-								sizes="(max-width: 767px) 100vw, 50vw"
-								width="850"
-								height="567"
-								alt="<?php echo esc_attr( wp_strip_all_tags( $area['title'] ) ); ?>"
-								loading="lazy" decoding="async">
-						</div>
-						<div class="au-focus-card__body">
-							<span class="au-focus-card__kicker"><?php echo esc_html( $area['kicker'] ); ?></span>
-							<h3 class="au-focus-card__title"><?php echo wp_kses_post( $area['title'] ); ?></h3>
-							<p class="au-focus-card__text"><?php echo esc_html( $area['summary'] ); ?></p>
-							<a href="<?php echo esc_url( $area['link'] ); ?>" class="au-focus-card__link">
-								Explore Focus Area <i class="fa fa-angle-right" aria-hidden="true"></i>
-							</a>
-						</div>
-					</article>
-				<?php endforeach; ?>
-			</div>
-		</div>
-	</section>
+	<!-- FOCUS AREAS (shared component — identical to the homepage) -->
+	<?php get_template_part( 'template-parts/sections/focus-areas' ); ?>
 
 	<!-- CLOSING CTA -->
 	<section class="au-cta" aria-labelledby="au-cta-title">

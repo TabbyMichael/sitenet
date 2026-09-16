@@ -20,9 +20,19 @@
    Shell / frame
    -------------------------------------------------------------------------- */
 
+/* The site header is position:fixed (header.css), so the hero must be pushed
+   down by the navbar's height to start *below* it instead of underneath it.
+   --site-hero-top is that distance: header.css's own height tokens are the
+   source of truth and carousel.js refines the value by measuring the real
+   header. The token fallback keeps the layout exact before JS runs (or with
+   JS disabled) so nothing shifts on load. */
 .site-hero-carousel {
+	--site-hero-top: var(
+		--site-hero-offset,
+		calc(var(--site-header-h-utility, 36px) + var(--site-header-h-nav, 78px))
+	);
 	position: relative;
-	margin: 0 auto 64px;
+	margin: var(--site-hero-top) auto 64px;
 	padding: 0;
 	max-width: none;
 	width: 100%;
@@ -37,9 +47,9 @@
 	box-shadow: none;
 	/* Fallback before JS measures the header (prevents CLS). */
 	height: clamp(680px, 100vh, 760px);
-	/* Full-screen height: carousel.js measures the header and sets
-	   --site-hero-offset so the hero fills the remaining viewport exactly. */
-	height: calc(100vh - var(--site-hero-offset, 0px));
+	/* The navbar's height is subtracted so the hero starts below the header
+	   and still ends exactly at the bottom edge of the viewport. */
+	height: calc(100vh - var(--site-hero-top, 114px));
 	min-height: 480px;
 }
 
