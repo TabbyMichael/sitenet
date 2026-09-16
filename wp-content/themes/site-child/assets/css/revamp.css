@@ -865,6 +865,58 @@
     font-size: 14px;
 }
 
+/* --------------------------------------------------------------------------
+   7b. Case studies page — one row of four, sized like the Resource categories
+   --------------------------------------------------------------------------
+   The four case studies are laid out to match .res-categories__grid on
+   /services/: 4-up with a 24px gutter, plus the same media ratio, card inset and
+   type scale as .res-cat-card (see section 5 of resources.css).
+
+   Scoped to .site-revamp--case-studies — the root class published by
+   page-case-studys.php — because the Press releases page
+   (page-irrigation-and-drainage.php) reuses BOTH .rv-cases__grid and the
+   .rv-case-card markup and must keep its existing 2-up layout. Every rule below
+   is therefore page-scoped rather than global.
+
+   Putting the 4-up grid inside (min-width: 1024px) leaves the shared responsive
+   rules in section 12 untouched, so the columns still step 4 -> 2 (<=1023px)
+   -> 1 (<=767px) exactly as the Resource categories grid does.
+   -------------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+    .site-revamp--case-studies .rv-cases__grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 24px;
+    }
+
+    /* A four-up card is only ~226-290px wide, which is tighter than the
+       "Download case study" pill needs. Spanning the card and scaling the label
+       with the viewport keeps that label on one line from 1024px upward. */
+    .site-revamp--case-studies .rv-case-card__download {
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+        padding: 9px 12px;
+        font-size: clamp(12px, 1.1vw, 14px);
+    }
+}
+
+/* Card inset + type scale lifted from .res-cat-card so the two pages read as one
+   system. These follow their generic .rv-case-card counterparts above, so they
+   take precedence on source order at equal specificity. */
+.site-revamp--case-studies .rv-case-card__body {
+    padding: 24px 24px 28px;
+}
+
+.site-revamp--case-studies .rv-case-card__title {
+    font-size: 20px;
+    line-height: 1.25;
+}
+
+.site-revamp--case-studies .rv-case-card__text {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
 /* Showcase strip ("Moments behind the impact") */
 .site-revamp .rv-showcase__grid {
     display: grid;
@@ -1050,6 +1102,11 @@
     flex-direction: column;
     gap: 8px;
     min-width: 0;
+    /* The card is align-items: flex-start so the icon keeps its square shape;
+       stretching the body instead lets the footer bottom-align, which lines the
+       download buttons up across a row of unequal-length titles. */
+    align-self: stretch;
+    flex: 1 1 auto;
 }
 
 .site-revamp .rv-paper-card__badge {
@@ -1071,6 +1128,34 @@
     font-weight: 700;
     line-height: 1.45;
     margin: 0;
+}
+
+/* Card footer: file type/size on the left, the download button on the right. */
+.site-revamp .rv-paper-card__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 4px;
+}
+
+.site-revamp .rv-paper-card__meta {
+    color: var(--rv-muted);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* Sits inside a card, so tighter than a section-level .rv-btn while still
+   meeting the ~44px minimum tap target. Declared after .rv-btn, which shares
+   its specificity, so source order decides. */
+.site-revamp .rv-paper-card__download {
+    min-height: 44px;
+    padding: 9px 20px;
+    font-size: 14px;
 }
 
 .site-revamp .rv-videos__grid {
@@ -1586,7 +1671,8 @@
         aspect-ratio: 1 / 1;
     }
 
-    .site-revamp .rv-case-card__foot {
+    .site-revamp .rv-case-card__foot,
+    .site-revamp .rv-paper-card__foot {
         flex-direction: column;
         align-items: flex-start;
     }

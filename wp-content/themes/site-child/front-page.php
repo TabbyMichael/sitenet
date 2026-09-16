@@ -45,7 +45,7 @@ get_header();
 
 						<div class="site-about-actions">
 							<a class="site-about-primary-link" href="<?php echo esc_url( home_url( '/about-us/' ) ); ?>">More About Us</a>
-							<a class="site-about-secondary-link" href="<?php echo esc_url( home_url( '/partnership/' ) ); ?>">Partner With Us</a>
+							<a class="site-about-secondary-link" href="<?php echo esc_url( home_url( '/make-an-appointment/' ) ); ?>">Partner With Us</a>
 						</div>
 					</div>
 				</div>

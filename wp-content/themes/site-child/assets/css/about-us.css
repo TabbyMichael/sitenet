@@ -210,6 +210,19 @@
 	padding: 36px 30px 32px;
 	box-shadow: var(--au-shadow-card);
 	overflow: hidden;
+	transition: transform var(--au-transition), box-shadow var(--au-transition),
+		border-color var(--au-transition);
+}
+
+/* Hover: the shared "card lift" used by every card on this site — the same
+   deltas and the same easing as .owk-program-card on Our Work, so the two
+   icon+title+text card families feel identical. Transform-only, so it needs no
+   separate dark-mode rule. */
+.site-about-us .au-mvv-card:hover,
+.site-about-us .au-mvv-card:focus-within {
+	transform: translateY(-4px);
+	box-shadow: var(--au-shadow-card-hover);
+	border-color: var(--au-border-strong);
 }
 
 .site-about-us .au-mvv-card::before {
@@ -234,6 +247,14 @@
 	font-size: 22px;
 	background-color: rgba(1, 98, 44, 0.08);
 	color: var(--au-green);
+	transition: transform var(--au-transition);
+}
+
+/* Matches .owk-program-card__icon on Our Work. Transform-only so the dark-mode
+   colour overrides below are untouched. */
+.site-about-us .au-mvv-card:hover .au-mvv-card__icon,
+.site-about-us .au-mvv-card:focus-within .au-mvv-card__icon {
+	transform: translateY(-3px);
 }
 
 [data-theme="dark"] .site-about-us .au-mvv-card__icon {
@@ -345,6 +366,17 @@
 	border-radius: var(--au-radius-sm);
 	padding: 32px 16px 28px;
 	box-shadow: var(--au-shadow-card);
+	transition: transform var(--au-transition), box-shadow var(--au-transition),
+		border-color var(--au-transition);
+}
+
+/* Same "card lift" as .owk-stat on Our Work — identical deltas, easing and
+   tokens, so the two Impact-in-Numbers sections behave the same way. */
+.site-about-us .au-stat:hover,
+.site-about-us .au-stat:focus-within {
+	transform: translateY(-4px);
+	box-shadow: var(--au-shadow-card-hover);
+	border-color: var(--au-border-strong);
 }
 
 .site-about-us .au-stat__number {
@@ -507,6 +539,11 @@
 	pointer-events: none;
 }
 
+.site-about-us .au-cta__text {
+	position: relative;
+	max-width: 580px;
+}
+
 .site-about-us .au-cta__title {
 	position: relative;
 	color: #ffffff;
@@ -652,5 +689,36 @@
 
 	.site-about-us .au-focus-card__link:hover i {
 		transform: none !important;
+	}
+
+	.site-about-us .au-stat:hover,
+	.site-about-us .au-stat:focus-within,
+	.site-about-us .au-mvv-card:hover,
+	.site-about-us .au-mvv-card:focus-within {
+		transform: none !important;
+	}
+
+	.site-about-us .au-mvv-card:hover .au-mvv-card__icon,
+	.site-about-us .au-mvv-card:focus-within .au-mvv-card__icon {
+		transform: none !important;
+	}
+}
+
+/* -------------------------------------------------------------------------- */
+/* 12. Touch devices — no sticky hover lift after a tap                       */
+/* -------------------------------------------------------------------------- */
+@media (hover: none) {
+	.site-about-us .au-stat:hover,
+	.site-about-us .au-stat:focus-within,
+	.site-about-us .au-mvv-card:hover,
+	.site-about-us .au-mvv-card:focus-within {
+		transform: none;
+		box-shadow: var(--au-shadow-card);
+		border-color: var(--au-border);
+	}
+
+	.site-about-us .au-mvv-card:hover .au-mvv-card__icon,
+	.site-about-us .au-mvv-card:focus-within .au-mvv-card__icon {
+		transform: none;
 	}
 }

@@ -422,16 +422,9 @@ html[data-theme="dark"] .breadcrumbs span > span {
     background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0 8px, transparent 8px 16px);
 }
 
-[data-theme="dark"] .pd-card {
-    background: #161f1a;
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-}
-
-[data-theme="dark"] .pd-card:hover {
-    transform: translateY(-6px) scale(1.03);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.55), 0 0 0 2px rgba(249, 200, 2, 0.5);
-}
+/* .pd-card dark chrome (surface background, border, drop shadow and hover
+   ring) lived here. Removed to match the light palette — the partner and
+   donor logos now sit free of any card in both themes. */
 
 [data-theme="dark"] .pd-nav {
     background: #161f1a;
@@ -454,33 +447,53 @@ html[data-theme="dark"] .breadcrumbs span > span {
 }
 
 /* --------------------------------------------------------------------------
-   Testimonials
+   Testimonials — rendered by template-parts/homepage/testimonials.php, base
+   styles in assets/css/testimonials.css.
+
+   The card is a white surface in light mode, so dark mode has to darken the
+   card itself: dark.css paints every <p> white (see "Generic fallbacks"
+   above) and against a white card that white copy is invisible.
+
+   Every selector below carries [data-theme] + a class, i.e. two class-level
+   components, so it outranks those generic `html[data-theme="dark"] p|li`
+   element rules. The section background (photo + green overlay) is already
+   dark and is deliberately left alone.
    -------------------------------------------------------------------------- */
-[data-theme="dark"] .site-testimonials-section {
-    background: #000000;
+[data-theme="dark"] .site-testimonial-card {
+    background: #1a241f;
+    border-color: rgba(255, 255, 255, 0.12);
+    border-top-color: #f9c802;
+    box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.7);
 }
 
-[data-theme="dark"] .site-testimonial p {
-    background: #1a241f;
+/* Restate the hover/focus lift: this rule and testimonials.css's :hover rule
+   have equal specificity, and dark.css loads last — without this, the base
+   border colour above would win and the card would stop responding. */
+[data-theme="dark"] .site-testimonial-card:hover,
+[data-theme="dark"] .site-testimonial-card:focus-within {
+    border-color: rgba(249, 200, 2, 0.55);
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.75);
+}
+
+[data-theme="dark"] .site-testimonial-card__quote p {
     color: #dde4e0;
 }
 
-[data-theme="dark"] .site-testimonial p::before {
-    color: #3c4c44;
-}
-
-[data-theme="dark"] .site-testimonial strong {
+[data-theme="dark"] .site-testimonial-card__name {
     color: #e7edea;
 }
 
-[data-theme="dark"] .site-testimonial span {
+[data-theme="dark"] .site-testimonial-card__location {
     color: #58c07f;
 }
 
-[data-theme="dark"] .testimonial-controls span {
-    background: #f9c802;
-    color: #1a3c34;
+/* Separator hairline is SITE green at 12% — invisible on a dark surface. */
+[data-theme="dark"] .site-testimonial-card__author {
+    border-top-color: rgba(255, 255, 255, 0.12);
 }
+
+/* Quote mark, stars and the gold avatar ring already read correctly on dark
+   (SITE gold), so they need no override. */
 
 /* --------------------------------------------------------------------------
    Map + misc

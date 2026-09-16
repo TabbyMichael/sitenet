@@ -48,8 +48,8 @@ $rv = array(
 	'title'         => 'Press Releases',
 	'lead'          => 'Official statements, announcements and updates from SITE Enterprise Promotion and its partners.',
 	'actions'       => array(
-		array( 'label' => 'Browse case studies', 'url' => '/resources/case-studys/', 'variant' => 'primary' ),
-		array( 'label' => 'Browse papers', 'url' => '/resources/papers/', 'variant' => 'ghost' ),
+		array( 'label' => 'Browse case studies', 'url' => site_child_resource_hub_url( 'case-studys' ), 'variant' => 'primary' ),
+		array( 'label' => 'Browse papers', 'url' => site_child_resource_hub_url( 'papers' ), 'variant' => 'ghost' ),
 	),
 	/* Preserved from the legacy page content — a real SITE statement. */
 	'featured'      => array(
@@ -63,13 +63,13 @@ $rv = array(
 			'icon'  => 'fa-book',
 			'title' => 'Case studies',
 			'desc'  => 'In-depth looks at how our projects create measurable change.',
-			'url'   => '/resources/case-studys/',
+			'url'   => site_child_resource_hub_url( 'case-studys' ),
 		),
 		array(
 			'icon'  => 'fa-file-pdf-o',
 			'title' => 'Papers',
 			'desc'  => 'Research, surveys, policy briefs and reports as free PDFs.',
-			'url'   => '/resources/papers/',
+			'url'   => site_child_resource_hub_url( 'papers' ),
 		),
 		array(
 			'icon'  => 'fa-video-camera',

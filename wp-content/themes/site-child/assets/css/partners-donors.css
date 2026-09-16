@@ -15,14 +15,18 @@
   letter-spacing:3px;text-transform:uppercase;color:#1a7a4a;margin:0 0 22px;padding:0 32px}
 .pd-sub::after{content:"";flex:1;height:1px;background:repeating-linear-gradient(90deg,#d9d9d9 0 8px,transparent 8px 16px)}
 
-/* ---------- Cards ---------- */
+/* ---------- Logo tiles ----------
+   The card chrome (white background, border, rounded corners and drop shadow)
+   has been removed so the logos now sit free inside their slide. Height,
+   padding and image sizing are deliberately unchanged, so every logo renders
+   at exactly the same size it did when it was boxed. */
 .pd-card{display:flex;align-items:center;justify-content:center;text-align:center;
-  height:96px;padding:18px 20px;background:#fff;border:1px solid #ececec;border-radius:14px;
-  box-shadow:0 4px 14px rgba(0,0,0,.06);
-  transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease;
+  height:96px;padding:18px 20px;background:transparent;border:0;border-radius:0;
+  box-shadow:none;
+  transition:transform .35s ease;
   cursor:pointer;user-select:none}
-.pd-card:hover{transform:translateY(-6px) scale(1.03);
-  box-shadow:0 14px 30px rgba(0,0,0,.16),0 0 0 2px rgba(249,200,2,.5)}
+/* Hover feedback kept on the logo itself (no card, so no ring/shadow lift). */
+.pd-card:hover{transform:translateY(-6px) scale(1.03)}
 .pd-card img{max-height:62px;max-width:88%;width:auto;object-fit:contain}
 
 /* Text-based logos (swap for real <img> logos in the template when available) */
@@ -70,6 +74,8 @@
 .pd-card a.pd-card-link:focus-visible{outline:2px solid #1a7a4a;outline-offset:3px;border-radius:12px}
 
 @media (prefers-reduced-motion:reduce){
+  .pd-card{transition:none}
+  .pd-card:hover{transform:none}
   .pd-card a.pd-card-link img{transition:none}
   .pd-card a.pd-card-link:hover img{transform:none}
 }

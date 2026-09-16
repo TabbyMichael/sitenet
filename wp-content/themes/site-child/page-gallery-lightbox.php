@@ -171,7 +171,7 @@ $rv = array(
 	'lead'          => 'A visual journey through our programmes and the communities we serve across Kenya.',
 	'actions'       => array(
 		array( 'label' => 'Watch videos', 'url' => '/galleries/gallery-full-width-2/', 'variant' => 'primary' ),
-		array( 'label' => 'Browse case studies', 'url' => '/resources/case-studys/', 'variant' => 'ghost' ),
+		array( 'label' => 'Browse case studies', 'url' => site_child_resource_hub_url( 'case-studys' ), 'variant' => 'ghost' ),
 	),
 	'photo_groups'  => $rv_groups,
 	/*

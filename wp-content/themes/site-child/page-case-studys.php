@@ -71,7 +71,7 @@ $rv = array(
 	'title'         => 'Case Studies',
 	'lead'          => 'In-depth looks at how our projects and partnerships create measurable change in the lives of communities and enterprises.',
 	'actions'       => array(
-		array( 'label' => 'Browse papers', 'url' => '/resources/papers/', 'variant' => 'primary' ),
+		array( 'label' => 'Browse papers', 'url' => site_child_resource_hub_url( 'papers' ), 'variant' => 'primary' ),
 		array( 'label' => 'View all stories', 'url' => '/stories/', 'variant' => 'ghost' ),
 	),
 	'intro_head'    => 'Stories of change',
@@ -85,13 +85,13 @@ $rv = array(
 			'icon'  => 'fa-file-pdf-o',
 			'title' => 'Papers',
 			'desc'  => 'Research, surveys, policy briefs and reports as free PDFs.',
-			'url'   => '/resources/papers/',
+			'url'   => site_child_resource_hub_url( 'papers' ),
 		),
 		array(
 			'icon'  => 'fa-bullhorn',
 			'title' => 'Press releases',
 			'desc'  => 'Official statements, announcements and updates from SITE.',
-			'url'   => '/resources/irrigation-and-drainage/',
+			'url'   => site_child_resource_hub_url( 'irrigation-and-drainage' ),
 		),
 		array(
 			'icon'  => 'fa-camera',

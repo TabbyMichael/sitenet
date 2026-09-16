@@ -169,18 +169,22 @@
 
 /* --------------------------------------------------------------------------
    4. Stats grid (5 items)
+   One separate card per figure — matching the About Us "Impact in Numbers"
+   section, which uses the same treatment. The five figures used to sit inside a
+   single panel card here; the card is now applied per <li> so each number reads
+   as its own card on both pages.
+
+   Grid geometry, gap, radius, padding, hover deltas and easing are copied from
+   .au-stats__grid / .au-stat in about-us.css (both token sets resolve to the
+   identical values) so the two sections look and feel the same.
    -------------------------------------------------------------------------- */
 .site-ourwork .owk-stats__grid {
 	display: grid;
 	grid-template-columns: repeat(5, minmax(0, 1fr));
-	gap: 18px;
-	padding: 28px 32px;
-	background-color: var(--owk-surface);
-	border: 1px solid var(--owk-border);
-	border-radius: var(--owk-radius);
-	box-shadow: var(--owk-shadow-card);
+	gap: 16px;
 	list-style: none;
 	margin: 0;
+	padding: 0;
 }
 
 .site-ourwork .owk-stat {
@@ -188,22 +192,40 @@
 	flex-direction: column;
 	gap: 6px;
 	text-align: center;
+	background-color: var(--owk-surface);
+	border: 1px solid var(--owk-border);
+	border-radius: var(--owk-radius-sm);
+	padding: 32px 16px 28px;
+	box-shadow: var(--owk-shadow-card);
+	transition: transform var(--owk-transition), box-shadow var(--owk-transition),
+		border-color var(--owk-transition);
+}
+
+/* Same "card lift" as .au-stat on About Us — identical deltas, easing and
+   tokens, so the two Impact-in-Numbers sections behave the same way. */
+.site-ourwork .owk-stat:hover,
+.site-ourwork .owk-stat:focus-within {
+	transform: translateY(-4px);
+	box-shadow: var(--owk-shadow-card-hover);
+	border-color: var(--owk-border-strong);
 }
 
 .site-ourwork .owk-stat__value {
 	color: var(--owk-heading);
-	font-size: clamp(24px, 2.6vw, 34px);
+	font-size: clamp(24px, 2.4vw, 32px);
 	font-weight: 800;
 	letter-spacing: -0.02em;
-	line-height: 1.05;
+	line-height: 1.15;
 }
 
+/* Sentence case, like .au-stat__label on About Us. The previous uppercase +
+   letter-spacing treatment was left over from the old single-panel layout and
+   made the same five figures look different on the two pages. */
 .site-ourwork .owk-stat__label {
 	color: var(--owk-muted);
 	font-size: 13px;
 	font-weight: 600;
-	letter-spacing: 0.04em;
-	text-transform: uppercase;
+	line-height: 1.4;
 }
 
 /* --------------------------------------------------------------------------
@@ -508,14 +530,9 @@
    8. Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 1023px) {
-	.site-ourwork .owk-focus__grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 20px;
-	}
-
 	.site-ourwork .owk-stats__grid {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 20px 12px;
+		gap: 14px;
 	}
 
 	.site-ourwork .owk-programs__grid {
@@ -541,7 +558,7 @@
 
 	.site-ourwork .owk-stats__grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		padding: 24px 20px;
+		gap: 12px;
 	}
 
 	.site-ourwork .owk-focus {
@@ -570,12 +587,12 @@
 
 @media (max-width: 480px) {
 	.site-ourwork .owk-stats__grid {
-		grid-template-columns: 1fr;
-		gap: 14px;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 10px;
 	}
 
-	.site-ourwork .owk-stat__value {
-		font-size: 28px;
+	.site-ourwork .owk-stat {
+		padding: 24px 12px 20px;
 	}
 }
 
@@ -607,11 +624,46 @@
 		transform: none !important;
 	}
 
+	.site-ourwork .owk-stat:hover,
+	.site-ourwork .owk-stat:focus-within {
+		transform: none !important;
+	}
+
 	.site-ourwork .owk-btn:hover {
 		transform: none !important;
 	}
 
 	.site-ourwork .owk-cta__button:hover {
 		transform: none !important;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   10. Touch devices — no sticky hover lift after a tap
+   Same guard as about-us.css, so the two Impact-in-Numbers sections behave
+   identically on touch hardware.
+   -------------------------------------------------------------------------- */
+@media (hover: none) {
+	.site-ourwork .owk-stat:hover,
+	.site-ourwork .owk-stat:focus-within {
+		transform: none;
+		box-shadow: var(--owk-shadow-card);
+		border-color: var(--owk-border);
+	}
+
+	.site-ourwork .owk-program-card:hover {
+		transform: none;
+		box-shadow: var(--owk-shadow-card);
+		border-color: var(--owk-border);
+	}
+
+	.site-ourwork .owk-focus-card:hover {
+		transform: none;
+		box-shadow: var(--owk-shadow-card);
+		border-color: var(--owk-border);
+	}
+
+	.site-ourwork .owk-focus-card:hover .owk-focus-card__media img {
+		transform: none;
 	}
 }

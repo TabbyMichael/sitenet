@@ -27,7 +27,7 @@ $rv = array(
 	'lead'          => 'Short films and highlights from SITE programmes — trainings, graduations and community moments, watchable on YouTube.',
 	'actions'       => array(
 		array( 'label' => 'View photos', 'url' => '/galleries/gallery-lightbox/', 'variant' => 'primary' ),
-		array( 'label' => 'Browse papers', 'url' => '/resources/papers/', 'variant' => 'ghost' ),
+		array( 'label' => 'Browse papers', 'url' => site_child_resource_hub_url( 'papers' ), 'variant' => 'ghost' ),
 	),
 	'videos'        => array(
 		array(

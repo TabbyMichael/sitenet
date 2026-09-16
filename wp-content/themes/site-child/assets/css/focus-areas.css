@@ -1,0 +1,174 @@
+/* ==========================================================================
+   SITE — Focus Areas (shared section)
+   --------------------------------------------------------------------------
+   Locked boundaries: header + footer are untouched. This stylesheet styles
+   ONLY .site-focus-areas-section.
+
+   WHY THIS FILE EXISTS
+   The Focus Areas cards are rendered by one shared part
+   (template-parts/sections/focus-areas.php), used by the homepage, the About Us
+   page and the Our Work pages. That guarantees identical *markup*.
+
+   The base look of the section already lives in style.css, scoped to
+   .site-focus-areas-section, so it applies everywhere. The *responsive*
+   overrides, however, live in homepage-responsive.css, which is enqueued on the
+   front page only. Without this file the About Us and Our Work pages would fall
+   back to the desktop sizes on tablets and phones.
+
+   Every rule below is the focus-area-scoped subset of homepage-responsive.css,
+   re-expressed at the same (or equivalent) specificity so the computed result on
+   About Us / Our Work matches the homepage exactly.
+
+   Deliberately NOT copied from homepage-responsive.css: the unscoped
+   .focus-card-media / .focus-card-icon aspect-ratio and size overrides. On the
+   homepage those lose to the more specific .site-focus-areas-section rules in
+   style.css, so reproducing them here would *change* the homepage result.
+
+   Colours stay in style.css / dark.css so light & dark keep working untouched.
+   dark.css is site-wide (priority 30) and its Focus Areas rules are already
+   scoped to .site-focus-areas-section, so dark mode needs nothing here.
+
+   Supports light/dark modes via the existing html[data-theme="dark"]
+   attribute set by assets/js/theme-init.js.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   LARGE MONITORS (>= 1600px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1600px) {
+	.site-focus-areas-section > .container {
+		max-width: 1360px;
+	}
+
+	.site-focus-areas-section .focus-card-title {
+		font-size: 17px;
+	}
+
+	.site-focus-areas-section .focus-card-text {
+		font-size: 14px;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   SMALL LAPTOPS (1024px - 1199px) — compact 4-up cards
+   -------------------------------------------------------------------------- */
+@media (min-width: 1024px) and (max-width: 1199px) {
+	.site-focus-areas-section {
+		padding: 60px 0 64px !important; /* base rule in style.css uses !important */
+	}
+
+	.site-focus-grid {
+		gap: 16px;
+	}
+
+	.site-focus-areas-section .site-modern-section-title h2 {
+		font-size: 31px;
+	}
+
+	.site-focus-areas-section .focus-card-content {
+		padding: 16px 16px 18px;
+	}
+
+	.site-focus-areas-section .focus-card-title {
+		font-size: 15px;
+	}
+
+	.site-focus-areas-section .focus-card-text {
+		font-size: 12px;
+		line-height: 1.55;
+		margin-bottom: 12px;
+	}
+
+	.site-focus-areas-section .focus-card-icon {
+		width: 40px;
+		height: 40px;
+		font-size: 15px;
+		left: 14px;
+		bottom: 14px;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   TABLETS (768px - 1023px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 768px) and (max-width: 1023px) {
+	.site-focus-areas-section {
+		padding: 52px 0 56px !important; /* base rule in style.css uses !important */
+	}
+
+	.site-focus-areas-section .site-modern-section-title h2 {
+		font-size: 30px;
+	}
+
+	.site-focus-areas-section .focus-card-content {
+		padding: 18px 18px 20px;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   PHONES (<= 767px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+	.site-focus-areas-section {
+		padding: 42px 0 !important; /* base rule in style.css uses !important */
+	}
+
+	.site-focus-areas-section .site-modern-section-title {
+		margin-bottom: 22px;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   SMALL PHONES (<= 480px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+	.site-focus-areas-section .focus-card-content {
+		padding: 16px 16px 18px;
+	}
+
+	.site-focus-areas-section .focus-card-title {
+		font-size: 15px;
+	}
+
+	.site-focus-areas-section .focus-card-text {
+		font-size: 12px;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   OLD 4" PHONES (<= 360px) — smallest cards
+   -------------------------------------------------------------------------- */
+@media (max-width: 360px) {
+	.site-focus-areas-section .focus-card-badge {
+		width: 28px;
+		height: 28px;
+		font-size: 11px;
+		top: 10px;
+		right: 10px;
+	}
+
+	.site-focus-areas-section .focus-card-content {
+		padding: 14px 14px 16px;
+	}
+
+	.site-focus-areas-section .focus-card-title {
+		font-size: 14px;
+	}
+
+	.site-focus-areas-section .focus-card-text {
+		font-size: 12px;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   TOUCH DEVICES — no sticky hover lift / zoom after a tap
+   -------------------------------------------------------------------------- */
+@media (hover: none) {
+	.site-focus-areas-section .focus-card.is-visible:hover {
+		transform: none;
+	}
+
+	.site-focus-areas-section .focus-card:hover .focus-card-media img {
+		transform: none;
+	}
+}

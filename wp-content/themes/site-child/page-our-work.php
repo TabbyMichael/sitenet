@@ -29,40 +29,12 @@ $ow_stats = array(
     array( 'value' => '20,000+',  'label' => 'Youth' ),
 );
 
-$ow_focus = array(
-    array(
-        'kicker'  => 'Youth & Skills',
-        'title'   => 'Skilling Youth for Employment',
-        'icon'    => 'fa-graduation-cap',
-        'image'   => content_url( 'uploads/2021/11/Gallery-1-850x567.jpg' ),
-        'summary' => 'Market-led technical, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
-        'link'    => home_url( '/sample-page-2/' ),
-    ),
-    array(
-        'kicker'  => 'Inclusive Markets',
-        'title'   => 'Enterprise Development & Value Chains',
-        'icon'    => 'fa-line-chart',
-        'image'   => content_url( 'uploads/2021/11/journeyofgrowth-850x567.jpg' ),
-        'summary' => 'Business development and value-chain strengthening for entrepreneurs, MSMEs, and producer groups seeking better markets and sustainable growth.',
-        'link'    => home_url( '/enterprise-development-and-value-chains/' ),
-    ),
-    array(
-        'kicker'  => 'Women & Inclusion',
-        'title'   => 'Empowering Women for Employment',
-        'icon'    => 'fa-female',
-        'image'   => content_url( 'uploads/2021/11/bilatha-850x567.jpg' ),
-        'summary' => 'Practical pathways for women and marginalized groups to build income, leadership, resilience, and stronger decision-making power.',
-        'link'    => home_url( '/empowering-women-for-employment/' ),
-    ),
-    array(
-        'kicker'  => 'Resilient Communities',
-        'title'   => 'Food Security & Climate Action',
-        'icon'    => 'fa-leaf',
-        'image'   => content_url( 'uploads/2021/11/harbole-water-850x567.jpg' ),
-        'summary' => 'Climate-smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
-        'link'    => home_url( '/climate-actions/' ),
-    ),
-);
+/*
+ * The Focus Areas section is shared with the homepage and the About Us page.
+ * It is rendered by template-parts/sections/focus-areas.php from the canonical
+ * dataset in site_child_get_focus_areas(), so this page no longer keeps its own
+ * copy of the array or its own card markup (the copies had already drifted apart).
+ */
 
 /* Live category landing pages. */
 $ow_collections = array(
@@ -70,28 +42,28 @@ $ow_collections = array(
         'title'  => 'Case Studies',
         'desc'   => 'In-depth looks at how our projects and partnerships create measurable change.',
         'icon'   => 'fa-book',
-        'link'   => home_url( '/resources/case-studys/' ),
+        'link'   => site_child_resource_hub_url( 'case-studys' ),
         'filter' => 'case-studies',
     ),
     array(
         'title'  => 'Papers',
         'desc'   => 'Research, surveys and reports from our work in enterprise development.',
         'icon'   => 'fa-file-text-o',
-        'link'   => home_url( '/resources/papers/' ),
+        'link'   => site_child_resource_hub_url( 'papers' ),
         'filter' => 'papers',
     ),
     array(
         'title'  => 'News',
         'desc'   => 'Updates and announcements from across our programs and communities.',
         'icon'   => 'fa-newspaper-o',
-        'link'   => home_url( '/resources/stone-and-hardscaping/' ),
+        'link'   => site_child_resource_hub_url( 'stone-and-hardscaping' ),
         'filter' => 'news',
     ),
     array(
         'title'  => 'Press Releases',
         'desc'   => 'Official statements and media releases from SITE Enterprise Promotion.',
         'icon'   => 'fa-bullhorn',
-        'link'   => home_url( '/resources/irrigation-and-drainage/' ),
+        'link'   => site_child_resource_hub_url( 'irrigation-and-drainage' ),
         'filter' => 'press-releases',
     ),
 );
@@ -226,31 +198,8 @@ foreach ( $ow_filters as $key => $label ) {
         </div>
     </section>
 
-    <!-- FOCUS AREAS -->
-    <section class="ow-programs" aria-labelledby="ow-programs-title">
-        <div class="ow-container">
-            <div class="ow-section-head">
-                <span class="ow-eyebrow">What we do</span>
-                <h2 id="ow-programs-title" class="ow-section-head__title">Focus areas</h2>
-                <p class="ow-section-head__lead">Our programs connect skills, enterprise growth, gender inclusion and climate resilience so communities can build sustainable incomes.</p>
-            </div>
-            <div class="ow-programs__grid">
-                <?php foreach ( $ow_focus as $area ) : ?>
-                    <article class="ow-program-card" aria-label="<?php echo esc_attr( $area['title'] ); ?>">
-                        <a class="ow-program-card__media" href="<?php echo esc_url( $area['link'] ); ?>" tabindex="-1" aria-hidden="true">
-                            <img src="<?php echo esc_url( $area['image'] ); ?>" alt="<?php echo esc_attr( $area['title'] ); ?>" loading="lazy" decoding="async" />
-                            <span class="ow-program-card__icon" aria-hidden="true"><i class="fa <?php echo esc_attr( $area['icon'] ); ?>"></i></span>
-                        </a>
-                        <div class="ow-program-card__body">
-                            <span class="ow-program-card__kicker"><?php echo esc_html( $area['kicker'] ); ?></span>
-                            <h3 class="ow-program-card__title"><a href="<?php echo esc_url( $area['link'] ); ?>"><?php echo esc_html( $area['title'] ); ?></a></h3>
-                            <p class="ow-program-card__text"><?php echo esc_html( $area['summary'] ); ?></p>
-                        </div>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
+    <!-- FOCUS AREAS (shared component — identical to the homepage) -->
+    <?php get_template_part( 'template-parts/sections/focus-areas' ); ?>
 
     <!-- FILTERABLE SHOWCASE -->
     <section class="ow-workspace" id="ow-work" aria-label="Selected work">
