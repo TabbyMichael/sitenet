@@ -29,7 +29,7 @@ $rv = array(
 	'papers'        => array(
 		array(
 			'type'  => 'Research paper',
-			'title' => 'Aspirations and gains of small-scale camel owners',
+			'title' => 'Aspirations and gains of small scale camel owners',
 			'url'   => '/wp-content/uploads/2021/11/Aspirations_and_gains_of_-small-scale_camel_owner1.pdf',
 		),
 		array(
@@ -64,7 +64,7 @@ $rv = array(
 		),
 		array(
 			'type'  => 'Research paper',
-			'title' => 'Women small scale traders businesses in the informal economy in Nairobi, Kenya: is profit-making a primary goal?',
+			'title' => 'Women small scale traders businesses in the informal economy in Nairobi, Kenya: is profit making a primary goal?',
 			'url'   => '/wp-content/uploads/2021/11/Women_small_scale_traders..is_profit_making_a_primary_goal1.pdf',
 		),
 	),
@@ -72,7 +72,7 @@ $rv = array(
 		array(
 			'icon'  => 'fa-book',
 			'title' => 'Case studies',
-			'desc'  => 'In-depth looks at how our projects create measurable change.',
+			'desc'  => 'In depth looks at how our projects create measurable change.',
 			'url'   => site_child_resource_hub_url( 'case-studys' ),
 		),
 		array(

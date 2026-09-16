@@ -27,7 +27,7 @@ $rv = array(
 		array( 'label' => 'Explore our work', 'url' => '/ourwork/', 'variant' => 'ghost' ),
 	),
 	'intro_head'    => 'Preparing youth for dignified work',
-	'intro_text'    => '<p>Through market-led training, mentorship and hands-on experience, we help young people turn skills into incomes, enterprises and careers.</p>',
+	'intro_text'    => '<p>Through market led training, mentorship and hands on experience, we help young people turn skills into incomes, enterprises and careers.</p>',
 	'features'      => array(
 		array(
 			'icon'  => 'fa-graduation-cap',
@@ -37,17 +37,17 @@ $rv = array(
 		array(
 			'icon'  => 'fa-wrench',
 			'title' => 'Vocational & life skills development',
-			'text'  => 'We design market-oriented training programmes that equip youth with practical vocational skills and essential life skills — such as communication, self-awareness and problem-solving — to provide solutions to community needs and thrive in the job market.',
+			'text'  => 'We design market oriented training programmes that equip youth with practical vocational skills and essential life skills such as communication, self awareness and problem solving to provide solutions to community needs and thrive in the job market.',
 		),
 		array(
 			'icon'  => 'fa-laptop',
 			'title' => 'Digital literacy & access to opportunities',
-			'text'  => 'Through mobile devices and access to digital platforms, youth access critical resources including market information, financial services and employment opportunities — bridging the digital divide in underserved areas.',
+			'text'  => 'Through mobile devices and access to digital platforms, youth access critical resources including market information, financial services and employment opportunities bridging the digital divide in underserved areas.',
 		),
 		array(
 			'icon'  => 'fa-handshake-o',
 			'title' => 'Internships, mentorship & hands-on training',
-			'text'  => 'In partnership with county departments and private sector actors, SITE facilitates real-world experience through internships and host-training, preparing youth for meaningful employment and leadership roles.',
+			'text'  => 'In partnership with county departments and private sector actors, SITE facilitates real world experience through internships and host training, preparing youth for meaningful employment and leadership roles.',
 		),
 	),
 	'gallery'       => array(
@@ -63,21 +63,21 @@ $rv = array(
 		array(
 			'kicker'  => 'Inclusive Markets',
 			'title'   => 'Enterprise Development & Value Chains',
-			'summary' => 'Business development and value-chain strengthening for entrepreneurs, MSMEs, and producer groups seeking better markets and sustainable growth.',
+			'summary' => 'Business development and value chain strengthening for entrepreneurs, MSMEs, and producer groups seeking better markets and sustainable growth.',
 			'link'    => '/enterprise-development-and-value-chains/',
 			'image'   => '/wp-content/uploads/2021/11/journeyofgrowth-850x567.jpg',
 		),
 		array(
 			'kicker'  => 'Women & Inclusion',
 			'title'   => 'Empowering Women for Employment',
-			'summary' => 'Practical pathways for women and marginalized groups to build income, leadership, resilience, and stronger decision-making power.',
+			'summary' => 'Practical pathways for women and marginalized groups to build income, leadership, resilience, and stronger decision making power.',
 			'link'    => '/empowering-women-for-employment/',
 			'image'   => '/wp-content/uploads/2021/11/bilatha-850x567.jpg',
 		),
 		array(
 			'kicker'  => 'Resilient Communities',
 			'title'   => 'Food Security & Climate Action',
-			'summary' => 'Climate-smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
+			'summary' => 'Climate smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
 			'link'    => '/climate-actions/',
 			'image'   => '/wp-content/uploads/2021/11/harbole-water-850x567.jpg',
 		),

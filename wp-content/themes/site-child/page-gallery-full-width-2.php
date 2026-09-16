@@ -24,14 +24,14 @@ $rv = array(
 	'root_class'    => 'site-revamp--gallery site-revamp--video',
 	'kicker'        => 'Media · Video',
 	'title'         => 'Video Gallery',
-	'lead'          => 'Short films and highlights from SITE programmes — trainings, graduations and community moments, watchable on YouTube.',
+	'lead'          => 'Short films and highlights from SITE programmes trainings, graduations and community moments, watchable on YouTube.',
 	'actions'       => array(
 		array( 'label' => 'View photos', 'url' => '/galleries/gallery-lightbox/', 'variant' => 'primary' ),
 		array( 'label' => 'Browse papers', 'url' => site_child_resource_hub_url( 'papers' ), 'variant' => 'ghost' ),
 	),
 	'videos'        => array(
 		array(
-			'title' => 'Camili Documentary: A story of families and their camels thriving in drought-prone lands',
+			'title' => 'Camili Documentary: A story of families and their camels thriving in drought prone lands',
 			'url'   => 'https://www.youtube.com/watch?v=bjAVuIYPdI0',
 			'meta'  => 'SITE Enterprise Promotion · YouTube',
 		),
@@ -42,7 +42,7 @@ $rv = array(
 		),
 	),
 	'cta_title'     => 'Have a story to share?',
-	'cta_text'      => 'We regularly document our work on video — suggestions and collaborations are welcome.',
+	'cta_text'      => 'We regularly document our work on video suggestions and collaborations are welcome.',
 	'cta_url'       => '/contact-us/',
 	'cta_label'     => 'Get in touch',
 );

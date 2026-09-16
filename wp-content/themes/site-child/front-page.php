@@ -23,7 +23,7 @@ get_header();
 						<span class="site-about-kicker">About SITE Enterprise Promotion</span>
 						<h2>Building resilient livelihoods through enterprise-led development.</h2>
 						<p class="site-about-lead">
-							SITE is a Kenyan not-for-profit development organization working with communities, entrepreneurs, women, youth, and marginalized groups to turn skills into sustainable incomes and dignified work.
+							SITE is a Kenyan not for profit development organization working with communities, entrepreneurs, women, youth, and marginalized groups to turn skills into sustainable incomes and dignified work.
 						</p>
 
 						<div class="site-about-values">
@@ -38,7 +38,7 @@ get_header();
 								<span class="site-about-value-icon"><i class="fa fa-bullseye"></i></span>
 								<div>
 									<h3>Mission</h3>
-									<p>To reduce poverty by strengthening livelihoods, competitive markets, and community-owned enterprises.</p>
+									<p>To reduce poverty by strengthening livelihoods, competitive markets, and community owned enterprises.</p>
 								</div>
 							</div>
 						</div>

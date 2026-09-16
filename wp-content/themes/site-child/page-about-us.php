@@ -23,7 +23,7 @@ $au_mvv = array(
 	array(
 		'icon'	=> 'fa-bullseye',
 		'title' => 'Mission',
-		'text'	=> 'To reduce poverty by strengthening livelihoods, competitive markets, and community-owned enterprises across Kenya.',
+		'text'	=> 'To reduce poverty by strengthening livelihoods, competitive markets, and community owned enterprises across Kenya.',
 	),
 	array(
 		'icon'	=> 'fa-eye',
@@ -39,7 +39,7 @@ $au_mvv = array(
 		 */
 		'icon'	=> 'fa-diamond',
 		'title' => 'Values',
-		'text'	=> 'Inclusion, integrity, innovation, and impact — guiding every partnership, program, and investment we make.',
+		'text'	=> 'Inclusion, integrity, innovation, and impact guiding every partnership, program, and investment we make.',
 	),
 );
 
@@ -57,17 +57,17 @@ $au_timeline = array(
 	array(
 		'year'	=> '2012',
 		'title' => 'Market-linked value chains',
-		'text'	=> 'Launched enterprise development and value-chain programs connecting producers to sustainable markets.',
+		'text'	=> 'Launched enterprise development and value chain programs connecting producers to sustainable markets.',
 	),
 	array(
 		'year'	=> '2018',
 		'title' => '100,000 lives reached',
-		'text'	=> 'Crossed a major milestone — over 100,000 women, youth, and persons with disabilities supported.',
+		'text'	=> 'Crossed a major milestone over 100,000 women, youth, and persons with disabilities supported.',
 	),
 	array(
 		'year'	=> 'Today',
 		'title' => 'Deepening community impact',
-		'text'	=> 'Continuing to build resilient livelihoods, inclusive markets, and climate-smart communities nationwide.',
+		'text'	=> 'Continuing to build resilient livelihoods, inclusive markets, and climate smart communities nationwide.',
 	),
 );
 
@@ -95,7 +95,7 @@ $au_stats = array(
 			<div class="au-hero__inner">
 				<h1 id="au-hero-title" class="au-hero__title">About SITE Enterprise Promotion</h1>
 				<p class="au-hero__lead">
-					SITE is a Kenyan not-for-profit development organization working with communities, entrepreneurs, women, youth, and marginalized groups to turn skills into sustainable incomes and dignified work. Since 1996, we have championed enterprise-led development as the pathway out of poverty.
+					SITE is a Kenyan not for profit development organization working with communities, entrepreneurs, women, youth, and marginalized groups to turn skills into sustainable incomes and dignified work. Since 1996, we have championed enterprise led development as the pathway out of poverty.
 				</p>
 			</div>
 		</div>
@@ -108,7 +108,7 @@ $au_stats = array(
 				<span class="au-eyebrow">Who We Are</span>
 				<h2 id="au-mvv-title" class="au-section-title">Mission, Vision &amp; Values</h2>
 				<p class="au-section-lead">
-					Three pillars guide everything we do — from the communities we serve to the partnerships we build.
+					Three pillars guide everything we do from the communities we serve to the partnerships we build.
 				</p>
 			</div>
 
@@ -131,7 +131,7 @@ $au_stats = array(
 				<span class="au-eyebrow">Our Journey</span>
 				<h2 id="au-story-title" class="au-section-title">Our Story</h2>
 				<p class="au-section-lead">
-					From a grassroots initiative in 1996 to a nationwide force for enterprise-led development.
+					From a grassroots initiative in 1996 to a nationwide force for enterprise led development.
 				</p>
 			</div>
 

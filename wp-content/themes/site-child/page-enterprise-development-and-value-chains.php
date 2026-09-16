@@ -19,7 +19,7 @@ $rv = array(
 	'root_class'    => 'site-revamp--programme site-revamp--value-chains',
 	'kicker'        => 'Our work · Inclusive markets',
 	'title'         => 'Value Chains for Enterprise Development',
-	'lead'          => 'We strengthen producers, MSMEs and cooperatives to improve productivity, add value and connect small enterprises to bigger markets — from camel milk and dairy to crops, beekeeping and soapstone.',
+	'lead'          => 'We strengthen producers, MSMEs and cooperatives to improve productivity, add value and connect small enterprises to bigger markets from camel milk and dairy to crops, beekeeping and soapstone.',
 	'hero_image'    => '/wp-content/uploads/2025/03/kyusyani-marketing-cluster-e1741789378810.jpg',
 	'hero_image_alt'=> 'Members of a marketing cluster meeting in Kyusyani',
 	'actions'       => array(
@@ -27,12 +27,12 @@ $rv = array(
 		array( 'label' => 'Explore our work', 'url' => '/ourwork/', 'variant' => 'ghost' ),
 	),
 	'intro_head'    => 'Building stronger, fairer value chains',
-	'intro_text'    => '<p>SITE supports group management and self-regulation, strengthens cooperatives for product aggregation, and facilitates access to business information through blended-learning and mobile-based digital platforms.</p>',
+	'intro_text'    => '<p>SITE supports group management and self regulation, strengthens cooperatives for product aggregation, and facilitates access to business information through blended learning and mobile based digital platforms.</p>',
 	'features'      => array(
 		array(
 			'icon'  => 'fa-line-chart',
 			'title' => 'Entrepreneurship skills & financial literacy',
-			'text'  => 'Supporting group management and self-regulation, strengthening cooperatives for product aggregation, and facilitating access to business information through blended-learning and mobile-based digital platforms.',
+			'text'  => 'Supporting group management and self regulation, strengthening cooperatives for product aggregation, and facilitating access to business information through blended learning and mobile based digital platforms.',
 		),
 		array(
 			'icon'  => 'fa-truck',
@@ -49,7 +49,7 @@ $rv = array(
 		array(
 			'icon'  => 'fa-mobile',
 			'title' => 'Technology & post-harvest solutions',
-			'text'  => 'Piloting and testing digital tools — such as the HerVenture business application with women in the informal sector — leveraging AI tools for business growth, and adopting appropriate technologies to improve post-harvest handling.',
+			'text'  => 'Piloting and testing digital tools such as the HerVenture business application with women in the informal sector leveraging AI tools for business growth, and adopting appropriate technologies to improve post harvest handling.',
 		),
 		array(
 			'icon'  => 'fa-bank',
@@ -71,21 +71,21 @@ $rv = array(
 		array(
 			'kicker'  => 'Youth & Skills',
 			'title'   => 'Skilling Youth for Employment',
-			'summary' => 'Market-led technical, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
+			'summary' => 'Market led technical, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
 			'link'    => '/sample-page-2/',
 			'image'   => '/wp-content/uploads/2021/11/Gallery-1-850x567.jpg',
 		),
 		array(
 			'kicker'  => 'Women & Inclusion',
 			'title'   => 'Empowering Women for Employment',
-			'summary' => 'Practical pathways for women and marginalized groups to build income, leadership, resilience, and stronger decision-making power.',
+			'summary' => 'Practical pathways for women and marginalized groups to build income, leadership, resilience, and stronger decision making power.',
 			'link'    => '/empowering-women-for-employment/',
 			'image'   => '/wp-content/uploads/2021/11/bilatha-850x567.jpg',
 		),
 		array(
 			'kicker'  => 'Resilient Communities',
 			'title'   => 'Food Security & Climate Action',
-			'summary' => 'Climate-smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
+			'summary' => 'Climate smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
 			'link'    => '/climate-actions/',
 			'image'   => '/wp-content/uploads/2021/11/harbole-water-850x567.jpg',
 		),

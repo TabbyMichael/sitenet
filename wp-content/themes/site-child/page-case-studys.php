@@ -75,7 +75,7 @@ $rv = array(
 		array( 'label' => 'View all stories', 'url' => '/stories/', 'variant' => 'ghost' ),
 	),
 	'intro_head'    => 'Stories of change',
-	'intro_text'    => '<p>Each case study documents a real SITE intervention — the challenge, the approach and the difference it made for the people involved.</p>',
+	'intro_text'    => '<p>Each case study documents a real SITE intervention the challenge, the approach and the difference it made for the people involved.</p>',
 	'cases'         => $rv_cases,
 		/* Showcase strip removed — its four images now serve as the case-study
 	   card images above, so a second strip would be redundant. */

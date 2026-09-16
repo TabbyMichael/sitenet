@@ -45,7 +45,7 @@ $rv_videos     = isset( $rv['videos'] )     ? $rv['videos']     : array();
 			<div class="rv-section-head">
 				<p class="rv-eyebrow"><span class="rv-eyebrow__dot" aria-hidden="true"></span>Video gallery</p>
 				<h2 id="rv-videos-title" class="rv-section-title">Stories on screen</h2>
-				<p class="rv-section-sub">Watch our videos on YouTube — training, graduations and community moments.</p>
+				<p class="rv-section-sub">Watch our videos on YouTube training, graduations and community moments.</p>
 			</div>
 
 			<?php if ( ! empty( $rv_videos ) ) : ?>

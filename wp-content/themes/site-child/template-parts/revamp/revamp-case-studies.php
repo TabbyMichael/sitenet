@@ -37,7 +37,7 @@ $rv_resource_links = isset( $rv['resource_links'] ) && is_array( $rv['resource_l
 				<div class="rv-section-head">
 					<p class="rv-eyebrow"><span class="rv-eyebrow__dot" aria-hidden="true"></span>Stories of change</p>
 					<h2 id="rv-cases-title" class="rv-section-title">Case studies from our work</h2>
-					<p class="rv-section-sub">Each case study documents a real SITE intervention — the challenge, the approach and the difference it made.</p>
+					<p class="rv-section-sub">Each case study documents a real SITE intervention the challenge, the approach and the difference it made.</p>
 				</div>
 				<div class="rv-cases__grid">
 					<?php $rv_index = 0; foreach ( $rv_cases as $rv_case ) :

@@ -19,7 +19,7 @@ $rv = array(
 	'root_class'    => 'site-revamp--programme site-revamp--women',
 	'kicker'        => 'Our work · Women & inclusion',
 	'title'         => 'Empowering Women for Employment',
-	'lead'          => 'We promote inclusive employment and economic opportunities for women and marginalized groups — persons with disabilities and refugees — through skills, markets and leadership.',
+	'lead'          => 'We promote inclusive employment and economic opportunities for women and marginalized groups persons with disabilities and refugees through skills, markets and leadership.',
 	'hero_image'    => '/wp-content/uploads/2025/03/1-1-e1742196391213.jpg',
 	'hero_image_alt'=> 'Women entrepreneurs at a SITE training session',
 	'actions'       => array(
@@ -27,7 +27,7 @@ $rv = array(
 		array( 'label' => 'Explore our work', 'url' => '/ourwork/', 'variant' => 'ghost' ),
 	),
 	'intro_head'    => 'Empowering women and marginalized groups',
-	'intro_text'    => '<p>SITE recognizes the unique barriers faced by women and marginalized groups — persons with disabilities (PWDs) and refugees. We promote inclusive employment opportunities and best practices that open doors to dignified work and decision-making.</p>',
+	'intro_text'    => '<p>SITE recognizes the unique barriers faced by women and marginalized groups persons with disabilities (PWDs) and refugees. We promote inclusive employment opportunities and best practices that open doors to dignified work and decision making.</p>',
 	'features'      => array(
 		array(
 			'icon'  => 'fa-female',
@@ -35,14 +35,14 @@ $rv = array(
 			'text'  => 'Opening practical pathways into work and enterprise for women.',
 			'items' => array(
 				'Entrepreneurship & financial literacy skills, access to markets and services.',
-				'Informal sector ecosystem mapping & interventions to improve access to resources — business licensing, credit, affirmative funds, financial inclusion, safe work spaces and technology.',
+				'Informal sector ecosystem mapping & interventions to improve access to resources business licensing, credit, affirmative funds, financial inclusion, safe work spaces and technology.',
 				'Encouraging women’s participation in leadership roles and community, business and political decision-making processes.',
 			),
 		),
 		array(
 			'icon'  => 'fa-wheelchair',
 			'title' => 'Persons with disabilities (PWDs)',
-			'text'  => 'Implementing strategies to improve service delivery for persons with disabilities, strengthening disability organizations, and ensuring their inclusion in local decision-making processes.',
+			'text'  => 'Implementing strategies to improve service delivery for persons with disabilities, strengthening disability organizations, and ensuring their inclusion in local decision making processes.',
 		),
 		array(
 			'icon'  => 'fa-life-ring',
@@ -52,7 +52,7 @@ $rv = array(
 		array(
 			'icon'  => 'fa-balance-scale',
 			'title' => 'Business rights',
-			'text'  => 'Advocating for women’s rights and social protection, addressing gender-based violence and discrimination, and promoting gender equality.',
+			'text'  => 'Advocating for women’s rights and social protection, addressing gender based violence and discrimination, and promoting gender equality.',
 		),
 	),
 	'gallery'       => array(
@@ -70,21 +70,21 @@ $rv = array(
 		array(
 			'kicker'  => 'Youth & Skills',
 			'title'   => 'Skilling Youth for Employment',
-			'summary' => 'Market-led technical, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
+			'summary' => 'Market led technical, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
 			'link'    => '/sample-page-2/',
 			'image'   => '/wp-content/uploads/2021/11/Gallery-1-850x567.jpg',
 		),
 		array(
 			'kicker'  => 'Inclusive Markets',
 			'title'   => 'Enterprise Development & Value Chains',
-			'summary' => 'Business development and value-chain strengthening for entrepreneurs, MSMEs, and producer groups seeking better markets and sustainable growth.',
+			'summary' => 'Business development and value chain strengthening for entrepreneurs, MSMEs, and producer groups seeking better markets and sustainable growth.',
 			'link'    => '/enterprise-development-and-value-chains/',
 			'image'   => '/wp-content/uploads/2021/11/journeyofgrowth-850x567.jpg',
 		),
 		array(
 			'kicker'  => 'Resilient Communities',
 			'title'   => 'Food Security & Climate Action',
-			'summary' => 'Climate-smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
+			'summary' => 'Climate smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
 			'link'    => '/climate-actions/',
 			'image'   => '/wp-content/uploads/2021/11/harbole-water-850x567.jpg',
 		),
