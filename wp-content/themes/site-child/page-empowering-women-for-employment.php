@@ -36,7 +36,7 @@ $rv = array(
 			'items' => array(
 				'Entrepreneurship & financial literacy skills, access to markets and services.',
 				'Informal sector ecosystem mapping & interventions to improve access to resources business licensing, credit, affirmative funds, financial inclusion, safe work spaces and technology.',
-				'Encouraging women’s participation in leadership roles and community, business and political decision-making processes.',
+				'Encouraging women’s participation in leadership roles and community, business and political decision making processes.',
 			),
 		),
 		array(

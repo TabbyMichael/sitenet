@@ -72,7 +72,7 @@ if ( have_posts() ) {
         <div class="st-container">
             <span class="st-eyebrow">Stories</span>
             <h1 id="st-hero-title" class="st-hero__title">Real people. Real change.</h1>
-            <p class="st-hero__lead">First-person stories of the entrepreneurs, women, youth and communities transforming their livelihoods with SITE.</p>
+            <p class="st-hero__lead">First person stories of the entrepreneurs, women, youth and communities transforming their livelihoods with SITE.</p>
         </div>
     </section>
 
@@ -167,7 +167,7 @@ if ( have_posts() ) {
                 <div class="st-contact-cta__text">
                     <span class="st-eyebrow st-eyebrow--cta">Get in touch</span>
                     <h2 id="st-cta-title" class="st-contact-cta__title">Have a story to share?</h2>
-                    <p class="st-contact-cta__lead">We'd love to hear how SITE's work has shaped your journey - or explore a partnership.</p>
+                    <p class="st-contact-cta__lead">We'd love to hear how SITE's work has shaped your journey or explore a partnership.</p>
                 </div>
                 <a class="st-contact-cta__button" href="<?php echo esc_url( home_url( '/contact-us/' ) ); ?>">Start a conversation <span class="st-card__cta-arrow" aria-hidden="true"><?php echo site_child_svg_arrow( 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></a>
             </div>

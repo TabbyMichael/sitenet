@@ -50,7 +50,7 @@ $site_logo_srcset = $site_logo;
 
 					<li class="site-utility__item site-utility__item--hours">
 						<svg class="site-utility__icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-						<span>Mon&ndash;Fri: 08:00&ndash;17:00</span>
+						<span>Mon Fri: 08:00 17:00</span>
 					</li>
 
 					<li class="site-utility__item site-utility__social">

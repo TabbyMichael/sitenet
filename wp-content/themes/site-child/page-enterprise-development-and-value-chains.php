@@ -48,7 +48,7 @@ $rv = array(
 		),
 		array(
 			'icon'  => 'fa-mobile',
-			'title' => 'Technology & post-harvest solutions',
+			'title' => 'Technology & post harvest solutions',
 			'text'  => 'Piloting and testing digital tools such as the HerVenture business application with women in the informal sector leveraging AI tools for business growth, and adopting appropriate technologies to improve post harvest handling.',
 		),
 		array(

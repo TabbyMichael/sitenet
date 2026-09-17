@@ -63,12 +63,16 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 	 * without deleting it — add a label here to drop that slide, e.g.
 	 * array( 'camelmmilk' ).
 	 *
-	 * Three photos are withheld so the hero runs six slides:
-	 *   - Agri-business-in-Meru                           (was slide 2)
-	 *   - WWD-in-Machakos-during-soap-making-training     (was slide 8)
-	 *   - WWDs-learning-how-to-make-liquid-soap-in-Machakos (was slide 9)
-	 * Their entries are deliberately left in $site_hero_content below, so
-	 * deleting a line here restores that slide with its curated alt text, in
+	 * Five photos are withheld so the hero runs four slides:
+	 *   - Agri-business-in-Meru                             (was slide 2)
+	 *   - WWD-in-Machakos-during-soap-making-training       (was slide 8)
+	 *   - poultry-keepiong-in-machakos                      (was slide 4)
+	 *   - PWDs-sensitization-forum-in-Machakos-1            (was slide 5)
+	 *   - sanitary                                          (was slide 6)
+	 * WWDs-learning-how-to-make-liquid-soap-in-Machakos is no longer excluded,
+	 * so it now renders as slide 4 (the image-only hero keeps its 2048x1365
+	 * photo). Entries are deliberately left in $site_hero_content below, so
+	 * removing a label here restores that slide with its curated alt text, in
 	 * its original position.
 	 *
 	 * Note that testimonials.php also renders
@@ -80,7 +84,9 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 	$site_hero_exclude = array(
 		'Agri-business-in-Meru',
 		'WWD-in-Machakos-during-soap-making-training',
-		'WWDs-learning-how-to-make-liquid-soap-in-Machakos',
+		'poultry-keepiong-in-machakos',
+		'PWDs-sensitization-forum-in-Machakos-1',
+		'sanitary',
 	);
 
 	/**

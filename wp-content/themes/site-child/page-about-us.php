@@ -47,7 +47,7 @@ $au_timeline = array(
 	array(
 		'year'	=> '1996',
 		'title' => 'SITE is founded',
-		'text'	=> 'Established as a Kenyan not-for-profit to promote enterprise-led development and dignified livelihoods.',
+		'text'	=> 'Established as a Kenyan not for profit to promote enterprise led development and dignified livelihoods.',
 	),
 	array(
 		'year'	=> '2005',
@@ -56,7 +56,7 @@ $au_timeline = array(
 	),
 	array(
 		'year'	=> '2012',
-		'title' => 'Market-linked value chains',
+		'title' => 'Market linked value chains',
 		'text'	=> 'Launched enterprise development and value chain programs connecting producers to sustainable markets.',
 	),
 	array(

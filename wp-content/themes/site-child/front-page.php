@@ -21,7 +21,7 @@ get_header();
 				<div class="col-md-7 margin-bottom-30">
 					<div class="intro-content-block">
 						<span class="site-about-kicker">About SITE Enterprise Promotion</span>
-						<h2>Building resilient livelihoods through enterprise-led development.</h2>
+						<h2>Building resilient livelihoods through enterprise led development.</h2>
 						<p class="site-about-lead">
 							SITE is a Kenyan not for profit development organization working with communities, entrepreneurs, women, youth, and marginalized groups to turn skills into sustainable incomes and dignified work.
 						</p>

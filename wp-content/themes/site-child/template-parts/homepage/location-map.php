@@ -1,7 +1,7 @@
-<section class="site-location-map-section" aria-label="SITE location map — Waleeh Motors, Ngong Road, Nairobi">
+<section class="site-location-map-section" aria-label="SITE location map, Waleeh Motors, Ngong Road, Nairobi">
 	<div class="site-location-map-wrap">
 		<iframe
-			title="SITE Enterprise Promotion — Waleeh Motors, Ngong Road, Nairobi"
+			title="SITE Enterprise Promotion, Waleeh Motors, Ngong Road, Nairobi"
 			src="https://www.google.com/maps?q=Waleeh%20Motors%2C%20Ngong%20Road%2C%20Nairobi%2C%20Kenya&z=17&output=embed"
 			loading="lazy"
 			referrerpolicy="no-referrer-when-downgrade"

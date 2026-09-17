@@ -31,7 +31,7 @@ $rv = array(
 	'features'      => array(
 		array(
 			'icon'  => 'fa-leaf',
-			'title' => 'Climate-smart practices',
+			'title' => 'Climate smart practices',
 			'text'  => 'Promoting climateresilient farming through drought-resistant crops, soil and water conservation techniques, and climate adapted livestock systems such as camel husbandry. We equip communities with knowledge and practical skills to strengthen livelihoods, food security and household incomes.',
 		),
 		array(

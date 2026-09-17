@@ -27,28 +27,28 @@ $res_categories = array(
 		'title' => 'Case Studies',
 		'desc'	=> 'In-depth looks at how our projects and partnerships create measurable change across Kenya.',
 		'icon'	=> 'fa-book',
-		'image' => content_url( 'uploads/2021/11/Gallery-1-850x567.jpg' ),
+		'image' => get_stylesheet_directory_uri() . '/assets/images/Resource/case-studies.jpeg',
 		'link'	=> site_child_resource_hub_url( 'case-studys' ),
 	),
 	array(
 		'title' => 'Papers',
 		'desc'	=> 'Research, surveys and reports from our work in enterprise development and value chains.',
 		'icon'	=> 'fa-file-text-o',
-		'image' => content_url( 'uploads/2021/11/journeyofgrowth-850x567.jpg' ),
+		'image' => get_stylesheet_directory_uri() . '/assets/images/Resource/papers.jpeg',
 		'link'	=> site_child_resource_hub_url( 'papers' ),
 	),
 	array(
 		'title' => 'Press Releases',
 		'desc'	=> 'Official statements and media releases from SITE Enterprise Promotion.',
 		'icon'	=> 'fa-bullhorn',
-		'image' => content_url( 'uploads/2021/11/harbole-water-850x567.jpg' ),
+		'image' => get_stylesheet_directory_uri() . '/assets/images/Resource/press-releases.jpeg',
 		'link'	=> site_child_resource_hub_url( 'irrigation-and-drainage' ),
 	),
 	array(
 		'title' => 'Video Gallery',
 		'desc'	=> 'Visual stories, documentaries and event highlights from the field.',
 		'icon'	=> 'fa-play-circle',
-		'image' => content_url( 'uploads/2021/11/bilatha-850x567.jpg' ),
+		'video' => get_stylesheet_directory_uri() . '/assets/images/Resource/video-gallery.mp4',
 		'link'	=> home_url( '/galleries/gallery-full-width-2/' ),
 	),
 );
@@ -58,18 +58,18 @@ $res_categories = array(
  * ------------------------------------------------------------------------- */
 $res_publications = array(
 	array(
-		'title' => 'Aspirations and gains of small-scale camel owners in Isiolo County, Kenya',
-		'meta'	=> 'Research Paper &mdash; 2023',
+		'title' => 'Aspirations and gains of small scale camel owners in Isiolo County, Kenya',
+		'meta'	=> 'Research Paper, 2023',
 		'link'	=> site_child_resource_hub_url( 'papers' ),
 	),
 	array(
-		'title' => 'Harbole watering point: community-led rangeland management',
-		'meta'	=> 'Case Study &mdash; 2022',
+		'title' => 'Harbole watering point: community led rangeland management',
+		'meta'	=> 'Case Study, 2022',
 		'link'	=> site_child_resource_hub_url( 'case-studys' ),
 	),
 	array(
 		'title' => 'Policy brief: working spaces in Mathare informal settlement',
-		'meta'	=> 'Policy Brief &mdash; 2023',
+		'meta'	=> 'Policy Brief, 2023',
 		'link'	=> site_child_resource_hub_url( 'papers' ),
 	),
 );
@@ -81,7 +81,7 @@ $res_publications = array(
 		<div class="res-container">
 			<span class="res-eyebrow">Resources</span>
 			<h1 id="res-hero-title" class="res-hero__title">Research, publications and learning.</h1>
-			<p class="res-hero__lead">Explore our growing library of case studies, research papers, press releases and video &mdash; the evidence behind SITE Enterprise Promotion's work across Kenya.</p>
+			<p class="res-hero__lead">Explore our growing library of case studies, research papers, press releases and video, the evidence behind SITE Enterprise Promotion's work across Kenya.</p>
 		</div>
 	</section>
 
@@ -97,7 +97,11 @@ $res_publications = array(
 				<?php foreach ( $res_categories as $cat ) : ?>
 					<a class="res-cat-card" href="<?php echo esc_url( $cat['link'] ); ?>">
 						<div class="res-cat-card__media">
-							<img src="<?php echo esc_url( $cat['image'] ); ?>" alt="<?php echo esc_attr( $cat['title'] ); ?>" loading="lazy" decoding="async" width="850" height="567" />
+							<?php if ( ! empty( $cat['video'] ) ) : ?>
+								<video class="res-cat-card__video" src="<?php echo esc_url( $cat['video'] ); ?>" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+							<?php else : ?>
+								<img src="<?php echo esc_url( $cat['image'] ); ?>" alt="<?php echo esc_attr( $cat['title'] ); ?>" loading="lazy" decoding="async" width="850" height="567" />
+							<?php endif; ?>
 							<span class="res-cat-card__overlay" aria-hidden="true"></span>
 							<span class="res-cat-card__icon" aria-hidden="true"><i class="fa <?php echo esc_attr( $cat['icon'] ); ?>"></i></span>
 						</div>

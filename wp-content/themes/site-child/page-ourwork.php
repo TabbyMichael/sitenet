@@ -42,14 +42,14 @@ $owk_programs = array(
 	),
 	array(
 		'icon'   => 'fa-users',
-		'title'  => 'Community-Led Livelihoods',
+		'title'  => 'Community Led Livelihoods',
 		'text'   => 'Working with community groups to design and own livelihood solutions that reduce vulnerability and build resilience.',
 		'link'   => home_url( '/empowering-women-for-employment/' ),
 	),
 	array(
 		'icon'   => 'fa-globe',
 		'title'  => 'Climate-Smart Agriculture',
-		'text'   => 'Helping households adopt climate-smart practices that protect ecosystems while raising food security and incomes.',
+		'text'   => 'Helping households adopt climate smart practices that protect ecosystems while raising food security and incomes.',
 		'link'   => home_url( '/climate-actions/' ),
 	),
 );
