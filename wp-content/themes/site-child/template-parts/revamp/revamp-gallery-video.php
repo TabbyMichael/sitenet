@@ -51,14 +51,31 @@ $rv_videos     = isset( $rv['videos'] )     ? $rv['videos']     : array();
 			<?php if ( ! empty( $rv_videos ) ) : ?>
 				<div class="rv-videos__grid">
 					<?php foreach ( $rv_videos as $rv_video ) : ?>
-						<a class="rv-card rv-video-card" href="<?php echo esc_url( $rv_video['url'] ); ?>" target="_blank" rel="noopener">
-							<span class="rv-video-card__play" aria-hidden="true"><i class="fa fa-play"></i></span>
-							<span class="rv-video-card__body">
-								<span class="rv-video-card__title"><?php echo esc_html( $rv_video['title'] ); ?></span>
-								<span class="rv-video-card__meta"><?php echo esc_html( isset( $rv_video['meta'] ) ? $rv_video['meta'] : 'SITE Enterprise Promotion · YouTube' ); ?></span>
-								<span class="rv-text-link">Watch on YouTube <i class="fa fa-angle-right" aria-hidden="true"></i></span>
-							</span>
-						</a>
+						<?php
+						$rv_is_local = ( isset( $rv_video['type'] ) && 'local' === $rv_video['type'] );
+						$rv_meta     = isset( $rv_video['meta'] ) ? $rv_video['meta'] : ( $rv_is_local ? 'SITE Enterprise Promotion · Video' : 'SITE Enterprise Promotion · YouTube' );
+						?>
+						<?php if ( $rv_is_local ) : ?>
+							<div class="rv-card rv-video-card rv-video-card--local" data-hover-video>
+								<video class="rv-video-card__media" src="<?php echo esc_url( $rv_video['url'] ); ?>" muted loop playsinline preload="metadata" aria-hidden="true"></video>
+								<span class="rv-video-card__overlay" aria-hidden="true"></span>
+								<span class="rv-video-card__play" aria-hidden="true"><i class="fa fa-play"></i></span>
+								<span class="rv-video-card__body">
+									<span class="rv-video-card__title"><?php echo esc_html( $rv_video['title'] ); ?></span>
+									<span class="rv-video-card__meta"><?php echo esc_html( $rv_meta ); ?></span>
+									<span class="rv-text-link">Hover to play <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+								</span>
+							</div>
+						<?php else : ?>
+							<a class="rv-card rv-video-card" href="<?php echo esc_url( $rv_video['url'] ); ?>" target="_blank" rel="noopener">
+								<span class="rv-video-card__play" aria-hidden="true"><i class="fa fa-play"></i></span>
+								<span class="rv-video-card__body">
+									<span class="rv-video-card__title"><?php echo esc_html( $rv_video['title'] ); ?></span>
+									<span class="rv-video-card__meta"><?php echo esc_html( $rv_meta ); ?></span>
+									<span class="rv-text-link">Watch on YouTube <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+								</span>
+							</a>
+						<?php endif; ?>
 					<?php endforeach; ?>
 				</div>
 			<?php else : ?>

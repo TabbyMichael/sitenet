@@ -143,15 +143,18 @@ html[data-theme="dark"] .breadcrumbs span > span {
    Header — hard-coded whites & panel separators
    -------------------------------------------------------------------------- */
 [data-theme="dark"] .site-nav__list .sub-menu {
-    background-color: rgba(24, 33, 28, 0.55);
+    background-color: #18211c;
 }
 
 [data-theme="dark"] .site-nav__menu {
-    background-color: rgba(19, 27, 23, 0.55);
+    background-color: #131b17;
 }
 
+/* Opaque (not translucent) so the mobile nav bar and its white hamburger
+   bars keep full contrast against the dark surface — no page content shows
+   through behind them. Mirrors the solid white nav bar used in light mode. */
 [data-theme="dark"] .site-nav {
-    background-color: rgba(19, 27, 23, 0.55);
+    background-color: #131b17;
     border-bottom-color: rgba(255, 255, 255, 0.12);
 }
 

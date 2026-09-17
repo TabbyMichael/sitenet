@@ -349,7 +349,7 @@ add_action( 'wp_enqueue_scripts', 'site_child_enqueue_about_us_assets', 25 );
  * Loaded before dark.css so both light and dark palettes are self-contained.
  */
 function site_child_enqueue_stories_assets() {
-	if ( ! is_home() && ! is_post_type_archive( 'site_story' ) ) {
+	if ( ! is_home() ) {
 		return;
 	}
 
@@ -398,6 +398,42 @@ function site_child_enqueue_resources_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'site_child_enqueue_resources_assets', 25 );
 add_action( 'wp_enqueue_scripts', 'site_child_enqueue_stories_assets', 25 );
+
+/**
+ * Enqueue the Stories archive (site_story) assets.
+ *
+ * Loaded only on the stories CPT archive (/stories/). CSS + vanilla JS are
+ * scoped to .site-stories-archive and do not affect the locked navbar, header,
+ * footer, or the blog index (which keeps stories.css). Loaded before dark.css
+ * (priority 30) so both light and dark palettes stay self-contained.
+ */
+function site_child_enqueue_stories_archive_assets() {
+	if ( ! is_post_type_archive( 'site_story' ) ) {
+		return;
+	}
+
+	$sa_css_path = get_stylesheet_directory() . '/assets/css/stories-archive.css';
+	$sa_js_path  = get_stylesheet_directory() . '/assets/js/stories-archive.js';
+
+	wp_enqueue_style(
+		'site-stories-archive',
+		get_stylesheet_directory_uri() . '/assets/css/stories-archive.css',
+		array( 'site-child-style', 'site-header', 'site-footer' ),
+		file_exists( $sa_css_path ) ? (string) filemtime( $sa_css_path ) : '1.0.0'
+	);
+
+	wp_enqueue_script(
+		'site-stories-archive',
+		get_stylesheet_directory_uri() . '/assets/js/stories-archive.js',
+		array(),
+		file_exists( $sa_js_path ) ? (string) filemtime( $sa_js_path ) : '1.0.0',
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+}
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_stories_archive_assets', 26 );
 
 /**
  * Enqueue single-story (site_story detail) assets.
@@ -1000,11 +1036,11 @@ function site_child_get_focus_areas() {
 			'title'     => 'Skilling Youth for Employment',
 			'kicker'    => 'Youth & Skills',
 			'icon'      => 'fa-graduation-cap',
-			'image'     => $image_uri . 'youth-768x513.jpg',
+			'image'     => $image_uri . 'skilling-youth.jpeg',
 			'image_alt' => 'SITE trainees in blue overalls, lab coats and yellow safety helmets with trainers after a youth skills session',
-			'image_w'   => 768,
-			'image_h'   => 513,
-			'summary'   => 'Market-led technical, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
+			'image_w'   => 1280,
+			'image_h'   => 960,
+			'summary'   => 'Market led technical, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
 			'link'      => home_url( '/sample-page-2/' ),
 		),
 		array(
@@ -1015,7 +1051,7 @@ function site_child_get_focus_areas() {
 			'image_alt' => 'Hands pouring milk from a stainless steel vessel into processing machinery',
 			'image_w'   => 768,
 			'image_h'   => 330,
-			'summary'   => 'Business development and value-chain strengthening for entrepreneurs, MSMEs, and producer groups seeking better markets and sustainable growth.',
+			'summary'   => 'Business development and value chain strengthening for entrepreneurs, MSMEs, and producer groups seeking better markets and sustainable growth.',
 			'link'      => home_url( '/enterprise-development-and-value-chains/' ),
 		),
 		array(
@@ -1026,7 +1062,7 @@ function site_child_get_focus_areas() {
 			'image_alt' => 'Two women in hijabs and hairnets filling plastic bottles from funnels at a production table',
 			'image_w'   => 2048,
 			'image_h'   => 1536,
-			'summary'   => 'Practical pathways for women and marginalized groups to build income, leadership, resilience, and stronger decision-making power.',
+			'summary'   => 'Practical pathways for women and marginalized groups to build income, leadership, resilience, and stronger decision making power.',
 			'link'      => home_url( '/empowering-women-for-employment/' ),
 		),
 		array(
@@ -1037,7 +1073,7 @@ function site_child_get_focus_areas() {
 			'image_alt' => 'Women sorting grains and beans into buckets during an outdoor community agriculture meeting',
 			'image_w'   => 800,
 			'image_h'   => 730,
-			'summary'   => 'Climate-smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
+			'summary'   => 'Climate smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
 			'link'      => home_url( '/climate-actions/' ),
 		),
 	);

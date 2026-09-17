@@ -61,7 +61,7 @@ $rv_group_source = array(
 	),
 	array(
 		'title'       => 'Beekeeping and honey',
-		'description' => 'Hives hung in acacia trees, honey harvested and sorted by producer groups — beekeeping from the apiary to the refinery floor.',
+		'description' => 'Hives hung in acacia trees, honey harvested and sorted by producer groups, beekeeping from the apiary to the refinery floor.',
 		'photos'      => array(
 			array( 'id' => 7510, 'caption' => 'Beehives hung in acacia trees at a community apiary' ),
 			array( 'id' => 7511, 'caption' => 'Honey changing hands after a harvest' ),
@@ -71,9 +71,9 @@ $rv_group_source = array(
 	),
 	array(
 		'title'       => 'Enterprise, markets and value chains',
-		'description' => 'On-farm demonstrations, producer groups and bulking centres: the work that links smallholder farmers to better markets.',
+		'description' => 'On farm demonstrations, producer groups and bulking centres: the work that links smallholder farmers to better markets.',
 		'photos'      => array(
-			array( 'id' => 7571, 'caption' => 'An on-farm demonstration with farmers in Meru County' ),
+			array( 'id' => 7571, 'caption' => 'An on farm demonstration with farmers in Meru County' ),
 			array( 'id' => 7572, 'caption' => 'A farmer with freshly harvested potatoes in Meru' ),
 			array( 'id' => 7573, 'caption' => 'A poultry keeping training session in Machakos County' ),
 			array( 'id' => 7574, 'caption' => 'Preparing liquid soap during a business skills demonstration in Meru' ),
@@ -82,13 +82,13 @@ $rv_group_source = array(
 	),
 	array(
 		'title'       => 'Water and climate resilience',
-		'description' => 'Water points, water pans and climate-smart practices — the work that keeps dryland production going through the dry seasons.',
+		'description' => 'Water points, water pans and climate smart practices, the work that keeps dryland production going through the dry seasons.',
 		'photos'      => array(
-			array( 'id' => 7410, 'caption' => 'Water technicians servicing a pump — case study from Fafi Centre, Garissa County' ),
+			array( 'id' => 7410, 'caption' => 'Water technicians servicing a pump, case study from Fafi Centre, Garissa County' ),
 			array( 'id' => 7365, 'caption' => 'Camel herds at the Harbole watering point, Garissa County' ),
 			array( 'id' => 7415, 'caption' => 'The Harbole watering point: a convergence of life' ),
 			array( 'id' => 8115, 'caption' => 'Camels watering at a water pan in the rangelands' ),
-			array( 'id' => 7898, 'caption' => 'Applying climate-smart crop protection practices with farmers' ),
+			array( 'id' => 7898, 'caption' => 'Applying climate smart crop protection practices with farmers' ),
 		),
 	),
 	array(
@@ -100,9 +100,9 @@ $rv_group_source = array(
 			array( 'id' => 7582, 'caption' => 'Registering a person with disability for an NCPWD card in Machakos' ),
 			array( 'id' => 7557, 'caption' => 'A business skills training event for persons with disabilities in Machakos County' ),
 			array( 'id' => 7568, 'caption' => 'A woman in a wheelchair learning liquid soap making in Machakos' ),
-			array( 'id' => 7585, 'caption' => 'The Kanana disability self-help group producing liquid soap' ),
+			array( 'id' => 7585, 'caption' => 'The Kanana disability self help group producing liquid soap' ),
 			array( 'id' => 7553, 'caption' => 'Mama Mlemavu serving customers at her food business' ),
-			array( 'id' => 7549, 'caption' => 'Lilian Kirimi at her shop — one of the entrepreneurs we support' ),
+			array( 'id' => 7549, 'caption' => 'Lilian Kirimi at her shop, one of the entrepreneurs we support' ),
 		),
 	),
 );

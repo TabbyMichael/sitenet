@@ -1,13 +1,17 @@
 <?php
 /**
- * site_story archive - premium editorial listing at /stories/.
+ * site_story archive - editorial blog/archive at /stories/.
  *
- * Adapted from home.php (the retired /blog/ posts-page index). Card meta shows
- * the primary program and reading time - dates/years intentionally omitted.
- * Cards use each story's hero_image ACF field.
+ * Presents the Stories archive as a real editorial publication rather than a
+ * set of marketing cards: a compact hero, program filter pills, a 50/50
+ * featured story, a 3-column story grid with search + load more, and a closing
+ * CTA. Stories are read from the site_story CPT via a self-contained WP_Query
+ * so the `program` filter and `story_search` query stay on this URL and page
+ * correctly.
  *
  * Locked boundaries: header (get_header) and footer (get_footer) are untouched.
- * Styling comes from assets/css/stories.css scoped to .site-stories.
+ * Styling lives in assets/css/stories-archive.css (scoped to
+ * .site-stories-archive); behaviour in assets/js/stories-archive.js.
  *
  * @package SITE Child
  */
@@ -18,169 +22,286 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-$st_index    = 0;
-$st_featured = null;
-$st_posts    = array();
+$sa_archive_url = get_post_type_archive_link( 'site_story' );
+$sa_program     = isset( $_GET['program'] ) ? sanitize_text_field( wp_unslash( $_GET['program'] ) ) : '';
+$sa_search      = isset( $_GET['story_search'] ) ? sanitize_text_field( wp_unslash( $_GET['story_search'] ) ) : '';
+$sa_paged       = max( 1, (int) get_query_var( 'paged' ) );
 
-if ( have_posts() ) {
-	while ( have_posts() ) {
-		the_post();
+$sa_args = array(
+	'post_type'      => 'site_story',
+	'post_status'    => 'publish',
+	'posts_per_page' => 9,
+	'paged'          => $sa_paged,
+	'orderby'        => 'date',
+	'order'          => 'DESC',
+);
 
-		$excerpt = get_the_excerpt();
-		if ( empty( $excerpt ) ) {
-			$excerpt = wp_trim_words( wp_strip_all_tags( get_the_content() ), 40 );
-		}
+if ( $sa_program ) {
+	$sa_args['tax_query'] = array(
+		array(
+			'taxonomy' => 'site_program',
+			'field'    => 'slug',
+			'terms'    => $sa_program,
+		),
+	);
+}
 
-		$words   = str_word_count( wp_strip_all_tags( get_the_content() ) );
-		$minutes = max( 1, (int) ceil( $words / 200 ) );
+if ( $sa_search ) {
+	$sa_args['s'] = $sa_search;
+}
 
-		$st_programs = get_the_terms( get_the_ID(), 'site_program' );
-		$st_program  = ( $st_programs && ! is_wp_error( $st_programs ) ) ? $st_programs[0]->name : '';
+$sa_query = new WP_Query( $sa_args );
 
-		$st_hero = get_field( 'hero_image' );
-		$st_hero = is_array( $st_hero ) ? ( $st_hero['ID'] ?? 0 ) : (int) $st_hero;
+/**
+ * Build the responsive <img> for one story from its hero_image field.
+ * Image HTML is generated (and escaped) by wp_get_attachment_image().
+ */
+$sa_story_image = static function ( array $sa_story, string $sa_size, string $sa_sizes, string $sa_loading ) {
+	if ( empty( $sa_story['hero_id'] ) ) {
+		return '';
+	}
 
-		$st_hero_html = '';
-		if ( $st_hero ) {
-			$st_hero_html = wp_get_attachment_image(
-				$st_hero,
-				'large',
-				false,
-				array(
-					'class'    => 'st-card-image',
-					'alt'      => the_title_attribute( array( 'echo' => false ) ),
-					'sizes'    => '(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw',
-					'loading'  => 'lazy',
-					'decoding' => 'async',
-				)
-			);
-		}
+	return wp_get_attachment_image(
+		$sa_story['hero_id'],
+		$sa_size,
+		false,
+		array(
+			'class'    => 'sa-media-img',
+			'alt'      => $sa_story['title'],
+			'sizes'    => $sa_sizes,
+			'loading'  => $sa_loading,
+			'decoding' => 'async',
+		)
+	);
+};
 
-		$item = array(
-			'title'          => get_the_title(),
-			'permalink'      => get_permalink(),
-			'excerpt'        => $excerpt,
-			'program'        => $st_program,
-			'reading_time'   => $minutes . ' min read',
-			'thumbnail_html' => $st_hero_html,
-		);
+$sa_stories = array();
 
-		if ( 0 === $st_index ) {
-			$st_featured = $item;
+if ( $sa_query->have_posts() ) {
+	while ( $sa_query->have_posts() ) {
+		$sa_query->the_post();
+
+		// Prefer a hand-written excerpt, then the impact statement, then content.
+		$sa_excerpt = '';
+		if ( has_excerpt( get_the_ID() ) ) {
+			$sa_excerpt = wp_strip_all_tags( get_the_excerpt() );
 		} else {
-			$st_posts[] = $item;
+			$sa_impact = get_field( 'impact_statement' );
+			if ( $sa_impact ) {
+				$sa_excerpt = wp_strip_all_tags( $sa_impact );
+			} else {
+				$sa_excerpt = wp_trim_words( wp_strip_all_tags( get_the_content() ), 28 );
+			}
 		}
 
-		$st_index++;
+		$sa_words   = str_word_count( wp_strip_all_tags( get_the_content() ) );
+		$sa_minutes = max( 1, (int) ceil( $sa_words / 200 ) );
+
+		$sa_program_name  = '';
+		$sa_program_terms = get_the_terms( get_the_ID(), 'site_program' );
+		if ( $sa_program_terms && ! is_wp_error( $sa_program_terms ) ) {
+			$sa_program_name = $sa_program_terms[0]->name;
+		}
+
+		$sa_year = get_field( 'story_year' );
+		$sa_year = $sa_year ? (string) $sa_year : get_the_date( 'Y' );
+
+		$sa_hero_id = 0;
+		$sa_hero    = get_field( 'hero_image' );
+		if ( is_array( $sa_hero ) ) {
+			$sa_hero_id = (int) ( isset( $sa_hero['ID'] ) ? $sa_hero['ID'] : 0 );
+		} elseif ( $sa_hero ) {
+			$sa_hero_id = (int) $sa_hero;
+		}
+
+		$sa_stories[] = array(
+			'title'        => get_the_title(),
+			'permalink'    => get_permalink(),
+			'excerpt'      => $sa_excerpt,
+			'program'      => $sa_program_name,
+			'reading_time' => $sa_minutes . ' min read',
+			'year'         => $sa_year,
+			'hero_id'      => $sa_hero_id,
+		);
+	}
+	wp_reset_postdata();
+}
+
+// The featured slot only appears on the default (unfiltered) first page.
+$sa_show_featured = ( '' === $sa_program && '' === $sa_search && 1 === $sa_paged );
+
+$sa_featured = null;
+if ( $sa_show_featured && ! empty( $sa_stories ) ) {
+	$sa_featured = array_shift( $sa_stories );
+}
+$sa_grid = $sa_stories;
+
+$sa_programs = get_terms(
+	array(
+		'taxonomy'   => 'site_program',
+		'hide_empty' => true,
+	)
+);
+
+$sa_active_label = '';
+if ( $sa_program && $sa_programs && ! is_wp_error( $sa_programs ) ) {
+	foreach ( $sa_programs as $sa_term ) {
+		if ( $sa_term->slug === $sa_program ) {
+			$sa_active_label = $sa_term->name;
+			break;
+		}
 	}
 }
 
-?>
-<main id="primary" class="site-stories">
+if ( $sa_program && $sa_active_label ) {
+	$sa_list_title = $sa_active_label;
+} elseif ( $sa_search ) {
+	/* translators: %s: the search query. */
+	$sa_list_title = sprintf( __( 'Results for "%s"', 'site-child' ), $sa_search );
+} else {
+	$sa_list_title = __( 'Latest stories', 'site-child' );
+}
 
-	<!-- HERO -->
-	<section class="st-hero" aria-labelledby="st-hero-title">
-		<div class="st-container">
-			<span class="st-eyebrow">Stories</span>
-			<h1 id="st-hero-title" class="st-hero__title">Real people. Real change.</h1>
-			<p class="st-hero__lead">First-person stories of the entrepreneurs, women, youth and communities transforming their livelihoods with SITE.</p>
+$sa_count = (int) $sa_query->found_posts;
+
+$sa_load_more_url = '';
+if ( $sa_query->max_num_pages > $sa_paged ) {
+	$sa_next = array( 'paged' => $sa_paged + 1 );
+	if ( $sa_program ) {
+		$sa_next['program'] = $sa_program;
+	}
+	if ( $sa_search ) {
+		$sa_next['story_search'] = $sa_search;
+	}
+	$sa_load_more_url = add_query_arg( $sa_next, $sa_archive_url );
+}
+?>
+<main id="primary" class="site-stories-archive">
+
+	<!-- HERO + FILTERS -->
+	<section class="sa-hero" aria-labelledby="sa-hero-title">
+		<div class="sa-container">
+			<span class="sa-kicker"><?php esc_html_e( 'Stories', 'site-child' ); ?></span>
+			<h1 id="sa-hero-title" class="sa-hero__title">Real people.<br><span class="sa-hero__title-second">Real change.</span></h1>
+			<p class="sa-hero__lead"><?php esc_html_e( 'Stories, ideas and experiences from the entrepreneurs, women, youth and communities working with SITE.', 'site-child' ); ?></p>
+
+			<nav class="sa-filters" aria-label="<?php esc_attr_e( 'Filter stories by program', 'site-child' ); ?>">
+				<a class="sa-filter<?php echo '' === $sa_program ? ' is-active' : ''; ?>" href="<?php echo esc_url( $sa_archive_url ); ?>"<?php echo '' === $sa_program ? ' aria-current="page"' : ''; ?>><?php esc_html_e( 'All', 'site-child' ); ?></a>
+				<?php if ( $sa_programs && ! is_wp_error( $sa_programs ) ) : ?>
+					<?php foreach ( $sa_programs as $sa_term ) : ?>
+						<?php $sa_is_active = ( $sa_program === $sa_term->slug ); ?>
+						<a class="sa-filter<?php echo $sa_is_active ? ' is-active' : ''; ?>" href="<?php echo esc_url( add_query_arg( 'program', $sa_term->slug, $sa_archive_url ) ); ?>"<?php echo $sa_is_active ? ' aria-current="page"' : ''; ?>><?php echo esc_html( $sa_term->name ); ?></a>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			</nav>
 		</div>
 	</section>
 
-	<?php if ( $st_featured || ! empty( $st_posts ) ) : ?>
+	<?php if ( $sa_featured || ! empty( $sa_grid ) ) : ?>
 
-		<?php if ( $st_featured ) : ?>
+		<?php if ( $sa_featured ) : ?>
 			<!-- FEATURED STORY -->
-			<section class="st-featured" aria-label="Featured story">
-				<div class="st-container">
-					<article class="st-card st-card--featured" data-index="0">
-						<a href="<?php echo esc_url( $st_featured['permalink'] ); ?>" class="st-card__image-link" tabindex="-1" aria-hidden="true">
-							<div class="st-card__media st-card__media--featured">
-								<?php if ( $st_featured['thumbnail_html'] ) : ?>
-									<?php echo $st_featured['thumbnail_html']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WP generated markup. ?>
-								<?php else : ?>
-									<span class="st-card__fallback" aria-hidden="true"><i class="fa fa-quote-left"></i></span>
-								<?php endif; ?>
-								<span class="st-card__overlay" aria-hidden="true"></span>
+			<section class="sa-featured" aria-label="<?php esc_attr_e( 'Featured story', 'site-child' ); ?>">
+				<div class="sa-container">
+					<article class="sa-featured-card">
+						<div class="sa-featured-card__media">
+							<?php if ( $sa_featured_image = $sa_story_image( $sa_featured, 'large', '(max-width: 1023px) 100vw, 55vw', 'eager' ) ) : ?>
+								<?php echo $sa_featured_image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WP generated markup. ?>
+							<?php else : ?>
+								<span class="sa-media-fallback" aria-hidden="true"><i class="fa fa-quote-left"></i></span>
+							<?php endif; ?>
+						</div>
+						<div class="sa-featured-card__body">
+							<span class="sa-kicker"><?php esc_html_e( 'Featured story', 'site-child' ); ?></span>
+							<h2 class="sa-featured-card__title"><a class="sa-card-link" href="<?php echo esc_url( $sa_featured['permalink'] ); ?>"><?php echo esc_html( $sa_featured['title'] ); ?></a></h2>
+							<p class="sa-featured-card__excerpt"><?php echo esc_html( wp_trim_words( $sa_featured['excerpt'], 40 ) ); ?></p>
+							<div class="sa-meta">
+								<span class="sa-meta__cat"><?php echo esc_html( $sa_featured['program'] ? $sa_featured['program'] : __( 'Story', 'site-child' ) ); ?></span>
+								<span class="sa-meta__sep" aria-hidden="true">·</span>
+								<span><?php echo esc_html( $sa_featured['reading_time'] ); ?> · <?php echo esc_html( $sa_featured['year'] ); ?></span>
 							</div>
-						</a>
-						<div class="st-card__content st-card__content--featured">
-							<span class="st-card__badge">Featured story</span>
-							<h2 class="st-card__title"><a href="<?php echo esc_url( $st_featured['permalink'] ); ?>"><?php echo esc_html( $st_featured['title'] ); ?></a></h2>
-							<p class="st-card__excerpt"><?php echo esc_html( wp_trim_words( $st_featured['excerpt'], 40 ) ); ?></p>
-							<span class="st-card__meta"><?php echo esc_html( $st_featured['program'] ); ?> &middot; <?php echo esc_html( $st_featured['reading_time'] ); ?></span>
-							<a href="<?php echo esc_url( $st_featured['permalink'] ); ?>" class="st-card__cta">Read story <span class="st-card__cta-arrow" aria-hidden="true"><?php echo site_child_svg_arrow( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></a>
+							<span class="sa-cta" aria-hidden="true"><?php esc_html_e( 'Read story', 'site-child' ); ?> <span class="sa-cta-arrow"><?php echo site_child_svg_arrow( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></span>
 						</div>
 					</article>
 				</div>
 			</section>
 		<?php endif; ?>
 
-		<?php if ( ! empty( $st_posts ) ) : ?>
-			<!-- STORY GRID -->
-			<section class="st-workspace" aria-label="More stories">
-				<div class="st-container">
-					<div class="st-grid">
-						<?php foreach ( $st_posts as $index => $item ) : ?>
-							<article class="st-card st-grid__item" data-index="<?php echo esc_attr( $index + 1 ); ?>">
-								<a href="<?php echo esc_url( $item['permalink'] ); ?>" class="st-card__image-link" tabindex="-1" aria-hidden="true">
-									<div class="st-card__media">
-										<?php if ( $item['thumbnail_html'] ) : ?>
-											<?php echo $item['thumbnail_html']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WP generated markup. ?>
-										<?php else : ?>
-											<span class="st-card__fallback" aria-hidden="true"><i class="fa fa-quote-left"></i></span>
-										<?php endif; ?>
-										<span class="st-card__overlay" aria-hidden="true"></span>
-									</div>
-								</a>
-								<div class="st-card__content">
-									<span class="st-card__badge"><?php echo esc_html( $item['program'] ? $item['program'] : 'Story' ); ?></span>
-									<h3 class="st-card__title"><a href="<?php echo esc_url( $item['permalink'] ); ?>"><?php echo esc_html( $item['title'] ); ?></a></h3>
-									<p class="st-card__excerpt"><?php echo esc_html( wp_trim_words( $item['excerpt'], 22 ) ); ?></p>
-									<span class="st-card__meta"><?php echo esc_html( $item['reading_time'] ); ?></span>
-									<a href="<?php echo esc_url( $item['permalink'] ); ?>" class="st-card__cta">Read story <span class="st-card__cta-arrow" aria-hidden="true"><?php echo site_child_svg_arrow( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></a>
-								</div>
-							</article>
-						<?php endforeach; ?>
+		<!-- STORY LISTING -->
+		<section class="sa-listing" aria-label="<?php echo esc_attr( $sa_list_title ); ?>">
+			<div class="sa-container">
+				<div class="sa-listing__head">
+					<div>
+						<h2 class="sa-listing__title"><?php echo esc_html( $sa_list_title ); ?></h2>
+						<p class="sa-listing__count"><?php echo esc_html( sprintf( _n( '%s story', '%s stories', $sa_count, 'site-child' ), number_format_i18n( $sa_count ) ) ); ?></p>
 					</div>
 
-					<?php
-					if ( $wp_query->max_num_pages > 1 ) {
-						the_posts_pagination(
-							array(
-								'mid_size'  => 1,
-								'prev_text' => '&larr; Newer',
-								'next_text' => 'Older &rarr;',
-							)
-						);
-					}
-					?>
+					<?php if ( $sa_program || $sa_search ) : ?>
+						<a class="sa-clear" href="<?php echo esc_url( $sa_archive_url ); ?>"><?php esc_html_e( 'Clear filter', 'site-child' ); ?></a>
+					<?php endif; ?>
+
+					<form class="sa-search" role="search" method="get" action="<?php echo esc_url( $sa_archive_url ); ?>">
+						<label class="sa-visually-hidden" for="sa-search-input"><?php esc_html_e( 'Search stories', 'site-child' ); ?></label>
+						<?php if ( $sa_program ) : ?>
+							<input type="hidden" name="program" value="<?php echo esc_attr( $sa_program ); ?>" />
+						<?php endif; ?>
+						<span class="sa-search__icon" aria-hidden="true"><i class="fa fa-search"></i></span>
+						<input id="sa-search-input" class="sa-search__input" type="search" name="story_search" value="<?php echo esc_attr( $sa_search ); ?>" placeholder="<?php esc_attr_e( 'Search stories…', 'site-child' ); ?>" />
+						<button class="sa-search__submit" type="submit"><?php esc_html_e( 'Search', 'site-child' ); ?></button>
+					</form>
 				</div>
-			</section>
-		<?php endif; ?>
+
+				<div class="sa-grid">
+					<?php foreach ( $sa_grid as $sa_item ) : ?>
+						<article class="sa-card">
+							<div class="sa-card__media">
+								<?php if ( $sa_card_image = $sa_story_image( $sa_item, 'large', '(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw', 'lazy' ) ) : ?>
+									<?php echo $sa_card_image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WP generated markup. ?>
+								<?php else : ?>
+									<span class="sa-media-fallback" aria-hidden="true"><i class="fa fa-quote-left"></i></span>
+								<?php endif; ?>
+							</div>
+							<div class="sa-card__body">
+								<span class="sa-card__label"><?php echo esc_html( $sa_item['program'] ? $sa_item['program'] : __( 'Story', 'site-child' ) ); ?></span>
+								<h3 class="sa-card__title"><a class="sa-card-link" href="<?php echo esc_url( $sa_item['permalink'] ); ?>"><?php echo esc_html( $sa_item['title'] ); ?></a></h3>
+								<p class="sa-card__excerpt"><?php echo esc_html( wp_trim_words( $sa_item['excerpt'], 22 ) ); ?></p>
+								<div class="sa-card__meta"><?php echo esc_html( $sa_item['reading_time'] ); ?> · <?php echo esc_html( $sa_item['year'] ); ?></div>
+								<span class="sa-card__cta" aria-hidden="true"><?php esc_html_e( 'Read story', 'site-child' ); ?> <span class="sa-cta-arrow"><?php echo site_child_svg_arrow( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></span>
+							</div>
+						</article>
+					<?php endforeach; ?>
+				</div>
+
+				<?php if ( $sa_load_more_url ) : ?>
+					<div class="sa-loadmore">
+						<a class="sa-loadmore__button" href="<?php echo esc_url( $sa_load_more_url ); ?>"><?php esc_html_e( 'Load more stories', 'site-child' ); ?></a>
+					</div>
+				<?php endif; ?>
+			</div>
+		</section>
 
 	<?php else : ?>
-		<section class="st-workspace">
-			<div class="st-container">
-				<div class="st-empty">
-					<div class="st-empty__icon" aria-hidden="true"><i class="fa fa-book"></i></div>
-					<h2 class="st-empty__title">No stories yet.</h2>
-					<p class="st-empty__text">We're preparing new stories from the field. Check back soon.</p>
+		<section class="sa-listing">
+			<div class="sa-container">
+				<div class="sa-empty">
+					<div class="sa-empty__icon" aria-hidden="true"><i class="fa fa-book"></i></div>
+					<h2 class="sa-empty__title"><?php esc_html_e( 'No stories found.', 'site-child' ); ?></h2>
+					<p class="sa-empty__text"><?php esc_html_e( 'Try a different search or filter, or check back soon for new stories from the field.', 'site-child' ); ?></p>
+					<?php if ( $sa_program || $sa_search ) : ?>
+						<a class="sa-clear" href="<?php echo esc_url( $sa_archive_url ); ?>"><?php esc_html_e( 'Clear filter', 'site-child' ); ?></a>
+					<?php endif; ?>
 				</div>
 			</div>
 		</section>
 	<?php endif; ?>
 
 	<!-- CLOSING CTA -->
-	<section class="st-contact-cta" aria-labelledby="st-cta-title">
-		<div class="st-container">
-			<div class="st-contact-cta__inner">
-				<div class="st-contact-cta__text">
-					<span class="st-eyebrow st-eyebrow--cta">Get in touch</span>
-					<h2 id="st-cta-title" class="st-contact-cta__title">Have a story to share?</h2>
-					<p class="st-contact-cta__lead">We'd love to hear how SITE's work has shaped your journey - or explore a partnership.</p>
-				</div>
-				<a class="st-contact-cta__button" href="<?php echo esc_url( home_url( '/contact-us/' ) ); ?>">Start a conversation <span class="st-card__cta-arrow" aria-hidden="true"><?php echo site_child_svg_arrow( 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></a>
+	<section class="sa-cta-panel" aria-labelledby="sa-cta-title">
+		<div class="sa-container">
+			<div class="sa-cta-panel__inner">
+				<h2 class="sa-cta-panel__title" id="sa-cta-title"><?php esc_html_e( 'Have a story to share?', 'site-child' ); ?></h2>
+				<p class="sa-cta-panel__text"><?php esc_html_e( 'We’d love to hear how SITE’s work has shaped your journey, business or community.', 'site-child' ); ?></p>
+				<a class="sa-cta-panel__button" href="<?php echo esc_url( home_url( '/contact-us/' ) ); ?>"><?php esc_html_e( 'Start a conversation', 'site-child' ); ?> <span class="sa-cta-arrow" aria-hidden="true"><?php echo site_child_svg_arrow( 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></a>
 			</div>
 		</div>
 	</section>

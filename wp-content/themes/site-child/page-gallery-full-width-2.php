@@ -31,14 +31,28 @@ $rv = array(
 	),
 	'videos'        => array(
 		array(
+			'type'  => 'youtube',
 			'title' => 'Camili Documentary: A story of families and their camels thriving in drought prone lands',
 			'url'   => 'https://www.youtube.com/watch?v=bjAVuIYPdI0',
 			'meta'  => 'SITE Enterprise Promotion · YouTube',
 		),
 		array(
+			'type'  => 'youtube',
 			'title' => 'Graduation ceremony organized by SITE and ILO at Garissa Vocational Training Center',
 			'url'   => 'https://www.youtube.com/watch?v=EAi9jcKILbI',
 			'meta'  => 'SITE Enterprise Promotion · YouTube',
+		),
+		array(
+			'type'  => 'local',
+			'title' => 'Visual stories from the field',
+			'url'   => wp_get_attachment_url( 8468 ),
+			'meta'  => 'SITE Enterprise Promotion · Video',
+		),
+		array(
+			'type'  => 'local',
+			'title' => 'SITE programmes and community moments',
+			'url'   => wp_get_attachment_url( 8468 ),
+			'meta'  => 'SITE Enterprise Promotion · Video',
 		),
 	),
 	'cta_title'     => 'Have a story to share?',

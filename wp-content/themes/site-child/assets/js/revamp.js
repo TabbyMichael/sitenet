@@ -56,6 +56,35 @@
 	}
 
 	/* ------------------------------------------------------------------
+	 * Video card hover-to-play (muted preview).
+	 * ------------------------------------------------------------------ */
+	const hoverVideos = Array.from( root.querySelectorAll( '[data-hover-video] .rv-video-card__media' ) );
+	hoverVideos.forEach( function ( video ) {
+		if ( video.tagName !== 'VIDEO' ) {
+			return;
+		}
+		const card = video.closest( '[data-hover-video]' );
+		if ( ! card ) {
+			return;
+		}
+
+		card.addEventListener( 'mouseenter', function () {
+			video.play().catch( function () {} );
+		} );
+		card.addEventListener( 'mouseleave', function () {
+			video.pause();
+		} );
+		/* Touch / no-hover devices: tap to toggle playback. */
+		card.addEventListener( 'click', function () {
+			if ( video.paused ) {
+				video.play().catch( function () {} );
+			} else {
+				video.pause();
+			}
+		} );
+	} );
+
+	/* ------------------------------------------------------------------
 	 * Photo lightbox.
 	 * ------------------------------------------------------------------ */
 	const grids = Array.from( root.querySelectorAll( '[data-rv-lightbox-grid]' ) );

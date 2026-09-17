@@ -713,9 +713,17 @@
     gap: 28px;
 }
 
+/* Equal-height cards — stretch each card into a column and let its body grow
+   so the "Download case study" buttons align on one line across the row. */
+.site-revamp .rv-case-card {
+    display: flex;
+    flex-direction: column;
+}
+
 .site-revamp .rv-case-card__body {
     display: flex;
     flex-direction: column;
+    flex: 1;
     gap: 12px;
     padding: 22px 24px 24px;
 }
@@ -1216,6 +1224,46 @@
     color: var(--rv-muted);
     font-size: 13px;
     font-weight: 600;
+}
+
+/* Local video card: muted, looping background video that plays on hover. */
+.site-revamp .rv-video-card--local {
+    position: relative;
+    min-height: 190px;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.14);
+    background-color: #0b1210;
+}
+
+.site-revamp .rv-video-card--local .rv-video-card__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.site-revamp .rv-video-card--local .rv-video-card__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(100deg, rgba(5, 15, 10, 0.88) 0%, rgba(5, 15, 10, 0.4) 70%, rgba(5, 15, 10, 0.22) 100%);
+    pointer-events: none;
+}
+
+.site-revamp .rv-video-card--local .rv-video-card__play,
+.site-revamp .rv-video-card--local .rv-video-card__body {
+    position: relative;
+    z-index: 2;
+}
+
+.site-revamp .rv-video-card--local .rv-video-card__title {
+    color: #fff;
+}
+
+.site-revamp .rv-video-card--local .rv-video-card__meta {
+    color: rgba(255, 255, 255, 0.78);
 }
 
 /* --------------------------------------------------------------------------

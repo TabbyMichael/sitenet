@@ -46,7 +46,7 @@ $rv = array(
 		),
 		array(
 			'icon'  => 'fa-handshake-o',
-			'title' => 'Internships, mentorship & hands-on training',
+			'title' => 'Internships, mentorship & hands on training',
 			'text'  => 'In partnership with county departments and private sector actors, SITE facilitates real world experience through internships and host training, preparing youth for meaningful employment and leadership roles.',
 		),
 	),

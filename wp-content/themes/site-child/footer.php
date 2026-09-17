@@ -31,11 +31,11 @@ $footer_logo_srcset = $footer_logo;
 // Weekly schedule — the currently open day (Mon–Fri) gets a subtle gold dot.
 $footer_open_day = wp_date( 'l' );
 $footer_hours    = array(
-	'Monday'    => '8:00 AM – 5:00 PM',
-	'Tuesday'   => '8:00 AM – 5:00 PM',
-	'Wednesday' => '8:00 AM – 5:00 PM',
-	'Thursday'  => '8:00 AM – 5:00 PM',
-	'Friday'    => '8:00 AM – 5:00 PM',
+	'Monday'    => '8:00 AM 5:00 PM',
+	'Tuesday'   => '8:00 AM 5:00 PM',
+	'Wednesday' => '8:00 AM 5:00 PM',
+	'Thursday'  => '8:00 AM 5:00 PM',
+	'Friday'    => '8:00 AM 5:00 PM',
 	'Saturday'  => 'CLOSED',
 	'Sunday'    => 'CLOSED',
 );
@@ -109,7 +109,7 @@ $footer_explore = array(
 			<section class="site-footer__col" data-reveal style="--reveal-delay:80ms" aria-label="About SITE">
 				<h2 class="site-footer__heading">About SITE</h2>
 				<p class="site-footer__about">
-					SITE Enterprise Promotion (SITE) is a Kenyan not-for-profit development
+					SITE Enterprise Promotion (SITE) is a Kenyan not for profit development
 					organization, established in 1996, whose goal is the promotion of employment
 					opportunities and economic growth among communities.
 				</p>

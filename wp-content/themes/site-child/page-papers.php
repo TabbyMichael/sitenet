@@ -19,7 +19,7 @@ $rv = array(
 	'root_class'    => 'site-revamp--resource site-revamp--papers',
 	'kicker'        => 'Resources · Papers & research',
 	'title'         => 'Papers',
-	'lead'          => 'Research, surveys, policy briefs and reports from SITE and its partners — available as free downloads.',
+	'lead'          => 'Research, surveys, policy briefs and reports from SITE and its partners, available as free downloads.',
 	'actions'       => array(
 		array( 'label' => 'Browse case studies', 'url' => site_child_resource_hub_url( 'case-studys' ), 'variant' => 'primary' ),
 		array( 'label' => 'View all stories', 'url' => '/stories/', 'variant' => 'ghost' ),
@@ -54,7 +54,7 @@ $rv = array(
 		),
 		array(
 			'type'  => 'Brochure',
-			'title' => 'SITE brochure — 20th anniversary',
+			'title' => 'SITE brochure, 20th anniversary',
 			'url'   => '/wp-content/uploads/2021/11/SITE_BROCHURE-20th_Anniversary3.pdf',
 		),
 		array(
