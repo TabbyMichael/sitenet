@@ -203,11 +203,6 @@ html[data-theme="dark"] .breadcrumbs span > span {
     background: #131b17;
 }
 
-[data-theme="dark"] .site-carousel-counter-current,
-[data-theme="dark"] .site-carousel-counter-sep {
-    color: #aab5ac;
-}
-
 [data-theme="dark"] .site-carousel-toggle {
     background: #1a231e;
     border-color: rgba(255, 255, 255, 0.22);

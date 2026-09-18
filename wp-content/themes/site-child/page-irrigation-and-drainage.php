@@ -16,30 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-/* Real published posts surfaced as latest updates. */
-$rv_update_posts = get_posts(
-	array(
-		'post_type'      => 'post',
-		'posts_per_page' => 3,
-		'post_status'    => 'publish',
-		'no_found_rows'  => true,
-	)
-);
-
-$rv_updates = array();
-foreach ( $rv_update_posts as $rv_update_post ) {
-	$rv_excerpt = trim( get_the_excerpt( $rv_update_post ) );
-	if ( ! $rv_excerpt ) {
-		$rv_excerpt = trim( wp_strip_all_tags( $rv_update_post->post_content ) );
-	}
-	$rv_updates[] = array(
-		'title'   => get_the_title( $rv_update_post ),
-		'link'    => get_permalink( $rv_update_post ),
-		'date'    => get_the_date( 'j F Y', $rv_update_post ),
-		'excerpt' => wp_trim_words( $rv_excerpt, 24 ),
-		'type'    => 'Update',
-	);
-}
+/* Legacy "Latest updates" section removed — stories live on /stories/. */
 
 $rv = array(
 	'type'          => 'press-releases',
@@ -55,9 +32,22 @@ $rv = array(
 	'featured'      => array(
 		'date'  => '',
 		'title' => 'Business community in Mathare calls for low-cost working spaces',
-		'text'  => '<p>Current and prospective business owners in Mathare struggle to remain profitable and start new businesses due to the high costs of doing business within Mathare. A survey of the business community identified the lack of appropriate working spaces and related infrastructural services as the top barriers to conducting business in Mathare. Participants also highlighted the need for greater dialogue between the business community and government around investment and planning.</p><p>The provision of services to the business community is important for the development of a robust enterprise ecosystem in Mathare. The business community calls upon government, civil society and the private sector to take action. One of the most effective first steps to address these concerns is to provide low cost, appropriate working spaces in unutilized areas around the community, centralizing service delivery for local enterprises.</p>',
+		'text'  => '<p>Current and prospective business owners in Mathare struggle to remain profitable and start new businesses due to the high costs of doing business within Mathare. A survey of the business community identified the lack of appropriate working spaces and related infrastructural services as the top barriers to conducting business in Mathare. Participants also highlighted the need for greater dialogue between the business community and government around investment and planning.</p><p>The provision of services to the business community is important for the development of a robust enterprise ecosystem in Mathare. The business community calls upon government, civil society and the private sector to take action. One of the most effective first steps to address these concerns is to provide low cost, appropriate working spaces in unutilized areas around the community, centralizing service delivery for local enterprises.</p><p>This policy brief discusses how the provision of working spaces and integration of infrastructure in Mathare promotes economic and social development in the community. The brief is derived from a mapping of the enterprise ecosystem and how it interacts with the business community that was carried out by SITE in Kiamaiko and Mlango Kubwa wards in Mathare sub-county between April and May 2018.</p>',
 	),
-	'updates'       => $rv_updates,
+	'contact_cards' => array(
+		array(
+			'icon'  => 'fa-phone',
+			'title' => 'Request a Call Back',
+			'text'  => 'Fill in the request form and we\'ll contact you by phone shortly.',
+			'url'   => '/contact-us/',
+		),
+		array(
+			'icon'  => 'fa-calendar',
+			'title' => 'Make An Appointment',
+			'text'  => 'To schedule an appointment and discuss your project with us.',
+			'url'   => '/contact-us/',
+		),
+	),
 	'resource_links'=> array(
 		array(
 			'icon'  => 'fa-book',

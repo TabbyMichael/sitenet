@@ -520,7 +520,7 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 32px;
-	padding: 48px 44px;
+	padding: clamp(26px, 4vw, 48px) clamp(22px, 4.5vw, 44px);
 	border-radius: var(--au-radius);
 	background: linear-gradient(135deg, var(--au-green) 0%, #014720 100%);
 	color: #ffffff;
@@ -639,7 +639,7 @@
 	}
 
 	.site-about-us .au-cta__inner {
-		padding: 32px 24px;
+		padding: 24px 18px;
 	}
 
 	.site-about-us .au-cta__button {

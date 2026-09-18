@@ -380,11 +380,6 @@ $site_total = count( $site_slides );
 			</button>
 
 			<div class="site-carousel-footer">
-				<div class="site-carousel-counter" aria-hidden="true">
-					<span class="site-carousel-counter-current" data-carousel-current>01</span>
-					<span class="site-carousel-counter-sep">/</span>
-					<span class="site-carousel-counter-total"><?php echo esc_html( str_pad( (string) $site_total, 2, '0', STR_PAD_LEFT ) ); ?></span>
-				</div>
 
 				<button
 					type="button"

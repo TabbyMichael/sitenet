@@ -567,7 +567,7 @@ add_filter( 'the_content', 'site_child_append_donors_to_content', 20 );
  * Donor / partner logo → stories map for the homepage carousel.
  *
  * Keys are logo FILENAMES from assets/images/partners/ (basename only, e.g.
- * 'ilo.png'). Values are arrays of story SLUGS (posts or site_story) in which
+ * 'ilo.png'). Values are arrays of story SLUGS (site_story) in which
  * that donor or partner features. Clicking a card routes the visitor to a
  * story chosen at random from its list — a different one each click.
  *
@@ -615,7 +615,7 @@ function site_child_resolve_donor_stories( $basename ) {
 			$sd_posts = get_posts(
 				array(
 					'name'           => sanitize_title( $sd_slug ),
-					'post_type'      => array( 'post', 'site_story' ),
+					'post_type'      => array( 'site_story' ),
 					'post_status'    => 'publish',
 					'numberposts'    => 1,
 					'no_found_rows'  => true,
@@ -633,7 +633,7 @@ function site_child_resolve_donor_stories( $basename ) {
 }
 
 /**
- * Permalinks of every published story (posts + site_story).
+ * Permalinks of every published story (site_story only).
  *
  * Used as the fallback target pool for logo cards that have no entry in the
  * donor map, so every card routes somewhere meaningful.
@@ -650,7 +650,7 @@ function site_child_get_all_story_urls() {
 	$sd_all = array();
 	$sd_posts = get_posts(
 		array(
-			'post_type'      => array( 'post', 'site_story' ),
+			'post_type'      => array( 'site_story' ),
 			'post_status'    => 'publish',
 			'numberposts'    => 100,
 			'no_found_rows'  => true,
