@@ -6,6 +6,7 @@
  *   type, root_class, kicker, title, lead, actions[],
  *   featured (title|date|text) — preserved from the legacy page content,
  *   updates[] (title|link|date|excerpt|image) — live story posts,
+ *   contact_cards[] (icon|title|text|url) — call-back / appointment prompts,
  *   resource_links[] (icon|title|desc|url) — other resource hubs.
  *
  * @package SITE Child
@@ -31,15 +32,17 @@ $rv_updates    = isset( $rv['updates'] )    ? $rv['updates']    : array();
 	get_template_part( 'template-parts/revamp/revamp-hero' );
 	?>
 
-	<?php if ( get_the_content() ) : ?>
-		<section class="rv-section rv-content" aria-label="Page content">
-			<div class="rv-container">
-				<div class="rv-content__inner">
-					<?php the_content(); ?>
-				</div>
-			</div>
-		</section>
-	<?php endif; ?>
+	<?php
+	/*
+	 * The legacy SiteOrigin `panels_data` for this page is deliberately NOT
+	 * rendered. It held four widgets that no longer belong here: a "Download
+	 * Policy Brief" brochure button, a broken demo divider image, and two icon
+	 * boxes ("Request a Call Back" / "Make An Appointment") whose links were
+	 * dead `href="#"` anchors. The release text itself was recovered into the
+	 * featured item in page-irrigation-and-drainage.php, and the two contact
+	 * prompts are re-rendered below as proper cards linking to /contact-us/.
+	 */
+	?>
 
 	<?php if ( ! empty( $rv_featured ) ) : ?>
 		<section class="rv-section rv-release" aria-labelledby="rv-release-title">
@@ -56,6 +59,30 @@ $rv_updates    = isset( $rv['updates'] )    ? $rv['updates']    : array();
 						<?php endif; ?>
 					</div>
 				</article>
+			</div>
+		</section>
+	<?php endif; ?>
+
+	<?php if ( ! empty( $rv['contact_cards'] ) ) : ?>
+		<section class="rv-section rv-contact-cards" aria-labelledby="rv-contact-cards-title">
+			<div class="rv-container">
+				<div class="rv-section-head">
+					<p class="rv-eyebrow"><span class="rv-eyebrow__dot" aria-hidden="true"></span>Get in touch</p>
+					<h2 id="rv-contact-cards-title" class="rv-section-title">Working with SITE</h2>
+					<p class="rv-section-sub">Reach our team and we'll follow up by phone or schedule time to discuss your project.</p>
+				</div>
+				<div class="rv-contact-cards__grid">
+					<?php foreach ( $rv['contact_cards'] as $rv_cc ) : ?>
+						<a class="rv-card rv-contact-card" href="<?php echo esc_url( $rv_cc['url'] ); ?>">
+							<span class="rv-contact-card__icon" aria-hidden="true"><i class="fa <?php echo esc_attr( $rv_cc['icon'] ); ?>"></i></span>
+							<span class="rv-contact-card__body">
+								<span class="rv-contact-card__title"><?php echo esc_html( $rv_cc['title'] ); ?></span>
+								<span class="rv-contact-card__text"><?php echo esc_html( $rv_cc['text'] ); ?></span>
+							</span>
+							<span class="rv-contact-card__arrow" aria-hidden="true"><i class="fa fa-angle-right"></i></span>
+						</a>
+					<?php endforeach; ?>
+				</div>
 			</div>
 		</section>
 	<?php endif; ?>

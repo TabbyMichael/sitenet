@@ -264,30 +264,6 @@
 	gap: 12px;
 }
 
-.site-carousel-counter {
-	display: inline-flex;
-	align-items: baseline;
-	gap: 6px;
-	margin: 0;
-	padding: 8px 14px;
-	border-radius: 999px;
-	background: rgba(255, 255, 255, 0.92);
-	color: #0b1f14;
-	font-size: 13px;
-	font-weight: 600;
-	line-height: 1;
-	font-variant-numeric: tabular-nums;
-}
-
-.site-carousel-counter-current {
-	font-weight: 800;
-	color: #01622c;
-}
-
-.site-carousel-counter-sep {
-	opacity: 0.45;
-}
-
 .site-carousel-toggle {
 	display: inline-flex;
 	align-items: center;

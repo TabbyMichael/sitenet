@@ -565,7 +565,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 32px;
-    padding: 54px 64px;
+    padding: clamp(28px, 4.5vw, 54px) clamp(24px, 5vw, 64px);
     border-radius: var(--ow-radius);
     background-color: var(--ow-surface);
     border: 1px solid var(--ow-border);
@@ -699,7 +699,7 @@
     }
 
     .site-our-work .ow-contact-cta__inner {
-        padding: 32px 24px;
+        padding: 26px 18px;
     }
 
     .site-our-work .ow-contact-cta__button {

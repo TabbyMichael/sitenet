@@ -160,27 +160,73 @@ $ss_share_title = rawurlencode( wp_strip_all_tags( get_the_title() ) );
 		</article>
 
 		<?php
+		// Build a guaranteed set of up to 3 related stories: same-program
+		// matches first, then any other published stories backfill the remainder
+		// so the section always shows 3 cards when enough stories exist.
+		$ss_related_base = array(
+			'post_type'      => 'site_story',
+			'post_status'    => 'publish',
+			'no_found_rows'  => true,
+			'fields'         => 'ids',
+		);
+
+		$ss_related_ids = array();
+		if ( $ss_programs && ! is_wp_error( $ss_programs ) ) {
+			$ss_program_query = new WP_Query( array_merge(
+				$ss_related_base,
+				array(
+					'posts_per_page' => 3,
+					'post__not_in'   => array( get_the_ID() ),
+					'orderby'        => 'date',
+					'order'          => 'DESC',
+					'tax_query'      => array(
+						array(
+							'taxonomy' => 'site_program',
+							'field'    => 'slug',
+							'terms'    => wp_list_pluck( $ss_programs, 'slug' ),
+						),
+					),
+				)
+			) );
+			$ss_related_ids = $ss_program_query->posts;
+		}
+
+		// Backfill with any other published stories to always reach 3.
+		if ( count( $ss_related_ids ) < 3 ) {
+			$ss_backfill = new WP_Query( array_merge(
+				$ss_related_base,
+				array(
+					'posts_per_page' => 3 - count( $ss_related_ids ),
+					'post__not_in'   => array_merge( array( get_the_ID() ), $ss_related_ids ),
+					'orderby'        => 'date',
+					'order'          => 'DESC',
+				)
+			) );
+			$ss_related_ids = array_merge( $ss_related_ids, $ss_backfill->posts );
+		}
+
+		$ss_related_ids = array_values( array_unique( array_map( 'absint', $ss_related_ids ) ) );
+
+		// Guard: an empty post__in array would make WP_Query ignore the limit.
+		if ( empty( $ss_related_ids ) ) {
+			$ss_related_ids = array( 0 );
+		}
+
 		$ss_related = new WP_Query(
 			array(
-				'post_type'      => 'site_story',
-				'post_status'    => 'publish',
-				'posts_per_page' => 3,
-				'post__not_in'   => array( get_the_ID() ),
-				'no_found_rows'  => true,
-				'tax_query'      => ( $ss_programs && ! is_wp_error( $ss_programs ) ) ? array(
-					array(
-						'taxonomy' => 'site_program',
-						'field'    => 'slug',
-						'terms'    => wp_list_pluck( $ss_programs, 'slug' ),
-					),
-				) : array(),
+				'post_type'           => 'site_story',
+				'post_status'         => 'publish',
+				'posts_per_page'      => 3,
+				'post__in'            => $ss_related_ids,
+				'orderby'             => 'post__in',
+				'ignore_sticky_posts' => true,
 			)
 		);
 
 		if ( $ss_related->have_posts() ) :
 			?>
 			<aside class="ss-related">
-				<h2 class="ss-related-title"><?php esc_html_e( 'More stories from this program', 'site-child' ); ?></h2>
+				<h2 class="ss-related-title"><?php esc_html_e( 'More stories', 'site-child' ); ?></h2>
 				<div class="ss-related-grid">
 					<?php
 					while ( $ss_related->have_posts() ) :
@@ -210,6 +256,7 @@ $ss_share_title = rawurlencode( wp_strip_all_tags( get_the_title() ) );
 							<?php if ( $ss_rel_impact ) : ?>
 								<span class="ss-related-impact"><?php echo esc_html( $ss_rel_impact ); ?></span>
 							<?php endif; ?>
+							<span class="ss-related-read"><?php esc_html_e( 'Read me', 'site-child' ); ?> <span class="ss-related-read__arrow" aria-hidden="true"><i class="fa fa-angle-right"></i></span></span>
 						</a>
 					<?php endwhile; ?>
 					<?php wp_reset_postdata(); ?>

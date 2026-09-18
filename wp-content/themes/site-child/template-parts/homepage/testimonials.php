@@ -23,6 +23,12 @@ $site_tm_items = apply_filters(
 	'site_child_testimonials',
 	array(
 		array(
+			'quote'    => 'The training has given me the technical skills to maintain water pipes and troughs. Now I can ensure water is consistently available for livestock, which is vital for our livelihoods. The stipend I earn from this work has also allowed me to start a small grocery business.',
+			'name'     => 'Mohammed Abdi Duale',
+			'location' => 'Garissa, Kenya',
+			'stars'    => 5,
+		),
+		array(
 			'quote'    => 'Thanks to SITE, in the last one month I have not received any spoilt milk back or negative feedback that the milk I sold to my customers was spoilt.',
 			'name'     => 'Saadia Muhamud',
 			'location' => 'Municipal market, Garissa town',
@@ -44,6 +50,12 @@ $site_tm_items = apply_filters(
 			'quote'    => 'What I saw unique and good about the training is that we were trained on the farms. They used to tell us when they were coming, we’d call farmers and we met on the farm. We used to plant all the crops together, they taught us how to do pure stands, how to trap and harvest water.',
 			'name'     => 'Nicholas Musyoka Kasa',
 			'location' => 'Kithambioni village, Mwingi West',
+			'stars'    => 5,
+		),
+		array(
+			'quote'    => 'Since I received practical skills on how to treat different camel diseases, I find myself explaining to herders on the correct use of drugs before they pay me, because I realized many of our people do not have the information I have.',
+			'name'     => 'Abdia Mohamed',
+			'location' => 'Mulanjo, Tana River County',
 			'stars'    => 5,
 		),
 	)

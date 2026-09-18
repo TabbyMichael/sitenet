@@ -252,7 +252,7 @@
 	background: var(--ss-green);
 	color: var(--ss-green-ink);
 	border-radius: var(--ss-radius);
-	padding: 28px 20px;
+	padding: clamp(20px, 3vw, 28px) clamp(16px, 2.5vw, 20px);
 	text-align: center;
 }
 
@@ -323,26 +323,67 @@
 .site-story-single .ss-related-image {
 	display: block;
 	line-height: 0;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
 }
 
 .site-story-single .ss-related-img {
 	width: 100%;
-	height: auto;
+	height: 100%;
+	object-fit: cover;
+	display: block;
 }
 
 .site-story-single .ss-related-name {
-	display: block;
 	padding: 14px 16px 4px;
 	font-weight: 700;
 	color: var(--ss-heading);
 	line-height: 1.3;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
 }
 
 .site-story-single .ss-related-impact {
-	display: block;
+	display: -webkit-box;
 	padding: 0 16px 16px;
 	font-size: 14px;
 	color: var(--ss-muted);
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.site-story-single .ss-related-read {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	margin: 0 16px 16px;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--ss-green);
+	text-decoration: none;
+	transition: color var(--ss-transition);
+}
+
+.site-story-single .ss-related-read__arrow {
+	display: inline-flex;
+	align-items: center;
+	transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.site-story-single .ss-related-card:hover .ss-related-read,
+.site-story-single .ss-related-card:focus-visible .ss-related-read {
+	color: var(--ss-green);
+	text-decoration: none;
+}
+
+.site-story-single .ss-related-card:hover .ss-related-read__arrow,
+.site-story-single .ss-related-card:focus-visible .ss-related-read__arrow {
+	transform: translateX(3px);
 }
 
 /* ---- Responsive (existing breakpoint bands) ------------------------- */
@@ -390,6 +431,31 @@
 	}
 }
 
+/* Phone: tighten the CTA block and let the button span the full column */
+@media (max-width: 767px) {
+	.site-story-single .ss-cta {
+		padding: 20px 16px;
+	}
+
+	.site-story-single .ss-cta-title {
+		font-size: 18px;
+	}
+
+	.site-story-single .ss-cta-text {
+		margin-bottom: 14px;
+		font-size: 14px;
+	}
+
+	.site-story-single .ss-cta-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		padding: 11px 20px;
+		min-height: 40px;
+	}
+}
+
 @media (hover: none) {
 	.site-story-single .ss-related-card:hover {
 		box-shadow: var(--ss-shadow-card);
@@ -432,12 +498,22 @@
 	--ss-shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.45), 0 16px 40px rgba(0, 0, 0, 0.50);
 }
 
+/* Theme pills sit on a yellow background in BOTH modes, so their text must
+   stay dark to remain legible. In dark mode the --ss-accent-dark token flips
+   to a yellow (#e0b402), which would make the label invisible — restore the
+   same dark text used in light mode. */
+[data-theme="dark"] .site-story-single .ss-theme-tag {
+	color: #7a6100;
+}
+
 /* ---- Reduced motion -------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
 	.site-story-single .ss-share-link,
 	.site-story-single .ss-cta-button,
 	.site-story-single .ss-related-card,
+	.site-story-single .ss-related-read,
+	.site-story-single .ss-related-read__arrow,
 	.site-story-single .ss-reveal {
 		transition: none;
 	}
