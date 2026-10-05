@@ -51,7 +51,7 @@ $rv = array(
 		array( 'url' => '/wp-content/uploads/2025/03/story-7a_200X200.jpg', 'alt' => 'Household food production in the drylands' ),
 		array( 'url' => '/wp-content/uploads/2025/03/story-11a_200X200.jpg', 'alt' => 'Community members at a water harvesting site' ),
 	),
-	'stories'       => site_child_revamp_stories( 'food-security-climate-actions-towards-resilient-communities', 3 ),
+	'stories'       => site_child_revamp_stories( 'food-security-climate', 3 ),
 	'stories_url'   => '/stories/',
 	'stories_head'  => 'Stories on food security & climate',
 	'stories_text'  => 'Updates from communities adapting and thriving in a changing climate.',

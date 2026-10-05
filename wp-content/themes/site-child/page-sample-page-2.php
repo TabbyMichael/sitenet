@@ -55,7 +55,7 @@ $rv = array(
 		array( 'url' => '/wp-content/uploads/2025/03/Untitled-1.jpg', 'alt' => 'Young trainees at a graduation ceremony' ),
 		array( 'url' => '/wp-content/uploads/2021/11/Gallery-1-850x567.jpg', 'alt' => 'Youth entrepreneurship training session' ),
 	),
-	'stories'       => site_child_revamp_stories( 'skilling-youth-for-employment', 3 ),
+	'stories'       => site_child_revamp_stories( '', 3 ),
 	'stories_url'   => '/stories/',
 	'stories_head'  => 'Stories from youth skills',
 	'stories_text'  => 'Real journeys of young people moving from training into employment and enterprise.',

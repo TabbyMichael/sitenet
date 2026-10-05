@@ -198,6 +198,32 @@ function site_child_enqueue_testimonials_assets() {
 add_action( 'wp_enqueue_scripts', 'site_child_enqueue_testimonials_assets', 26 );
 
 /**
+ * Enqueue impact counter animation assets (homepage only).
+ *
+ * Behaviour: assets/js/impact-counter.js  — vanilla, no dependencies, deferred.
+ * Animates numbers from 0 to target value when scrolled into view.
+ */
+function site_child_enqueue_impact_counter_assets() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	$ic_js_path = get_stylesheet_directory() . '/assets/js/impact-counter.js';
+
+	wp_enqueue_script(
+		'site-impact-counter',
+		get_stylesheet_directory_uri() . '/assets/js/impact-counter.js',
+		array(),
+		file_exists( $ic_js_path ) ? (string) filemtime( $ic_js_path ) : '1.0.0',
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+}
+add_action( 'wp_enqueue_scripts', 'site_child_enqueue_impact_counter_assets', 27 );
+
+/**
  * Enqueue the rebuilt header / navigation assets (site-wide).
  *
  * Styling: assets/css/header.css  — loaded after style.css so it wins ties.
@@ -548,7 +574,6 @@ function site_child_append_donors_to_content( $content ) {
 		'climate-actions',
 		'sample-page-2',
 		'enterprise-development-and-value-chains',
-		'empowering-women-for-employment',
 	);
 
 	if ( ! ( is_singular( 'post' ) || is_page( $sd_pages ) ) ) {
@@ -677,7 +702,6 @@ function site_child_enqueue_donors_assets() {
 		'climate-actions',
 		'sample-page-2',
 		'enterprise-development-and-value-chains',
-		'empowering-women-for-employment',
 	);
 
 	if ( ! ( is_singular( 'post' ) || is_singular( 'site_story' ) || is_page( $sd_pages ) ) ) {
@@ -932,30 +956,45 @@ add_action( 'wp_enqueue_scripts', 'site_child_enqueue_revamp_assets', 25 );
  * posts assigned to $category_slug, newest first. Falls back to an empty
  * array, which pages render as a friendly empty state.
  */
-function site_child_revamp_stories( $category_slug, $limit = 3 ) {
+function site_child_revamp_stories( $program_slug, $limit = 3 ) {
 	$card_stack = array();
 
-	$category = get_category_by_slug( $category_slug );
-	if ( ! $category ) {
-		return $card_stack;
+	// Allow multiple program slugs as comma-separated string or array
+	$program_terms = is_array( $program_slug ) ? $program_slug : explode( ',', $program_slug );
+	$program_terms = array_map( 'trim', $program_terms );
+
+	$story_args = array(
+		'post_type'      => 'site_story',
+		'posts_per_page' => absint( $limit ),
+		'post_status'    => 'publish',
+		'no_found_rows'  => true,
+	);
+
+	// Only add tax_query if program_slug is provided and not empty
+	if ( ! empty( $program_slug ) ) {
+		$story_args['tax_query'] = array(
+			array(
+				'taxonomy' => 'site_program',
+				'field'    => 'slug',
+				'terms'    => $program_terms,
+			),
+		);
 	}
 
-	$story_posts = get_posts(
-		array(
-			'post_type'      => 'post',
-			'cat'            => $category->term_id,
-			'posts_per_page' => absint( $limit ),
-			'post_status'    => 'publish',
-			'no_found_rows'  => true,
-		)
-	);
+	$story_posts = get_posts( $story_args );
 
 	foreach ( $story_posts as $story_post ) {
 		$story_image = '';
-		$story_thumb = get_post_thumbnail_id( $story_post );
-		if ( $story_thumb ) {
-			$story_image = wp_get_attachment_image_url( $story_thumb, 'site-story-thumb' );
-			if ( ! $story_image ) {
+		$hero_image = get_field( 'hero_image', $story_post->ID );
+		if ( $hero_image && is_array( $hero_image ) ) {
+			$story_image = isset( $hero_image['url'] ) ? $hero_image['url'] : '';
+		} elseif ( $hero_image ) {
+			$story_image = wp_get_attachment_image_url( (int) $hero_image, 'medium' );
+		}
+
+		if ( ! $story_image ) {
+			$story_thumb = get_post_thumbnail_id( $story_post->ID );
+			if ( $story_thumb ) {
 				$story_image = wp_get_attachment_image_url( $story_thumb, 'medium' );
 			}
 		}
@@ -1040,7 +1079,7 @@ function site_child_get_focus_areas() {
 			'image_alt' => 'SITE trainees in blue overalls, lab coats and yellow safety helmets with trainers after a youth skills session',
 			'image_w'   => 1280,
 			'image_h'   => 960,
-			'summary'   => 'Market led technical, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
+			'summary'   => 'Market led innovative technologies, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
 			'link'      => home_url( '/sample-page-2/' ),
 		),
 		array(
@@ -1062,7 +1101,7 @@ function site_child_get_focus_areas() {
 			'image_alt' => 'Two women in hijabs and hairnets filling plastic bottles from funnels at a production table',
 			'image_w'   => 2048,
 			'image_h'   => 1536,
-			'summary'   => 'Practical pathways for women and marginalized groups to build income, leadership, resilience, and stronger decision making power.',
+			'summary'   => 'Practical pathways for women and marginalized groups to build income, leadership, and confidence to believe in themselves, inspire action, and explore new opportunities.',
 			'link'      => home_url( '/empowering-women-for-employment/' ),
 		),
 		array(

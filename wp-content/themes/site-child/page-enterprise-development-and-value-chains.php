@@ -27,7 +27,7 @@ $rv = array(
 		array( 'label' => 'Explore our work', 'url' => '/ourwork/', 'variant' => 'ghost' ),
 	),
 	'intro_head'    => 'Building stronger, fairer value chains',
-	'intro_text'    => '<p>SITE supports group management and self regulation, strengthens cooperatives for product aggregation, and facilitates access to business information through blended learning and mobile based digital platforms.</p>',
+	'intro_text'    => '<p>SITE supports mobilization and management of business groups. Self regulation and organizing groups to meet required standards. Strengthening producer groups.</p>',
 	'features'      => array(
 		array(
 			'icon'  => 'fa-line-chart',
@@ -39,11 +39,10 @@ $rv = array(
 			'title' => 'Value chains development',
 			'text'  => 'Facilitating access to quality inputs, increasing productivity, supporting value addition and processing by small enterprises, and facilitating market linkages between producers and big buyers.',
 			'items' => array(
-				'Camel milk value chain',
-				'Dairy milk value chain',
-				'Crops value chain',
-				'Beekeeping value chain',
-				'Soapstone value chain',
+				'Gourd value chain',
+				'Self selection',
+				'Self regulation & organizing groups to meet standards',
+				'Strengthening producer groups',
 			),
 		),
 		array(
@@ -63,7 +62,7 @@ $rv = array(
 		array( 'url' => '/wp-content/uploads/2025/03/1-2.jpg',   'alt' => 'Cooperative members sorting harvest' ),
 		array( 'url' => '/wp-content/uploads/2025/03/DSCN2570.jpg', 'alt' => 'Field visit with value chain partners' ),
 	),
-	'stories'       => site_child_revamp_stories( 'enterprise-development-and-value-chains', 3 ),
+	'stories'       => site_child_revamp_stories( 'enterprise-development', 3 ),
 	'stories_url'   => '/stories/',
 	'stories_head'  => 'Stories from the value chains',
 	'stories_text'  => 'Real updates from producers, cooperatives and markets we work with.',

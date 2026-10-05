@@ -60,7 +60,7 @@ function site_seed_hero_slides_once() {
 			'title'              => 'Women Building Enterprises That Lift Whole Communities',
 			'description'        => 'Village savings, cooperative enterprise and market linkages that put income decisions in women\'s hands.',
 			'cta_text'           => 'Meet the Women',
-			'cta_url'            => home_url( '/blog/' ),
+			'cta_url'            => home_url( '/stories/' ),
 			'secondary_cta_text' => '',
 			'secondary_cta_url'  => '',
 			'image_position'     => 'top',
