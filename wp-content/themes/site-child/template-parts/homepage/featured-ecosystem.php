@@ -2,6 +2,12 @@
 /**
  * Homepage Featured Ecosystem — Our Work Stories
  *
+ * Shows three published stories in a fixed order: the newest story leads, a
+ * pinned story always occupies the second slot, and the third slot is filled
+ * with the next most recent story. The pinned slug is overridable via the
+ * `site_child_homepage_featured_story_slug` filter — returning an empty string
+ * disables pinning and shows the latest three.
+ *
  * @package SITE Child
  */
 
@@ -9,20 +15,95 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$args = array(
-	'post_type'      => array( 'site_story', 'post' ),
-	'posts_per_page' => 3,
-	'post_status'    => 'publish',
-	'orderby'        => 'date',
-	'order'          => 'DESC',
+$featured_post_types = array( 'site_story', 'post' );
+
+$featured_slug = (string) apply_filters(
+	'site_child_homepage_featured_story_slug',
+	'a-young-small-scale-trader-with-big-dreams'
 );
 
-$featured_query = new WP_Query( $args );
+// Resolve the pinned story, which is always shown in the second slot.
+// Restricted to the site_story CPT so the card links to the Story page rather
+// than a same-named legacy blog post.
+$featured_pinned_id = 0;
+
+if ( '' !== $featured_slug ) {
+	$featured_pinned = get_posts(
+		array(
+			'name'           => sanitize_title( $featured_slug ),
+			'post_type'      => 'site_story',
+			'post_status'    => 'publish',
+			'numberposts'    => 1,
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
+		)
+	);
+
+	if ( ! empty( $featured_pinned ) ) {
+		$featured_pinned_id = (int) $featured_pinned[0];
+	}
+}
+
+// Newest stories, excluding the pinned one so it is never duplicated.
+$featured_latest = array_map(
+	'intval',
+	get_posts(
+		array(
+			'post_type'      => $featured_post_types,
+			'post_status'    => 'publish',
+			'numberposts'    => 3,
+			'posts_per_page' => 3,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+			'fields'         => 'ids',
+			'post__not_in'   => $featured_pinned_id ? array( $featured_pinned_id ) : array(),
+			'no_found_rows'  => true,
+		)
+	)
+);
+
+// Order the cards: newest story first, pinned story second, next newest third.
+$featured_ids = array();
+
+if ( $featured_pinned_id ) {
+	if ( ! empty( $featured_latest ) ) {
+		$featured_ids[] = array_shift( $featured_latest );
+	}
+	$featured_ids[] = $featured_pinned_id;
+}
+
+$featured_ids = array_slice( array_merge( $featured_ids, $featured_latest ), 0, 3 );
+
+if ( ! empty( $featured_ids ) ) {
+	$featured_query = new WP_Query(
+		array(
+			'post_type'      => $featured_post_types,
+			'post_status'    => 'publish',
+			'post__in'       => $featured_ids,
+			'orderby'        => 'post__in',
+			'posts_per_page' => 3,
+		)
+	);
+} else {
+	// Fallback: no stories at all — keep the previous behaviour.
+	$featured_query = new WP_Query(
+		array(
+			'post_type'      => $featured_post_types,
+			'posts_per_page' => 3,
+			'post_status'    => 'publish',
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		)
+	);
+}
+
+$catherine_image_url = get_stylesheet_directory_uri() . '/assets/images/stories/Catherine-Wangui-848x450.png';
 
 $fallback_items = array(
 	array(
 		'title'        => 'A young small scale trader, with big dreams',
-		'image'        => content_url( 'uploads/2021/11/wrm-848x450.png' ),
+		'image'        => $catherine_image_url,
 		'image_srcset' => '',
 		'image_w'      => 848,
 		'image_h'      => 450,
@@ -76,6 +157,8 @@ $fallback_items = array(
 					if ( empty( $excerpt ) ) {
 						$excerpt = wp_trim_words( get_the_content(), 22 );
 					}
+					$post_title = get_the_title();
+					$is_catherine = ( false !== stripos( $post_title, 'Catherine' ) || false !== stripos( $post_title, 'trader' ) );
 					?>
 					<article class="ecosystem-card" data-index="<?php echo esc_attr( $card_index ); ?>" aria-label="<?php the_title_attribute(); ?>">
 
@@ -88,7 +171,13 @@ $fallback_items = array(
 									$ecosystem_thumb_id = is_array( $ecosystem_hero ) ? (int) ( $ecosystem_hero['ID'] ?? 0 ) : (int) $ecosystem_hero;
 								}
 								?>
-								<?php if ( $ecosystem_thumb_id ) : ?>
+								<?php if ( $is_catherine ) : ?>
+									<img src="<?php echo esc_url( $catherine_image_url ); ?>"
+										sizes="(max-width: 599px) 100vw, (max-width: 1023px) 50vw, 33vw"
+										width="848" height="450"
+										alt="<?php the_title_attribute(); ?>"
+										class="ecosystem-thumb-img" loading="lazy" decoding="async" />
+								<?php elseif ( $ecosystem_thumb_id ) : ?>
 									<?php
 									echo wp_get_attachment_image(
 										$ecosystem_thumb_id,
@@ -104,7 +193,7 @@ $fallback_items = array(
 									);
 									?>
 								<?php else : ?>
-									<img src="<?php echo esc_url( content_url( 'uploads/2021/11/wrm-848x450.png' ) ); ?>"
+									<img src="<?php echo esc_url( $catherine_image_url ); ?>"
 										sizes="(max-width: 599px) 100vw, (max-width: 1023px) 50vw, 33vw"
 										width="848" height="450"
 										alt="<?php the_title_attribute(); ?>"

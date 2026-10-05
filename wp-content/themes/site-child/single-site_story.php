@@ -26,6 +26,20 @@ if ( is_array( $ss_hero_id ) ) {
 }
 $ss_hero_id = (int) $ss_hero_id;
 
+if ( ! $ss_hero_id ) {
+	$ss_hero_id = (int) get_post_thumbnail_id();
+}
+
+$ss_fallback_hero_url = '';
+if ( ! $ss_hero_id ) {
+	$post_title = get_the_title();
+	if ( false !== stripos( $post_title, 'Catherine' ) || false !== stripos( $post_title, 'trader' ) ) {
+		$ss_fallback_hero_url = get_stylesheet_directory_uri() . '/assets/images/stories/Catherine-Wangui-848x450.png';
+	} else {
+		$ss_fallback_hero_url = get_stylesheet_directory_uri() . '/assets/images/stories/camelmmilk-848x450.png';
+	}
+}
+
 $ss_impact  = get_field( 'impact_statement' );
 $ss_author  = get_field( 'story_author' );
 $ss_stats   = get_field( 'impact_statistics' );
@@ -48,8 +62,8 @@ $ss_share_title = rawurlencode( wp_strip_all_tags( get_the_title() ) );
 
 <section class="site-story-single">
 
-	<?php if ( $ss_hero_id ) : ?>
-		<figure class="ss-hero">
+	<figure class="ss-hero">
+		<?php if ( $ss_hero_id ) : ?>
 			<?php
 			echo wp_get_attachment_image(
 				(int) $ss_hero_id,
@@ -57,13 +71,15 @@ $ss_share_title = rawurlencode( wp_strip_all_tags( get_the_title() ) );
 				false,
 				array(
 					'class'    => 'ss-hero-image',
-					'alt'      => get_post_meta( (int) $ss_hero_id, '_wp_attachment_image_alt', true ),
+					'alt'      => get_post_meta( (int) $ss_hero_id, '_wp_attachment_image_alt', true ) ?: get_the_title(),
 					'decoding' => 'async',
 				)
 			);
 			?>
-		</figure>
-	<?php endif; ?>
+		<?php else : ?>
+			<img src="<?php echo esc_url( $ss_fallback_hero_url ); ?>" alt="<?php the_title_attribute(); ?>" class="ss-hero-image" decoding="async" />
+		<?php endif; ?>
+	</figure>
 
 	<div class="ss-container">
 		<article class="ss-article">

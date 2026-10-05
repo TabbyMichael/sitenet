@@ -107,15 +107,43 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 	$site_hero_content = array(
 		'transforming lives' => array(
 			'alt' => 'Camels and donkeys at a community water point while herders fill their jerrycans',
+			'eyebrow' => 'Value Chains',
+			'title' => 'Value Chains for Enterprise Development',
+			'description' => 'Strengthening producers, MSMEs and cooperatives to improve productivity, add value and connect small enterprises to bigger markets.',
+			'cta_url' => home_url( '/enterprise-development-and-value-chains/' ),
+			'cta_text' => 'Learn More',
 		),
 		'Agri-business-in-Meru' => array(
 			'alt' => 'Farmers gathered around a compost-making demonstration in Meru',
+			'eyebrow' => 'Youth & Skills',
+			'title' => 'Skilling Youth for Employment',
+			'description' => 'Market led innovative technologies, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
+			'cta_url' => home_url( '/sample-page-2/' ),
+			'cta_text' => 'Learn More',
 		),
 		'camelmmilk' => array(
 			'alt' => 'Children and community members drinking camel milk at a SITE nutrition event',
+			'eyebrow' => 'Resilient Communities',
+			'title' => 'Food Security & Climate Actions',
+			'description' => 'Climate smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
+			'cta_url' => home_url( '/climate-actions/' ),
+			'cta_text' => 'Learn More',
 		),
 		'potato-farming-in-Meru' => array(
 			'alt' => 'A woman farmer holding freshly harvested potatoes in a field in Meru',
+			'eyebrow' => 'Women & Inclusion',
+			'title' => 'Empowering Women for Employment',
+			'description' => 'Practical pathways for women and marginalized groups to build income, leadership, and confidence to believe in themselves, inspire action, and explore new opportunities.',
+			'cta_url' => home_url( '/empowering-women-for-employment/' ),
+			'cta_text' => 'Learn More',
+		),
+		'WWDs-learning-how-to-make-liquid-soap-in-Machakos' => array(
+			'alt' => 'Women learning to make liquid soap during a SITE training session in Machakos',
+			'eyebrow' => 'Our Impact',
+			'title' => 'Empowering Marginalized Communities',
+			'description' => 'Transforming communities through skills development, enterprise support, and economic empowerment programs across Kenya.',
+			'cta_url' => home_url( '/ourwork/' ),
+			'cta_text' => 'Learn More',
 		),
 		'poultry-keepiong-in-machakos' => array(
 			'alt' => 'Community members attending a poultry-keeping training session in Machakos',
@@ -128,9 +156,6 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 		),
 		'WWD-in-Machakos-during-soap-making-training' => array(
 			'alt' => 'Women learning soap-making skills during a SITE training session in Machakos',
-		),
-		'WWDs-learning-how-to-make-liquid-soap-in-Machakos' => array(
-			'alt' => 'Women learning to make liquid soap during a SITE training session in Machakos',
 		),
 	);
 

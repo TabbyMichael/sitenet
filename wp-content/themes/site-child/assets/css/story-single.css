@@ -38,19 +38,26 @@
 
 /* ---- Hero ---------------------------------------------------------- */
 
+/* Image starts after the TopNavBar with full viewport width */
 .site-story-single .ss-hero {
-	margin: 0;
-	max-height: 72vh;
+	margin: 0 calc(50% - 50vw);
+	width: 100vw;
+	max-width: 100vw;
+	height: 65vh;
+	min-height: 360px;
 	overflow: hidden;
 	background: var(--ss-surface-raised);
+	position: relative;
 }
 
 .site-story-single .ss-hero-image {
-	display: block;
-	width: 100%;
-	height: auto;
-	max-height: 72vh;
-	object-fit: cover;
+	display: block !important;
+	width: 100% !important;
+	height: 100% !important;
+	max-width: none !important;
+	max-height: none !important;
+	object-fit: cover !important;
+	object-position: center !important;
 }
 
 /* ---- Article shell ------------------------------------------------- */
@@ -412,6 +419,15 @@
 	.site-story-single .ss-related-grid {
 		grid-template-columns: repeat(2, 1fr);
 	}
+
+	/* Ensure hero starts after navbar on tablet and desktop */
+	.site-story-single .ss-hero {
+		margin: 0 auto;
+		width: 100%;
+		max-width: 1240px;
+		height: 50vh;
+		min-height: 300px;
+	}
 }
 
 @media (min-width: 1024px) {
@@ -423,6 +439,13 @@
 	.site-story-single .ss-stats {
 		grid-template-columns: repeat(3, 1fr);
 	}
+
+	/* Ensure hero starts after navbar on desktop */
+	.site-story-single .ss-hero {
+		margin: 0 auto;
+		width: 100%;
+		max-width: 1240px;
+	}
 }
 
 @media (min-width: 1200px) {
@@ -433,6 +456,15 @@
 
 /* Phone: tighten the CTA block and let the button span the full column */
 @media (max-width: 767px) {
+	/* Ensure hero starts after navbar on mobile */
+	.site-story-single .ss-hero {
+		margin: 0 auto;
+		width: 100%;
+		max-width: 100%;
+		height: 40vh;
+		min-height: 250px;
+	}
+
 	.site-story-single .ss-cta {
 		padding: 20px 16px;
 	}

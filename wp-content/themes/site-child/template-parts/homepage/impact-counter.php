@@ -12,26 +12,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 $metrics = array(
 	array(
 		'number' => '35,000+',
+		'value'  => 35000,
 		'label'  => 'Men',
 		'icon'   => 'fa-users',
 	),
 	array(
 		'number' => '100,000+',
+		'value'  => 100000,
 		'label'  => 'Women And Girls',
 		'icon'   => 'fa-female',
 	),
 	array(
 		'number' => '51,000+',
+		'value'  => 51000,
 		'label'  => 'Persons With Disabilities (PWDs)',
 		'icon'   => 'fa-wheelchair',
 	),
 	array(
 		'number' => '460+',
+		'value'  => 460,
 		'label'  => 'Refugees',
 		'icon'   => 'fa-group',
 	),
 	array(
 		'number' => '20,000+',
+		'value'  => 20000,
 		'label'  => 'Youth',
 		'icon'   => 'fa-child',
 	),
@@ -49,7 +54,7 @@ $metrics = array(
 			<?php foreach ( $metrics as $m ) : ?>
 				<div class="impact-box">
 					<div class="impact-icon"><i class="fa <?php echo esc_attr( $m['icon'] ); ?>"></i></div>
-					<div class="impact-number"><?php echo esc_html( $m['number'] ); ?></div>
+					<div class="impact-number" data-target="<?php echo esc_attr( $m['value'] ); ?>">0</div>
 					<div class="impact-label"><?php echo esc_html( $m['label'] ); ?></div>
 				</div>
 			<?php endforeach; ?>

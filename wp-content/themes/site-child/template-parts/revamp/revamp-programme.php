@@ -38,6 +38,7 @@ $rv_gallery     = isset( $rv['gallery'] )     ? $rv['gallery']     : array();
 $rv_stories     = isset( $rv['stories'] )     ? $rv['stories']     : array();
 $rv_stories_url = isset( $rv['stories_url'] ) ? $rv['stories_url'] : '/stories/';
 $rv_programmes  = isset( $rv['programmes'] )  ? $rv['programmes']  : array();
+$rv_hide_legacy = ! empty( $rv['hide_legacy_content'] );
 ?>
 
 <main id="primary" class="site-main site-revamp <?php echo esc_attr( $rv_root_class ); ?>">
@@ -61,7 +62,7 @@ $rv_programmes  = isset( $rv['programmes'] )  ? $rv['programmes']  : array();
 		</section>
 	<?php endif; ?>
 
-	<?php if ( get_the_content() ) : ?>
+	<?php if ( ! $rv_hide_legacy && get_the_content() ) : ?>
 		<section class="rv-section rv-content" aria-label="Page content">
 			<div class="rv-container">
 				<div class="rv-content__inner">

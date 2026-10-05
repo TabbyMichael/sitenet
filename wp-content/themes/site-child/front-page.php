@@ -20,10 +20,10 @@ get_header();
 			<div class="row site-about-row">
 				<div class="col-md-7 margin-bottom-30">
 					<div class="intro-content-block">
-						<span class="site-about-kicker">About SITE Enterprise Promotion</span>
-						<h2>Building resilient livelihoods through enterprise led development.</h2>
+						<span class="site-about-kicker">About SITE</span>
+						<h2>Transforming Lives Since 1996</h2>
 						<p class="site-about-lead">
-							SITE is a Kenyan not for profit development organization working with communities, entrepreneurs, women, youth, and marginalized groups to turn skills into sustainable incomes and dignified work.
+							SITE Enterprise Promotion (SITE) is a Kenyan not-for-profit development organization, established in 1996, whose goal is the promotion of employment opportunities and economic growth among communities.
 						</p>
 
 						<div class="site-about-values">
@@ -31,21 +31,20 @@ get_header();
 								<span class="site-about-value-icon"><i class="fa fa-eye"></i></span>
 								<div>
 									<h3>Vision</h3>
-									<p>Better quality of life for people and communities through economic dignity.</p>
+									<p>Better quality of life for the people of our world.</p>
 								</div>
 							</div>
 							<div class="site-about-value">
 								<span class="site-about-value-icon"><i class="fa fa-bullseye"></i></span>
 								<div>
 									<h3>Mission</h3>
-									<p>To reduce poverty by strengthening livelihoods, competitive markets, and community owned enterprises.</p>
+									<p>Our mission is to reduce poverty by working with communities to address their needs through sustainable livelihood projects. We empower enterprising individuals to enhance productivity, foster competitive markets, and sustainable businesses that generate income and job opportunities.</p>
 								</div>
 							</div>
 						</div>
 
 						<div class="site-about-actions">
 							<a class="site-about-primary-link" href="<?php echo esc_url( home_url( '/about-us/' ) ); ?>">More About Us</a>
-							<a class="site-about-secondary-link" href="<?php echo esc_url( home_url( '/make-an-appointment/' ) ); ?>">Partner With Us</a>
 						</div>
 					</div>
 				</div>
@@ -54,7 +53,7 @@ get_header();
 						<img src="<?php echo esc_url( content_url( 'uploads/2021/11/aniversery.png' ) ); ?>" alt="SITE transforming lives since 1996" class="img-responsive center-block">
 						<div class="site-about-proof">
 							<strong>Since 1996</strong>
-							<span>Promoting inclusive enterprise, employment, and sustainable livelihoods across Kenya.</span>
+							<span>Promoting inclusive enterprise and employment opportunities, and sustainable livelihoods.</span>
 						</div>
 					</div>
 				</div>

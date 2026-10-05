@@ -134,6 +134,52 @@ $sa_featured = null;
 if ( $sa_show_featured && ! empty( $sa_stories ) ) {
 	$sa_featured = array_shift( $sa_stories );
 }
+
+// Custom story reordering for the grid - reorder by current array position
+if ( ! empty( $sa_stories ) ) {
+	$sa_temp = $sa_stories;
+	$sa_stories = array();
+	$sa_count = count( $sa_temp );
+	
+	// Build the new order: 1,9,7,8,3,4,5,6,2 (swapped story 3 and story 8)
+	$sa_stories[] = $sa_temp[0];  // Story 1 → position 1
+	
+	if ( $sa_count > 8 ) {
+		$sa_stories[] = $sa_temp[8];  // Story 9 → position 2
+	}
+	
+	if ( $sa_count > 6 ) {
+		$sa_stories[] = $sa_temp[6];  // Story 7 → position 3
+	}
+	
+	if ( $sa_count > 7 ) {
+		$sa_stories[] = $sa_temp[7];  // Story 8 → position 4 (swapped with story 3)
+	}
+	
+	$sa_stories[] = $sa_temp[2];  // Story 3 → position 5 (swapped with story 8)
+	
+	// Add remaining stories (4,5,6) in order
+	$sa_used_positions = array(0, 2);
+	if ( $sa_count > 6 ) {
+		$sa_used_positions[] = 6;
+	}
+	if ( $sa_count > 7 ) {
+		$sa_used_positions[] = 7;
+	}
+	if ( $sa_count > 8 ) {
+		$sa_used_positions[] = 8;
+	}
+	
+	for ( $i = 3; $i < $sa_count; $i++ ) {
+		if ( ! in_array( $i, $sa_used_positions ) ) {
+			$sa_stories[] = $sa_temp[$i];
+		}
+	}
+	
+	// Add story 2 at the end (position 9)
+	$sa_stories[] = $sa_temp[1];  // Story 2 → position 9
+}
+
 $sa_grid = $sa_stories;
 
 $sa_programs = get_terms(
@@ -218,7 +264,7 @@ if ( $sa_query->max_num_pages > $sa_paged ) {
 							<div class="sa-meta">
 								<span class="sa-meta__cat"><?php echo esc_html( $sa_featured['program'] ? $sa_featured['program'] : __( 'Story', 'site-child' ) ); ?></span>
 								<span class="sa-meta__sep" aria-hidden="true">·</span>
-								<span><?php echo esc_html( $sa_featured['reading_time'] ); ?> · <?php echo esc_html( $sa_featured['year'] ); ?></span>
+								<span><?php echo esc_html( $sa_featured['reading_time'] ); ?></span>
 							</div>
 							<span class="sa-cta" aria-hidden="true"><?php esc_html_e( 'Read story', 'site-child' ); ?> <span class="sa-cta-arrow"><?php echo site_child_svg_arrow( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></span>
 						</div>
@@ -265,7 +311,7 @@ if ( $sa_query->max_num_pages > $sa_paged ) {
 								<span class="sa-card__label"><?php echo esc_html( $sa_item['program'] ? $sa_item['program'] : __( 'Story', 'site-child' ) ); ?></span>
 								<h3 class="sa-card__title"><a class="sa-card-link" href="<?php echo esc_url( $sa_item['permalink'] ); ?>"><?php echo esc_html( $sa_item['title'] ); ?></a></h3>
 								<p class="sa-card__excerpt"><?php echo esc_html( wp_trim_words( $sa_item['excerpt'], 22 ) ); ?></p>
-								<div class="sa-card__meta"><?php echo esc_html( $sa_item['reading_time'] ); ?> · <?php echo esc_html( $sa_item['year'] ); ?></div>
+								<div class="sa-card__meta"><?php echo esc_html( $sa_item['reading_time'] ); ?></div>
 								<span class="sa-card__cta" aria-hidden="true"><?php esc_html_e( 'Read story', 'site-child' ); ?> <span class="sa-cta-arrow"><?php echo site_child_svg_arrow( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></span>
 							</div>
 						</article>
