@@ -1070,15 +1070,20 @@ function site_child_focus_area_image_uri() {
 function site_child_get_focus_areas() {
 	$image_uri = site_child_focus_area_image_uri();
 
+	// The "Skilling Youth" card uses a photo from the assets/images/New / folder
+	// (folder name carries a trailing space — percent-encoded exactly once here,
+	// mirroring the rule in site_child_focus_area_image_uri()).
+	$new_image_uri = get_stylesheet_directory_uri() . '/assets/images/' . rawurlencode( 'New ' ) . '/';
+
 	return array(
 		array(
 			'title'     => 'Skilling Youth for Employment',
 			'kicker'    => 'Youth & Skills',
 			'icon'      => 'fa-graduation-cap',
-			'image'     => $image_uri . 'skilling-youth.jpeg',
-			'image_alt' => 'SITE trainees in blue overalls, lab coats and yellow safety helmets with trainers after a youth skills session',
-			'image_w'   => 1280,
-			'image_h'   => 960,
+			'image'     => $new_image_uri . '1-480x265.jpg',
+			'image_alt' => 'A SITE youth trainee in a yellow hard hat and overalls testing an electrical control panel with a multimeter while a trainer observes',
+			'image_w'   => 480,
+			'image_h'   => 265,
 			'summary'   => 'Market led innovative technologies, vocational, entrepreneurship, and mentorship support that helps young people transition from training into dignified work.',
 			'link'      => home_url( '/sample-page-2/' ),
 		),

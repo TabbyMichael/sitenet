@@ -1,4 +1,10 @@
-FROM wordpress:6.6.1-php8.2-apache
+# PHP 8.2 line on the latest patched release. The repo working tree is
+# bind-mounted as the webroot, so the WordPress version baked into the base
+# image is never served — what matters here is the PHP runtime. The old pin
+# (wordpress:6.6.1-php8.2-apache, built Sep 2024) shipped PHP 8.2.23, which is
+# vulnerable to php2shell (CVE-2026-109618 / CVE-2026-109619, fixed in 8.2.35,
+# CISA alert 2026-10-21). Do not re-pin to an old dated tag.
+FROM wordpress:php8.2-apache
 
 # PHP extensions needed by the site's plugins (Elementor, WooCommerce, ACF Pro,
 # revslider, etc.). Matches the LocalWP environment (PHP 8.2).
