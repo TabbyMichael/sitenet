@@ -2033,3 +2033,40 @@
         padding: 26px 22px;
     }
 }
+
+/* ------------------------------------------------------------------
+ * Water-harvesting media section (photos + video) — .rv-media.
+ * Reuses the .rv-imagery grid; the video item spans two columns.
+ * ------------------------------------------------------------------ */
+.site-revamp .rv-media__item--video {
+    grid-column: span 2;
+}
+
+.site-revamp .rv-media__video {
+    display: block;
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    background-color: #000;
+    border-radius: var(--rv-radius-sm);
+}
+
+/* Collapse the wide video tile when the grid drops to one column. */
+@media (max-width: 767px) {
+    .site-revamp .rv-media__item--video {
+        grid-column: span 1;
+    }
+}
+
+/* ------------------------------------------------------------------
+ * The legacy Elementor "Harvesting water for sustainability" heading
+ * and its tiny thumbnail gallery are superseded by the designed .rv-media
+ * section above. Hide ONLY those two blocks (scoped to the climate page)
+ * so the Donors & Promoters logos and agri-food text in the legacy body
+ * stay intact. NOTE: these IDs are Elementor-generated; if the page is
+ * re-saved in the Elementor editor they can change and need updating.
+ * ------------------------------------------------------------------ */
+.site-revamp--climate .elementor-element-95efecf,
+.site-revamp--climate .elementor-element-686efd1 {
+    display: none;
+}

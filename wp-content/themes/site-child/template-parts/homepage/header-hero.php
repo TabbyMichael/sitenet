@@ -106,7 +106,8 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 	 */
 	$site_hero_content = array(
 		'transforming lives' => array(
-			'alt' => 'Camels and donkeys at a community water point while herders fill their jerrycans',
+			'alt' => 'Water access for the community',
+			'url' => get_stylesheet_directory_uri() . '/assets/images/water/water-1.jpg',
 			'eyebrow' => 'Value Chains',
 			'title' => 'Value Chains for Enterprise Development',
 			'description' => 'Strengthening producers, MSMEs and cooperatives to improve productivity, add value and connect small enterprises to bigger markets.',
@@ -190,7 +191,7 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 				if ( in_array( $site_key, $site_hero_exclude, true ) ) {
 					continue;
 				}
-				if ( ! isset( $site_file_index[ $site_key ] ) ) {
+				if ( empty( $site_content['url'] ) && ! isset( $site_file_index[ $site_key ] ) ) {
 					continue;
 				}
 				$site_label = ucwords( trim( preg_replace( '/\s+/', ' ', preg_replace( '/[-_]+/', ' ', $site_key ) ) ) );
@@ -201,7 +202,7 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 				$site_alt = ! empty( $site_content['alt'] ) ? $site_content['alt'] : $site_label;
 				$site_slides[] = array(
 					'type'        => 'file',
-					'url'         => $site_file_index[ $site_key ]['url'],
+					'url'         => ! empty( $site_content['url'] ) ? $site_content['url'] : $site_file_index[ $site_key ]['url'],
 					'alt'         => $site_alt,
 					'title'       => ! empty( $site_content['title'] ) ? $site_content['title'] : '',
 					'description' => isset( $site_content['description'] ) ? $site_content['description'] : '',

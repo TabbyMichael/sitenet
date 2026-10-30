@@ -38,6 +38,7 @@ $rv_gallery     = isset( $rv['gallery'] )     ? $rv['gallery']     : array();
 $rv_stories     = isset( $rv['stories'] )     ? $rv['stories']     : array();
 $rv_stories_url = isset( $rv['stories_url'] ) ? $rv['stories_url'] : '/stories/';
 $rv_programmes  = isset( $rv['programmes'] )  ? $rv['programmes']  : array();
+$rv_media       = isset( $rv['media'] )       ? $rv['media']       : array();
 $rv_hide_legacy = ! empty( $rv['hide_legacy_content'] );
 ?>
 
@@ -116,6 +117,45 @@ $rv_hide_legacy = ! empty( $rv['hide_legacy_content'] );
 					<?php endforeach; ?>
 				</div>
 			</div>
+		</section>
+	<?php endif; ?>
+
+	<?php if ( ! empty( $rv_media['items'] ) ) : ?>
+		<section class="rv-section rv-imagery rv-media" aria-labelledby="rv-media-title">
+			<div class="rv-container">
+				<?php if ( ! empty( $rv_media['title'] ) || ! empty( $rv_media['text'] ) ) : ?>
+					<div class="rv-section-head">
+						<?php if ( ! empty( $rv_media['title'] ) ) : ?>
+							<h2 id="rv-media-title" class="rv-section-title"><?php echo esc_html( $rv_media['title'] ); ?></h2>
+						<?php endif; ?>
+						<?php if ( ! empty( $rv_media['text'] ) ) : ?>
+							<p class="rv-section-sub"><?php echo esc_html( $rv_media['text'] ); ?></p>
+						<?php endif; ?>
+					</div>
+				<?php endif; ?>
+				<div class="rv-imagery__grid">
+					<?php
+					foreach ( $rv_media['items'] as $rv_media_item ) :
+						$rv_is_video = ! empty( $rv_media_item['video'] );
+						?>
+						<figure class="rv-imagery__item<?php echo $rv_is_video ? ' rv-media__item--video' : ''; ?>">
+							<?php if ( $rv_is_video ) : ?>
+								<video class="rv-media__video"
+									src="<?php echo esc_url( $rv_media_item['video'] ); ?>"
+									<?php if ( ! empty( $rv_media_item['poster'] ) ) : ?>poster="<?php echo esc_url( $rv_media_item['poster'] ); ?>"<?php endif; ?>
+									controls playsinline preload="metadata"
+									aria-label="<?php echo esc_attr( isset( $rv_media_item['alt'] ) ? $rv_media_item['alt'] : '' ); ?>"
+									width="640" height="427"></video>
+							<?php else : ?>
+								<img class="rv-imagery__img"
+									src="<?php echo esc_url( $rv_media_item['image'] ); ?>"
+									alt="<?php echo esc_attr( isset( $rv_media_item['alt'] ) ? $rv_media_item['alt'] : '' ); ?>"
+									loading="lazy" decoding="async" width="640" height="427">
+							<?php endif; ?>
+						</figure>
+					<?php endforeach; ?>
+				</div>
+				</div>
 		</section>
 	<?php endif; ?>
 

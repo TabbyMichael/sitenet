@@ -14,14 +14,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+// Gallery imagery for this programme lives in the child theme so it travels
+// with the code and stays version-controlled (matches the Focus Areas pattern).
+$rv_enterprise_uri = get_stylesheet_directory_uri() . '/assets/images/enterprise/';
+
 $rv = array(
 	'type'          => 'programme',
 	'root_class'    => 'site-revamp--programme site-revamp--value-chains',
+	// The legacy Elementor body for this page duplicates the designed Features
+	// section below and carries outdated photos (produce sacks, cloth/soap
+	// slider) that live in post meta and cannot be edited from PHP. Suppress it
+	// so only the designed sections render — including the new gallery imagery.
+	'hide_legacy_content' => true,
 	'kicker'        => 'Our work · Inclusive markets',
 	'title'         => 'Value Chains for Enterprise Development',
 	'lead'          => 'We strengthen producers, MSMEs and cooperatives to improve productivity, add value and connect small enterprises to bigger markets from camel milk and dairy to crops, beekeeping and soapstone.',
-	'hero_image'    => '/wp-content/uploads/2025/03/kyusyani-marketing-cluster-e1741789378810.jpg',
-	'hero_image_alt'=> 'Members of a marketing cluster meeting in Kyusyani',
+	'hero_image'    => $rv_enterprise_uri . 'soapstone-crafts.jpg',
+	'hero_image_alt'=> 'Finished soapstone carvings and tableware displayed on a market table',
 	'actions'       => array(
 		array( 'label' => 'Partner with us', 'url' => '/contact-us/', 'variant' => 'primary' ),
 		array( 'label' => 'Explore our work', 'url' => '/ourwork/', 'variant' => 'ghost' ),
@@ -57,10 +66,10 @@ $rv = array(
 		),
 	),
 	'gallery'       => array(
-		array( 'url' => '/wp-content/uploads/2025/03/3-1.jpg',   'alt' => 'Artisans working on soapstone products' ),
-		array( 'url' => '/wp-content/uploads/2025/03/2.jpg',     'alt' => 'Produce being prepared for market' ),
-		array( 'url' => '/wp-content/uploads/2025/03/1-2.jpg',   'alt' => 'Cooperative members sorting harvest' ),
-		array( 'url' => '/wp-content/uploads/2025/03/DSCN2570.jpg', 'alt' => 'Field visit with value chain partners' ),
+		array( 'url' => $rv_enterprise_uri . 'quarry-collage.jpg',    'alt' => 'Collage of a sunset over a stone quarry and artisans splitting soapstone blocks by hand' ),
+		array( 'url' => $rv_enterprise_uri . 'kisac-fair-trade.jpg',  'alt' => 'KISAC Fair Trade soapstone producers posing behind their banner in a forest' ),
+		array( 'url' => $rv_enterprise_uri . 'soapstone-crafts.jpg',  'alt' => 'Finished soapstone carvings and tableware displayed on a market table' ),
+		array( 'url' => $rv_enterprise_uri . 'soapstone-carving.jpg', 'alt' => 'A smiling soapstone artisan carving a figure with a hammer and chisel' ),
 	),
 	'stories'       => site_child_revamp_stories( 'enterprise-development', 3 ),
 	'stories_url'   => '/stories/',

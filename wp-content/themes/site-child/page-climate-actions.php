@@ -14,14 +14,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+// Water-harvesting media (photos + video) lives in the child theme so it
+// travels with the code and stays version-controlled (see .clinerules).
+$rv_water_uri = get_stylesheet_directory_uri() . '/assets/images/water/';
+
 $rv = array(
 	'type'          => 'programme',
 	'root_class'    => 'site-revamp--programme site-revamp--climate',
 	'kicker'        => 'Our work · Resilient communities',
 	'title'         => 'Food Security & Climate Actions towards Resilient Communities',
 	'lead'          => 'We promote climate smart farming, sustainable practices and water security so communities can adapt, thrive and secure their food and household incomes.',
-	'hero_image'    => '/wp-content/uploads/2025/03/mai.jpg',
-	'hero_image_alt'=> 'Community members at a watering point in a drought-prone area',
+	'hero_image'    => $rv_water_uri . 'water-2.jpg',
+	'hero_image_alt'=> 'Community members and SITE staff gather around a new rainwater harvest tank as two men test the water flowing from the pipe',
 	'actions'       => array(
 		array( 'label' => 'Partner with us', 'url' => '/contact-us/', 'variant' => 'primary' ),
 		array( 'label' => 'Explore our work', 'url' => '/ourwork/', 'variant' => 'ghost' ),
@@ -50,6 +54,15 @@ $rv = array(
 		array( 'url' => '/wp-content/uploads/2025/03/story-1a_200X200.jpg', 'alt' => 'Livestock adapting to dryland conditions' ),
 		array( 'url' => '/wp-content/uploads/2025/03/story-7a_200X200.jpg', 'alt' => 'Household food production in the drylands' ),
 		array( 'url' => '/wp-content/uploads/2025/03/story-11a_200X200.jpg', 'alt' => 'Community members at a water harvesting site' ),
+	),
+	'media'         => array(
+		'title' => 'Harvesting water for sustainability',
+		'text'  => 'Desilting dams, clean-ups and community rainwater tanks that keep water flowing for households and livestock through the dry seasons.',
+		'items' => array(
+			array( 'image' => $rv_water_uri . 'water-2.jpg', 'alt' => 'Community members and SITE staff gather around a new rainwater harvest tank as two men test the water flowing from the pipe' ),
+			array( 'image' => $rv_water_uri . 'water-1.jpg', 'alt' => 'Camels drinking from a concrete livestock water trough built by SITE in a dryland area' ),
+			array( 'video' => $rv_water_uri . 'water-harvest.mp4', 'poster' => $rv_water_uri . 'water-1.jpg', 'alt' => 'Video of a community water harvesting point in use' ),
+		),
 	),
 	'stories'       => site_child_revamp_stories( 'food-security-climate', 3 ),
 	'stories_url'   => '/stories/',
