@@ -23,7 +23,7 @@ get_header();
 						<span class="site-about-kicker">About SITE</span>
 						<h2>Transforming Lives Since 1996</h2>
 						<p class="site-about-lead">
-							SITE Enterprise Promotion (SITE) is a Kenyan not-for-profit development organization, established in 1996, whose goal is the promotion of employment opportunities and economic growth among communities.
+							SITE Enterprise Promotion (SITE) is a Kenyan not for profit development organization, established in 1996, whose goal is the promotion of employment opportunities and economic growth among communities.
 						</p>
 
 						<div class="site-about-values">
