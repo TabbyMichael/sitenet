@@ -109,6 +109,10 @@ $ss_share_title = rawurlencode( wp_strip_all_tags( get_the_title() ) );
 				?>
 			</p>
 
+			<div class="ss-body">
+				<?php the_content(); ?>
+			</div>
+
 			<?php if ( $ss_stats ) : ?>
 				<ul class="ss-stats">
 					<?php foreach ( $ss_stats as $ss_stat ) : ?>
@@ -119,10 +123,6 @@ $ss_share_title = rawurlencode( wp_strip_all_tags( get_the_title() ) );
 					<?php endforeach; ?>
 				</ul>
 			<?php endif; ?>
-
-			<div class="ss-body">
-				<?php the_content(); ?>
-			</div>
 
 			<?php if ( $ss_themes && ! is_wp_error( $ss_themes ) ) : ?>
 				<p class="ss-themes">
@@ -157,8 +157,6 @@ $ss_share_title = rawurlencode( wp_strip_all_tags( get_the_title() ) );
 					<?php endforeach; ?>
 				</div>
 			<?php endif; ?>
-
-			<?php echo site_child_get_donors_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built and escaped in the helper. ?>
 
 			<div class="ss-share">
 				<span class="ss-share-label"><?php esc_html_e( 'Share this story:', 'site-child' ); ?></span>

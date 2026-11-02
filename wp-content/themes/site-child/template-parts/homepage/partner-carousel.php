@@ -42,22 +42,10 @@ function site_pd_render_slide( $item, $duplicate = false ) {
 			$inner = '<img src="' . esc_url( $item['src'] ) . '" alt="' . esc_attr( $item['alt'] ) . '" loading="lazy">';
 		}
 
-		$stories = ( ! empty( $item['stories'] ) && is_array( $item['stories'] ) )
-			? array_values( $item['stories'] )
-			: array();
-
-		// Fall back to the full story pool so every card is clickable.
-		if ( empty( $stories ) ) {
-			$stories = site_child_get_all_story_urls();
-		}
-
-		if ( ! empty( $stories ) ) {
-			$inner = '<a class="pd-card-link" href="' . esc_url( $stories[0] ) . '"'
-				. ' data-pd-stories="' . esc_attr( wp_json_encode( array_values( $stories ) ) ) . '"'
-				. ' title="' . esc_attr__( 'Read one of our stories', 'site-child' ) . '"'
-				. ( $duplicate ? ' tabindex="-1"' : '' )
-				. '>' . $inner . '</a>';
-		}
+		// Donor / partner logos are presentational only — deliberately NOT
+		// linked. They used to route to a random story through an
+		// a.pd-card-link anchor; that anchor is gone, and the story-routing
+		// JS (assets/js/partners-donors.js) no-ops when no such link exists.
 	} else {
 		$inner = '<span class="pd-logo-text ' . esc_attr( $item['class'] ) . '">' . esc_html( $item['label'] ) . '</span>';
 	}

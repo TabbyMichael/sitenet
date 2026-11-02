@@ -87,6 +87,11 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 		'poultry-keepiong-in-machakos',
 		'PWDs-sensitization-forum-in-Machakos-1',
 		'sanitary',
+		// Now used as explicit slide images (slides 1 & 2) via the content
+		// array 'url' overrides above. Withhold them from the auto-append pass
+		// so they don't also render as duplicate trailing slides.
+		'2',
+		'WhatsApp Image 2026-11-02 at 09.58.42',
 	);
 
 	/**
@@ -106,8 +111,8 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 	 */
 	$site_hero_content = array(
 		'transforming lives' => array(
-			'alt' => 'Water access for the community',
-			'url' => get_stylesheet_directory_uri() . '/assets/images/water/water-1.jpg',
+			'alt' => 'A woman tailor sewing colourful patterned fabric at a pedal sewing machine outside her workshop',
+			'url' => get_stylesheet_directory_uri() . '/assets/images/hero/2-1430x730.jpg',
 			'eyebrow' => 'Value Chains',
 			'title' => 'Value Chains for Enterprise Development',
 			'description' => 'Strengthening producers, MSMEs and cooperatives to improve productivity, add value and connect small enterprises to bigger markets.',
@@ -123,7 +128,8 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 			'cta_text' => 'Learn More',
 		),
 		'camelmmilk' => array(
-			'alt' => 'Children and community members drinking camel milk at a SITE nutrition event',
+			'alt' => 'Camels drinking from a concrete livestock water trough beside a black water tank in dryland scrub',
+			'url' => get_stylesheet_directory_uri() . '/assets/images/hero/' . rawurlencode( 'WhatsApp Image 2026-11-02 at 09.58.42.jpeg' ),
 			'eyebrow' => 'Resilient Communities',
 			'title' => 'Food Security & Climate Actions',
 			'description' => 'Climate smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',
@@ -188,7 +194,7 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 
 			// 1. Slides that have explicit content — in content-array order.
 			foreach ( $site_hero_content as $site_key => $site_content ) {
-				if ( in_array( $site_key, $site_hero_exclude, true ) ) {
+				if ( in_array( (string) $site_key, $site_hero_exclude, true ) ) {
 					continue;
 				}
 				if ( empty( $site_content['url'] ) && ! isset( $site_file_index[ $site_key ] ) ) {
@@ -216,7 +222,7 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 			// 2. Any remaining files not in the content array — alphabetical.
 			ksort( $site_file_index );
 			foreach ( $site_file_index as $site_key => $site_file ) {
-				if ( in_array( $site_key, $site_hero_exclude, true ) ) {
+				if ( in_array( (string) $site_key, $site_hero_exclude, true ) ) {
 					continue;
 				}
 				$site_label = ucwords( trim( preg_replace( '/\s+/', ' ', preg_replace( '/[-_]+/', ' ', $site_key ) ) ) );

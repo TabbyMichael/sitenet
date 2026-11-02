@@ -7,7 +7,7 @@
 
 .site-testimonials {
 	position: relative;
-	padding: 96px 0 104px;
+	padding: 60px 0 66px;
 	background: center / cover no-repeat fixed var(--site-tm-bg, #0b1f14);
 	background-color: #0b1f14;
 	color: #ffffff;
@@ -274,7 +274,7 @@
 /* ---- Responsive breakpoints ---- */
 @media (max-width: 991px) {
 	.site-testimonials {
-		padding: 72px 0 80px;
+		padding: 52px 0 58px;
 		background-attachment: scroll;
 	}
 
@@ -291,7 +291,7 @@
 
 @media (max-width: 767px) {
 	.site-testimonials {
-		padding: 60px 0 68px;
+		padding: 46px 0 52px;
 	}
 
 	.site-testimonials__head {
@@ -318,7 +318,7 @@
 
 @media (max-width: 480px) {
 	.site-testimonials {
-		padding: 52px 0 60px;
+		padding: 42px 0 48px;
 	}
 
 	.site-testimonials__kicker {
