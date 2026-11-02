@@ -4,7 +4,7 @@
    ============================================================ */
 
 /* ---------- Section wrapper (full-bleed, fills viewport width) ---------- */
-.pd-section{width:100%;max-width:none;margin:0;padding:90px 0 56px;font-family:inherit}
+.pd-section{width:100%;max-width:none;margin:0;padding:52px 0 40px;font-family:inherit}
 .pd-header{text-align:center;max-width:760px;margin:0 auto 56px;padding:0 24px}
 .pd-title{font-size:clamp(30px,4.5vw,44px);font-weight:800;line-height:1.15;letter-spacing:-.5px;margin:0 0 18px;color:#1a3c34}
 .pd-lede{font-size:17px;line-height:1.75;color:#5f6b68;margin:0}
@@ -17,17 +17,17 @@
 
 /* ---------- Logo tiles ----------
    The card chrome (white background, border, rounded corners and drop shadow)
-   has been removed so the logos now sit free inside their slide. Height,
-   padding and image sizing are deliberately unchanged, so every logo renders
-   at exactly the same size it did when it was boxed. */
+   has been removed so the logos now sit free inside their slide. Tiles and
+   images were enlarged (~1.5x) so the logos read more clearly, and the cursor
+   is now default because the cards are no longer links. */
 .pd-card{display:flex;align-items:center;justify-content:center;text-align:center;
-  height:96px;padding:18px 20px;background:transparent;border:0;border-radius:0;
+  height:140px;padding:20px 22px;background:transparent;border:0;border-radius:0;
   box-shadow:none;
   transition:transform .35s ease;
-  cursor:pointer;user-select:none}
+  cursor:default;user-select:none}
 /* Hover feedback kept on the logo itself (no card, so no ring/shadow lift). */
 .pd-card:hover{transform:translateY(-6px) scale(1.03)}
-.pd-card img{max-height:62px;max-width:88%;width:auto;object-fit:contain}
+.pd-card img{max-height:104px;max-width:92%;width:auto;object-fit:contain}
 
 /* Text-based logos (swap for real <img> logos in the template when available) */
 .pd-card .pd-logo-text{font-weight:800;font-size:19px;letter-spacing:.4px}

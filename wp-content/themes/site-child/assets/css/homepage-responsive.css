@@ -83,7 +83,7 @@
 
 @media (min-width: 1024px) and (max-width: 1199px) {
 	.site-org-intro-section {
-		padding: 50px 0 44px;
+		padding: 40px 0 34px;
 	}
 
 	.intro-content-block h2 {
@@ -91,15 +91,15 @@
 	}
 
 	.site-focus-areas-section {
-		padding: 60px 0 64px !important; /* base rule uses !important */
+		padding: 40px 0 !important;
 	}
 
 	.site-featured-ecosystem-section {
-		padding: 60px 0 64px;
+		padding: 40px 0;
 	}
 
 	.site-impact-counter-section {
-		padding: 40px 0 46px;
+		padding: 34px 0 40px;
 	}
 
 	.site-modern-section-title h2 {
@@ -180,7 +180,7 @@
 
 @media (min-width: 768px) and (max-width: 1023px) {
 	.site-org-intro-section {
-		padding: 46px 0 40px;
+		padding: 38px 0 32px;
 	}
 
 	/* Bootstrap 3 col-md-* only kicks in >= 992px; below that the flex row
@@ -210,15 +210,15 @@
 	}
 
 	.site-focus-areas-section {
-		padding: 52px 0 56px !important; /* base rule uses !important */
+		padding: 38px 0 !important;
 	}
 
 	.site-featured-ecosystem-section {
-		padding: 52px 0 56px;
+		padding: 38px 0;
 	}
 
 	.site-impact-counter-section {
-		padding: 36px 0 42px;
+		padding: 32px 0 38px;
 	}
 
 	.site-modern-section-title h2 {

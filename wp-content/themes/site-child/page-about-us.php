@@ -23,12 +23,12 @@ $au_mvv = array(
 	array(
 		'icon'	=> 'fa-bullseye',
 		'title' => 'Mission',
-		'text'	=> 'To reduce poverty by strengthening livelihoods, competitive markets, and community owned enterprises across Kenya.',
+		'text'	=> 'Our mission is to reduce poverty by working with communities to address their needs through sustainable livelihood projects. We empower enterprising individuals to enhance productivity, foster competitive markets, and sustainable businesses that generate income and job opportunities.',
 	),
 	array(
 		'icon'	=> 'fa-eye',
 		'title' => 'Vision',
-		'text'	=> 'Better quality of life for people and communities through economic dignity and sustainable enterprise.',
+		'text'	=> 'Better quality of life for the people of our world.',
 	),
 	array(
 		/*
