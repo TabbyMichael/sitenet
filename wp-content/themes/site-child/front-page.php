@@ -33,6 +33,14 @@ get_header();
 									<h3>Vision</h3>
 									<p>Better quality of life for the people of our world.</p>
 								</div>
+								<figure class="site-about-value-image">
+									<img
+										src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/images/focus area/skilling-youth.jpeg' ); ?>"
+										alt="SITE staff and community members working on a water point"
+										loading="lazy"
+										decoding="async"
+									>
+								</figure>
 							</div>
 							<div class="site-about-value">
 								<span class="site-about-value-icon"><i class="fa fa-bullseye"></i></span>

@@ -139,13 +139,6 @@
    OLD 4" PHONES (<= 360px) — smallest cards
    -------------------------------------------------------------------------- */
 @media (max-width: 360px) {
-	.site-focus-areas-section .focus-card-badge {
-		width: 28px;
-		height: 28px;
-		font-size: 11px;
-		top: 10px;
-		right: 10px;
-	}
 
 	.site-focus-areas-section .focus-card-content {
 		padding: 14px 14px 16px;

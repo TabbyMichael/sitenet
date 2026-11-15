@@ -87,11 +87,13 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 		'poultry-keepiong-in-machakos',
 		'PWDs-sensitization-forum-in-Machakos-1',
 		'sanitary',
-		// Now used as explicit slide images (slides 1 & 2) via the content
-		// array 'url' overrides above. Withhold them from the auto-append pass
-		// so they don't also render as duplicate trailing slides.
+		// Explicit slide images are supplied through the content array's URL
+		// overrides. Withhold both the source and replacement files from the
+		// auto-append pass so they don't render as duplicate trailing slides.
 		'2',
 		'WhatsApp Image 2026-11-02 at 09.58.42',
+		'image001',
+		'MVI_0919.00_19_08_25.Still121 (1)',
 	);
 
 	/**
@@ -111,8 +113,8 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 	 */
 	$site_hero_content = array(
 		'transforming lives' => array(
-			'alt' => 'A woman tailor sewing colourful patterned fabric at a pedal sewing machine outside her workshop',
-			'url' => get_stylesheet_directory_uri() . '/assets/images/hero/2-1430x730.jpg',
+			'alt' => 'Two women fish vendors in aprons beside an insulated cooler at a market',
+			'url' => get_stylesheet_directory_uri() . '/assets/images/hero/' . rawurlencode( 'MVI_0919.00_19_08_25.Still121 (1).jpg' ),
 			'eyebrow' => 'Value Chains',
 			'title' => 'Value Chains for Enterprise Development',
 			'description' => 'Strengthening producers, MSMEs and cooperatives to improve productivity, add value and connect small enterprises to bigger markets.',
@@ -128,8 +130,8 @@ if ( $site_prefer_acf && ! empty( $site_acf_slides ) ) {
 			'cta_text' => 'Learn More',
 		),
 		'camelmmilk' => array(
-			'alt' => 'Camels drinking from a concrete livestock water trough beside a black water tank in dryland scrub',
-			'url' => get_stylesheet_directory_uri() . '/assets/images/hero/' . rawurlencode( 'WhatsApp Image 2026-11-02 at 09.58.42.jpeg' ),
+			'alt' => 'A person milking a camel into a metal bucket',
+			'url' => get_stylesheet_directory_uri() . '/assets/images/hero/image001.jpg',
 			'eyebrow' => 'Resilient Communities',
 			'title' => 'Food Security & Climate Actions',
 			'description' => 'Climate smart livelihood actions that improve food security, household incomes, and community capacity to adapt and thrive.',

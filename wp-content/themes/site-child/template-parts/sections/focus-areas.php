@@ -37,8 +37,6 @@ $focus_areas = site_child_get_focus_areas();
 			<?php foreach ( $focus_areas as $index => $area ) : ?>
 				<article class="focus-card" aria-label="<?php echo esc_attr( $area['title'] ); ?>">
 
-					<!-- Numbered badge -->
-					<span class="focus-card-badge" aria-hidden="true"><?php echo esc_html( str_pad( $index + 1, 2, '0', STR_PAD_LEFT ) ); ?></span>
 
 					<div class="focus-card-media">
 						<img src="<?php echo esc_url( $area['image'] ); ?>"

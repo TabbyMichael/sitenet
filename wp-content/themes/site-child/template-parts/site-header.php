@@ -40,7 +40,7 @@ $site_logo_srcset = $site_logo;
 
 					<li class="site-utility__item site-utility__item--location">
 						<svg class="site-utility__icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 21s-7-5.1-7-11a7 7 0 1 1 14 0c0 5.9-7 11-7 11z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="2"/></svg>
-						<a href="https://www.google.com/maps/dir/?api=1&amp;destination=Waleeh%20Motors%2C%20Ngong%20Road%2C%20Nairobi%2C%20Kenya" target="_blank" rel="noopener noreferrer" aria-label="Get directions to Waleeh Motors, Ngong Road, Nairobi">ISMA Building, Along Ngong Road, Nairobi</a>
+						<a href="https://www.google.com/maps/dir/?api=1&amp;destination=Waleeh%20Motors%2C%20Ngong%20Road%2C%20Nairobi%2C%20Kenya" target="_blank" rel="noopener noreferrer" aria-label="Get directions to Waleeh Motors, Ngong Road, Nairobi">ISMA Building, Behind Waleed Motors Limited Along Ngong Road</a>
 					</li>
 
 					<li class="site-utility__item site-utility__item--phone">

@@ -1574,6 +1574,7 @@ ul.main-navigation li ul li a:hover,
 .site-focus-areas-section .site-modern-section-title .section-lead {
     color: #435149;
     font-size: 16px;
+    font-weight: 600;
 }
 
 .site-focus-areas-section .site-modern-section-title .site-section-kicker {
@@ -1589,7 +1590,6 @@ ul.main-navigation li ul li a:hover,
     background: #ffffff;
     border: none;
     border-radius: 12px;
-    border-top: 4px solid #f9c802;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.10), 0 1px 4px rgba(0, 0, 0, 0.06);
     overflow: hidden;
     display: flex;
@@ -1630,26 +1630,6 @@ ul.main-navigation li ul li a:hover,
     transform: translateY(-6px);
 }
 
-/* ── Card number badge (top-right corner) ── */
-.site-focus-areas-section .focus-card-badge {
-    position: absolute;
-    top: 12px;
-    right: 14px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #f9c802;
-    color: #013d1c;
-    font-size: 13px;
-    font-weight: 900;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-    letter-spacing: 0;
-}
-
 /* ── Image ── */
 .site-focus-areas-section .focus-card-media {
     aspect-ratio: 3 / 2;
@@ -1672,11 +1652,12 @@ ul.main-navigation li ul li a:hover,
     height: 100%;
     object-fit: cover;
     display: block;
+    transform: scale(1.2);
     transition: transform 0.5s ease;
 }
 
 .site-focus-areas-section .focus-card:hover .focus-card-media img {
-    transform: scale(1.05);
+    transform: scale(1.25);
 }
 
 /* ── Icon circle (sits at bottom of image) ── */
