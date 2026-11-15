@@ -160,7 +160,7 @@ $footer_explore = array(
 					<li>
 						<a class="site-footer__contact-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=Waleeh%20Motors%2C%20Ngong%20Road%2C%20Nairobi%2C%20Kenya" target="_blank" rel="noopener noreferrer" aria-label="Get directions to Waleeh Motors, Ngong Road, Nairobi">
 							<svg class="site-footer__contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 21s-7-5.1-7-11a7 7 0 1 1 14 0c0 5.9-7 11-7 11z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="2"/></svg>
-							<span>ISMA Building, Along Ngong Road, Nairobi</span>
+							<span>ISMA Building, Behind Waleed Motors Limited Along Ngong Road</span>
 						</a>
 					</li>
 				</ul>

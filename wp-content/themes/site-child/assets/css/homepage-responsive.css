@@ -16,6 +16,24 @@
    style.css / dark.css so light & dark themes keep working untouched.
    ========================================================================== */
 
+.site-about-value-image {
+	grid-column: 1 / -1;
+	width: 100%;
+	margin: 16px 0 0;
+	overflow: hidden;
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	border-radius: 8px;
+}
+
+.site-about-value-image img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	min-height: 180px;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+}
+
 /* --------------------------------------------------------------------------
    LARGE MONITORS (>= 1600px): let the grids breathe, scale cards up slightly
    -------------------------------------------------------------------------- */
@@ -526,14 +544,6 @@
 		bottom: 12px;
 	}
 
-	.site-focus-areas-section .focus-card-badge {
-		width: 28px;
-		height: 28px;
-		font-size: 11px;
-		top: 10px;
-		right: 10px;
-	}
-
 	.site-focus-areas-section .focus-card-content,
 	.ecosystem-card-content {
 		padding: 14px 14px 16px;
@@ -622,5 +632,4 @@
 		transform: none;
 	}
 }
-
 
